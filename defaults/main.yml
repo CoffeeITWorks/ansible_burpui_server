@@ -1,0 +1,38 @@
+---
+# file defaults/main.yml
+
+burp_ui_pip_pkgs:
+  - pip
+  - gevent
+  - greenlet
+  - burp-ui==0.2.1
+
+storage: /var/lib
+burp_ui_root: "{{ storage }}/burp"
+burp_ui_directory: "{{ burp_ui_root }}/data"
+burp_ui_tmp: "{{ burp_ui_root }}/burp-ui"
+
+burp_ui_gunicorn_logs: /var/log/gunicorn
+burp_ui_bin: /usr/local/bin
+burp_ui_ssl_key_pass: ""
+burp_ui_appsecret: "random"
+burp_ui_clients: False
+burp_ui_dedup_group: win7
+
+burp_ui_server: 127.0.0.1
+burp_ui_address: "0.0.0.0"
+burp_ui_port: 4973
+burp_ui_status_address: "127.0.0.1"
+burp_ui_status_port: 4974
+burp_ui_web_bind: "0.0.0.0"
+burp_ui_web_port: 5000
+burp_ui_proxy_port: 80
+burp_ui_monitor_cache: 1 
+
+burp_ui_syslog: 1
+
+burp_ui_max_children: 3
+burp_ui_max_status_children: 3
+
+burp_ui_version: 2
+burp_ui_protocol: 1

@@ -1,0 +1,11 @@
+---
+# file: handlers/main.yml
+
+- name: restart burp-ui server
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - "{{ burp_ui_service }}"
+    - gunicorn
+    - nginx

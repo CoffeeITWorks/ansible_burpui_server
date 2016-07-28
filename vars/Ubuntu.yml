@@ -1,0 +1,13 @@
+#::::::::::::::
+# Ubuntu.yml
+#::::::::::::::
+---
+
+burp_ui_service: "burp-ui"
+
+burp_ui_packages:
+  - gunicorn
+  - python-pip
+  - python-dev
+  - redis-server
+  - nginx

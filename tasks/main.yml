@@ -1,0 +1,73 @@
+---
+# file: tasks/main.yml
+
+- include: multi_os.yml
+
+- name: install role packages
+  package: name={{ burp_ui_packages| join(',') }} state=present
+  
+- name: install role pip packages
+  pip:
+    name: "{{ burp_ui_pip_pkgs| join(' ') }}"
+    state: latest
+
+- name: create burp-ui folders
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items:
+    - "{{ burp_ui_tmp }}"
+
+- name: remove gunicorn example files
+  file:
+    path: "/etc/gunicorn.d/{{ item }}"
+    state: absent
+  with_items:
+    - django.example
+    - wsgi.example
+
+- name: setup script files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - { src: "burp-ui_post.sh.j2", dest: "{{ burp_ui_bin }}/burp-ui_post.sh" }
+    - { src: "email_restore.py.j2", dest: "{{ burp_ui_bin }}/email_restore.py" }
+
+- name: setup burp-ui configuration files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "burp-ui.conf.j2", dest: "/etc/burp/burp-ui.conf", owner: "root", group: "root", mode: "0644" }
+    - { src: "burp-ui-default.j2", dest: "/etc/default/burp-ui", owner: "root", group: "root", mode: "0644" }
+    - { src: "burp-ui_service.j2", dest: "/etc/init.d/burp-ui", owner: "root", group: "root", mode: "0755" }
+    - { src: "burp-ui.cfg.j2", dest: "/etc/burp/burp-ui.cfg", owner: "root", group: "root", mode: "0644" }
+    - { src: "gunicorn.j2", dest: "/etc/gunicorn.d/burp-ui", owner: "root", group: "root", mode: "0644" }
+    - { src: "burp-monitor.conf.j2", dest: "/etc/burp/burp-monitor.conf", owner: "root", group: "root", mode: "0644" }
+    - { src: "burp-ui_site.j2", dest: "/etc/nginx/sites-available/burp-ui", owner: "root", group: "root", mode: "0644" }
+  notify: restart burp-ui server
+
+- name: enable burp-ui site in nginx
+  file:
+    src: "/etc/nginx/sites-available/burp-ui"
+    dest: "/etc/nginx/sites-enabled/burp-ui"
+    state: link
+
+- name: ensure services are enabled
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - "{{ burp_ui_service }}"
+    - gunicorn
+    - nginx

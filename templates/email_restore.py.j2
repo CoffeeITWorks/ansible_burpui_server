@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+
+import sys
+import os.path
+import smtplib
+import mimetypes
+from datetime import date, timedelta
+from email.mime.multipart import MIMEMultipart
+
+COMMASPACE = ', '
+
+def main(argv):
+
+  emailfrom = "{{ burp_server_send_from }}"
+  emailto = [{{ burp_restore_email_to }}]
+  status = ''
+
+  if os.path.isfile("/tmp/" + argv[0] + ".success"):
+    status = 'SUCCESS'
+  else:
+    status = 'FAIL'
+
+  msg = MIMEMultipart()
+  msg["From"] = emailfrom
+  msg["To"] = COMMASPACE.join(emailto)
+  msg["Subject"] = "Burp Restore " + argv[0] + " in " + argv[1] + " - " + status
+
+  server = smtplib.SMTP("127.0.0.1:25")
+  server.sendmail(emailfrom, emailto, msg.as_string())
+  server.quit()
+
+if __name__ == "__main__":
+   main(sys.argv[1:])

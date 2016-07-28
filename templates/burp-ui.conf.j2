@@ -1,0 +1,62 @@
+# This is an example config file for the burp server.
+
+mode = server
+
+protocol = {{ burp_ui_protocol }}
+
+address = {{ burp_ui_address }}
+port = {{ burp_ui_port }}
+status_address = {{ burp_ui_status_address }}
+status_port = {{ burp_ui_status_port }}
+max_children = {{ burp_ui_max_children }}
+max_status_children = {{ burp_ui_max_status_children }}
+
+syslog = {{ burp_ui_syslog }}
+autoupgrade_dir = /etc/burp/autoupgrade/server
+version_warn = 0
+
+hardlinked_archive = {{ burp_ui_hardlinked_archive }}
+working_dir_recovery_method = {{ burp_ui_working_dir_recovery_method }}
+resume_partial = {{ burp_ui_resume_partial }}
+
+client_can_delete = 1
+client_can_force_backup = 1
+client_can_list = 1
+client_can_restore = 1
+client_can_verify = 1
+
+ratelimit = 100
+
+network_timeout = {{ burp_ui_network_timeout }}
+
+keep = 1
+
+clientconfdir = /etc/burp/clientconfdir
+pidfile = /var/run/burp-ui.pid
+directory = {{ burp_ui_directory }}
+user = root
+group = root
+umask = 0022
+
+ca_conf = /etc/burp/CA.cnf
+ca_name = burpCA
+ca_server_name = {{ ansible_nodename }}
+ca_burp_ca = /usr/sbin/burp_ca
+ssl_cert_ca = /etc/burp/ssl_cert_ca-server.pem
+ssl_cert = /etc/burp/ssl_cert-server.pem
+ssl_key = /etc/burp/ssl_cert-server.key
+ssl_key_password = {{ burp_ui_ssl_key_pass }}
+ssl_dhfile = /etc/burp/dhfile.pem
+
+server_script_post = {{ burp_ui_bin }}/burp-ui_post.sh
+
+restore_client = {{ ansible_nodename }}
+{% for client in burp_ui_clients %}
+restore_client = {{ client }}
+{% endfor %}
+
+{% if burp_ui_version == 2 %}
+# Burp2 specific
+dedup_group = {{ burp_ui_dedup_group }}
+monitor_browse_cache = {{ burp_ui_monitor_cache }}
+{% endif %}
