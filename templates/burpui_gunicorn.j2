@@ -1,0 +1,15 @@
+CONFIG = {
+    'working_dir': '/',
+    'environment': {
+        'SERVER_SOFTWARE': 'gunicorn',
+    },
+    'args': (
+        '--bind={{ burpui_global_bind }}:{{ burpui_global_port }}',
+        '--user=root',
+        '--workers=3',
+        '--worker-class=gevent',
+        '--access-logfile=/var/log/gunicorn/burpui_access.log',
+        '--error-logfile=/var/log/gunicorn/burpui_error.log',
+        'burpui:init(conf="/etc/burp/burpui.cfg",logfile="/var/log/gunicorn/burpui_info.log")',
+    ),
+}

@@ -1,0 +1,33 @@
+---
+# file defaults/bui-celery.yml
+
+- name: install role packages
+  package:
+    name: "{{ burp_ui_celery_packages| join(',') }}"
+    state: latest
+
+- name: create burp ui folder
+  file:
+    path: /var/spool/burpui
+    state: directory
+
+- name: configure bui-celery
+  template:
+    src: bui-celery.conf_supervisor.j2
+    dest: /etc/supervisor/conf.d/bui-celery.conf
+  notify: restart bui-celery
+
+- name: configure supervisor logrotate
+  template:
+    src: supervisor_logrotate.j2
+    dest: /etc/logrotate.d/supervisor
+
+- name: ensure supervisor is running
+  service:
+    name: supervisor
+    state: started
+
+- name: ensure supervisor is enabled
+  service:
+    name: supervisor
+    enabled: yes

@@ -1,38 +1,107 @@
 ---
 # file defaults/main.yml
 
-burp_ui_pip_pkgs:
+burpui_pip_burpui: "burp-ui"
+
+burpui_pip_latest:
   - pip
+  - cffi
+  - urllib3
+  - ndg-httpsclient
+  - pyasn1
+  - requests[security]
+  - "{{ burpui_pip_burpui }}"
+
+burpui_pip_present:
   - gevent
-  - greenlet
-  - burp-ui==0.2.1
+  - ujson
+  - redis
+  - Flask-Session
+  - Flask-Migrate
+  - celery
+  
+burpui_nginx_port: "8080"
 
-storage: /var/lib
-burp_ui_root: "{{ storage }}/burp"
-burp_ui_directory: "{{ burp_ui_root }}/data"
-burp_ui_tmp: "{{ burp_ui_root }}/burp-ui"
+burpui_standalone: true
 
-burp_ui_gunicorn_logs: /var/log/gunicorn
-burp_ui_bin: /usr/local/bin
-burp_ui_ssl_key_pass: ""
-burp_ui_appsecret: "random"
-burp_ui_clients: False
-burp_ui_dedup_group: win7
+#[Global]
+burpui_global_port: "5000"
+burpui_global_bind: "127.0.0.1"
+burpui_global_ssl: "false"
+burpui_global_sslcert: "/etc/burp/ssl_cert-server.pem"
+burpui_global_sslkey: "/etc/burp/ssl_cert-server.key"
+burpui_global_version: "2"
+burpui_global_auth: "basic"
+burpui_global_acl: "basic"
+burpui_global_prefix: "none"
+#[UI]
+burpui_ui_refresh: "180"
+burpui_ui_liverefresh: "60"
+#[Production]
+burpui_production_storage: "redis"
+burpui_production_session: "redis://localhost:6379/0"
+burpui_production_cache: "redis"
+burpui_production_redis: "localhost:6379"
+burpui_production_celery: "true"
+burpui_production_database: "sqlite:////var/spool/burpui/celery.db"
+#[Security]
+burpui_security_includes: "/etc/burp"
+burpui_security_enforce: "false"
+burpui_security_revoke: "true"
+burpui_security_cookietime: "14"
+burpui_security_scookie: "true"
+burpui_security_appsecret: "random"
+#[Experimental]
+burpui_experimental_zip64: "false"
+burpui_experimental_noserverrestore: "false"
+#[Backend]
+burpui_backend_burpbin: "/usr/sbin/burp"
+burpui_backend_stripbin: "/usr/bin/vss_strip"
+burpui_backend_bconfcli: "/etc/burp/burp.conf"
+burpui_backend_bconfsrv: "/etc/burp/burp-server.conf"
+burpui_backend_tmpdir: "/tmp"
+burpui_backend_timeout: "60"
+#[LDAP]
+burpui_ldap_enabled: false
+burpui_ldap_priority: "1"
+burpui_ldap_host: "127.0.0.1"
+burpui_ldap_port: "389"
+burpui_ldap_encryption: "ssl"
+burpui_ldap_validate: "none"
+burpui_ldap_version: "TLSv1"
+burpui_ldap_cafile: "none"
+burpui_ldap_searchattr: "uid"
+burpui_ldap_base: '"ou=users,dc=example,dc=com"'
+burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
+burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
+#[BASIC]
+burpui_basic_enabled: false
+burpui_basic_priority: "2"
+burpui_basic_mixed: "true"
+burpui_basic_users:
+  - { name: "admin", password: "admin" }
+#[LOCAL]
+burpui_local_enabled: false
+burpui_local_priority: "3"
+burpui_local_users: "user1,user2"
+#[BASIC:ACL]
+burpui_basic_acl_enabled: false
+burpui_basic_acl_admins: "user1,user2"
+burpui_basic_acl_users: false
+#burpui_basic_acl_users:
+#  - { name: "user3", value: '["client4", "client5"]' }
+#  - { name: "user4", value: '{"agent2": ["client8"], "agent1": ["client6", "client7"]}' }
+# bui-agent
+burpui_agents:
+  - { name: "localhost", address: "127.0.0.1", port: "10000", password: "password", ssl: "false" }
 
-burp_ui_server: 127.0.0.1
-burp_ui_address: "0.0.0.0"
-burp_ui_port: 4973
-burp_ui_status_address: "127.0.0.1"
-burp_ui_status_port: 4974
-burp_ui_web_bind: "0.0.0.0"
-burp_ui_web_port: 5000
-burp_ui_proxy_port: 80
-burp_ui_monitor_cache: 1 
-
-burp_ui_syslog: 1
-
-burp_ui_max_children: 3
-burp_ui_max_status_children: 3
-
-burp_ui_version: 2
-burp_ui_protocol: 1
+# Bui Celery
+burpui_sv_priority: "20"
+burpui_sv_directory: "/tmp"
+burpui_sv_environment: "C_FORCE_ROOT=true"
+burpui_sv_command: "bui-celery -c /etc/burp/burpui.cfg -- --beat"
+burpui_sv_user: "root"
+burpui_sv_autostart: "true"
+burpui_sv_autorestart: "true"
+burpui_sv_stdout_logfile: "/var/log/supervisor/%(program_name)s.log"
+burpui_sv_stderr_logfile: "/var/log/supervisor/%(program_name)s.log"

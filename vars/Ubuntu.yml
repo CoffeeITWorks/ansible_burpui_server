@@ -3,11 +3,13 @@
 #::::::::::::::
 ---
 
-burp_ui_service: "burp-ui"
-
-burp_ui_packages:
+burpui_packages:
   - gunicorn
   - python-pip
   - python-dev
+  - libssl-dev # dependecy of ndg-httpsclient
   - redis-server
   - nginx
+
+burp_ui_celery_packages:
+  - supervisor

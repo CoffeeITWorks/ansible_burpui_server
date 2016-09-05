@@ -1,5 +1,5 @@
 server {
-    listen {{ burp_ui_proxy_port }};
+    listen {{ burpui_nginx_port }};
     server_name {{ ansible_nodename }};
 
     access_log  /var/log/nginx/burpui.access.log;
@@ -15,6 +15,6 @@ server {
         proxy_read_timeout 300;
         proxy_connect_timeout 300;
 
-        proxy_pass http://localhost:{{ burp_ui_web_port }};
+        proxy_pass http://localhost:{{ burpui_global_port }};
     }
 }

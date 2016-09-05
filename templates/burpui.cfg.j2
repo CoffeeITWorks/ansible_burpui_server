@@ -1,0 +1,236 @@
+# Burp-UI configuration file
+# @version@ - 0.3.0
+# @release@ - stable
+[Global]
+# On which port is the application listening
+port = {{ burpui_global_port }}
+# On which address is the application listening
+# '::' is the default for all IPv6
+# set it to '0.0.0.0' if you want to listen on all IPv4 addresses
+bind = {{ burpui_global_bind }}
+# enable SSL
+ssl = {{ burpui_global_ssl }}
+# ssl cert
+sslcert = {{ burpui_global_sslcert }}
+# ssl key
+sslkey = {{ burpui_global_sslkey }}
+# burp server version 1 or 2
+version = {{ burpui_global_version }}
+# Handle multiple bui-servers or not
+# If set to 'false', you will need to declare at least one 'Agent' section (see
+# bellow)
+{% if burpui_standalone %}
+standalone = true
+{% else %}
+standalone = false
+{% endif %}
+# authentication plugin (mandatory)
+# list the misc/auth directory to see the available backends
+# to disable authentication you can set "auth = none"
+# you can also chain multiple backends. Example: "auth = ldap,basic"
+# the order will be respected unless you manually set a higher backend priority
+auth = {{ burpui_global_auth }}
+# acl plugin
+# list misc/acl directory to see the available backends
+# default is no ACL
+acl = {{ burpui_global_acl }}
+# You can change the prefix if you are behind a reverse-proxy under a custom
+# root path. For example: /burpui
+# You can also configure your reverse-proxy to announce the prefix through the
+# 'X-Script-Name' header. In this case, the bellow prefix will be ignored in
+# favour of the one announced by your reverse-proxy
+prefix = {{ burpui_global_prefix }}
+
+[UI]
+# refresh interval of the pages in seconds
+refresh = {{ burpui_ui_refresh }}
+# refresh interval of the live-monitoring page in seconds
+liverefresh = {{ burpui_ui_liverefresh }}
+
+[Production]
+# storage backend for session and cache
+# may be either 'default' or 'redis'
+storage = {{ burpui_production_storage }}
+# session database to use
+# may also be a backend url like: redis://localhost:6379/0
+# if set to 'redis', the backend url defaults to:
+# redis://<redis_host>:<redis_port>/0
+# where <redis_host> is the host part, and <redis_port> is the port part of
+# the below "redis" setting
+session = {{ burpui_production_session }}
+# cache database to use
+# may also be a backend url like: redis://localhost:6379/0
+# if set to 'redis', the backend url defaults to:
+# redis://<redis_host>:<redis_port>/1
+# where <redis_host> is the host part, and <redis_port> is the port part of
+# the below "redis" setting
+cache = {{ burpui_production_cache }}
+# redis server to connect to
+redis = {{ burpui_production_redis }}
+# whether to use celery or not
+# may also be a broker url like: redis://localhost:6379/0
+# if set to "true", the broker url defaults to:
+# redis://<redis_host>:<redis_port>/2
+# where <redis_host> is the host part, and <redis_port> is the port part of
+# the above "redis" setting
+celery = {{ burpui_production_celery }}
+# database url to store some persistent data
+# none or a connect string supported by SQLAlchemy:
+# http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
+# example: sqlite:////var/lib/burpui/store.db
+database = {{ burpui_production_database }}
+
+[Security]
+## This section contains some security options. Make sure you understand the
+## security implications before changing these.
+# list of 'root' paths allowed when sourcing files in the configuration.
+# Set this to 'none' if you don't want any restrictions, keeping in mind this
+# can lead to accessing sensible files. Defaults to '/etc/burp'.
+# Note: you can have several paths separated by comas.
+# Example: /etc/burp,/etc/burp.d
+includes = {{ burpui_security_includes }}
+# if files already included in config do not respect the above restriction, we
+# prune them
+enforce = {{ burpui_security_enforce }}
+# enable certificates revocation
+revoke = {{ burpui_security_revoke }}
+# remember_cookie duration in days
+cookietime = {{ burpui_security_cookietime }}
+# whether to use a secure cookie for https or not. If set to false, cookies
+# won't have the 'secure' flag.
+# This setting is only useful when HTTPS is detected
+scookie = {{ burpui_security_scookie }}
+# application secret to secure cookies. If you don't set anything, the default
+# value is 'random' which will generate a new secret after every restart of your
+# application. You can also set it to 'none' although this is not recommended.
+# /!\ YOU CANNOT USE THE MAGIC 'random' VALUE WHEN USING GUNICORN /!\
+appsecret = {{ burpui_security_appsecret }}
+
+[Experimental]
+## This section contains some experimental features that have not been deeply
+## tested yet
+# enable zip64 feature. Python doc says:
+# « ZIP64 extensions are disabled by default because the default zip and unzip
+# commands on Unix (the InfoZIP utilities) don’t support these extensions. »
+zip64 = {{ burpui_experimental_zip64 }}
+# disable server initiated restoration if `bconfcli` file contains
+# `server_can_restore = 0`
+noserverrestore = {{ burpui_experimental_noserverrestore }}
+
+{% if burpui_standalone %}
+## burp2 backend specific options
+[Burp2]
+## burp binary
+burpbin = {{ burpui_backend_burpbin }}
+## vss_strip binary
+stripbin = {{ burpui_backend_stripbin }}
+## burp client configuration file used for the restoration (Default: None)
+bconfcli = {{ burpui_backend_bconfcli }}
+## burp server configuration file used for the setting page
+bconfsrv = {{ burpui_backend_bconfsrv }}
+## temporary directory to use for restoration
+tmpdir = {{ burpui_backend_tmpdir }}
+## how many time to wait for the monitor to answer (in seconds)
+timeout = {{ burpui_backend_timeout }}
+{% endif %}
+
+{% if burpui_ldap_enabled %}
+## ldapauth specific options
+[LDAP]
+## Backend priority. Higher is first
+priority = {{ burpui_ldap_priority }}
+## LDAP host
+host = {{ burpui_ldap_host }}
+## LDAP port
+port = {{ burpui_ldap_port }}
+## Encryption type to LDAP server (none, ssl or tls)
+## - try tls if unsure, otherwise ssl on port 636
+encryption = {{ burpui_ldap_encryption }}
+## specifies if the server certificate must be validated, values can be:
+##  - none (certificates are ignored)
+##  - optional (not required, but validated if provided)
+##  - required (required and validated)
+validate = {{ burpui_ldap_validate }}
+## SSL or TLS version to use, can be one of the following:
+##  - SSLv2
+##  - SSLv3
+##  - SSLv23
+##  - TLSv1
+##  - TLSv1_1 (Available only with openssl version 1.0.1+, requires python 2.7.9 or higher)
+version = {{ burpui_ldap_version }}
+## the file containing the certificates of the certification authorities
+cafile = {{ burpui_ldap_cafile }}
+## Attribute to use when searching the LDAP repository
+##searchattr = sAMAccountName
+searchattr = {{ burpui_ldap_searchattr }}
+## LDAP filter to find users in the LDAP repository
+##  - {0} will be replaced by the search attribute
+##  - {1} will be replaced by the login name
+##filter = (&({0}={1})(burpui=1))
+##filter = (&({0}={1})(|(userAccountControl=512)(userAccountControl=66048)))
+## LDAP base (quotes are mandatory)
+base = {{ burpui_ldap_base }}
+## Binddn to list existing users (quotes are mandatory)
+binddn = {{ burpui_ldap_binddn }}
+## Bindpw to list existing users
+bindpw = {{ burpui_ldap_bindpw }}
+{% endif %}
+
+{% if burpui_basic_enabled %}
+## basicauth specific options
+## Note: in case you leave this section commented, the default login/password
+## is admin/admin
+[BASIC]
+## Backend priority. Higher is first
+priority = {{ burpui_basic_priority }}
+## Allow both plain and hashed passwords
+## WARNING: This will defaults to false in 0.4.0
+mixed = {{ burpui_basic_mixed }}
+{% for item in burpui_basic_users %}
+{{ item.name }} = {{ item.password }}
+{% endfor %}
+{% endif %}
+
+{% if burpui_local_enabled %}
+## localauth specific options
+## Note: if not running as root, then burp-ui must be run as group 'shadow' to
+## allow PAM to work
+[LOCAL]
+## Backend priority. Higher is first
+priority = {{ burpui_local_priority }}
+## List of local users allowed to login. If you don't set this setting, every 
+## local user will be able to login
+users = {{ burpui_local_users }}
+{% endif %}
+
+{% if burpui_basic_acl_enabled %}
+## basicacl specific options
+## Note: in case you leave this section commented, the user 'admin' will have
+## access to all clients whereas other users will only see the client that have
+## the same name
+[BASIC:ACL]
+admin = {{ burpui_basic_acl_admins }}
+## Please note the double-quotes and single-quotes on the following lines are
+## mandatory!
+## You can also overwrite the default behavior by specifying which clients a
+## user can access
+#user3 = '["client4", "client5"]'
+## In case you are not in a standalone mode, you can also specify which clients
+## a user can access on a specific Agent
+#user4 = '{"agent2": ["client8"], "agent1": ["client6", "client7"]}'
+{% for item in burpui_basic_acl_users %}
+{{ item.name }} = {{ item.value }}
+{% endfor %}
+{% endif %}
+
+{% if not burpui_standalone %}
+## If you set standalone to 'false', add at least one section like this per
+## bui-agent
+{% for item in burpui_agents %}
+[Agent:{{ item.name }}]
+host = {{ item.address }}
+port = {{ item.port }}
+password = {{ item.password }}
+ssl = {{ item.ssl }}
+{% endfor %}
+{% endif %}
