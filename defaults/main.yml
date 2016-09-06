@@ -5,13 +5,10 @@ burpui_pip_burpui: "burp-ui"
 
 burpui_pip_latest:
   - pip
-  - cffi
   - urllib3
-  - ndg-httpsclient
   - pyasn1
-  - requests[security]
   - "{{ burpui_pip_burpui }}"
-
+  
 burpui_pip_present:
   - gevent
   - ujson
@@ -19,6 +16,9 @@ burpui_pip_present:
   - Flask-Session
   - Flask-Migrate
   - celery
+  - cffi
+  - ndg-httpsclient
+  - requests[security]
   
 burpui_nginx_port: "8080"
 
