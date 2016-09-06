@@ -8,6 +8,7 @@ burpui_packages:
   - python-pip
   - python-dev
   - libssl-dev # dependecy of ndg-httpsclient
+  - libffi-dev # dependency for cffi
   - redis-server
   - nginx
 
