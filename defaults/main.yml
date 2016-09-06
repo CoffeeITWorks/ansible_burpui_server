@@ -7,7 +7,6 @@ burpui_pip_latest:
   - pip
   - urllib3
   - pyasn1
-  - requests[security]
   - "{{ burpui_pip_burpui }}"
   
 burpui_pip_present:
@@ -19,6 +18,7 @@ burpui_pip_present:
   - celery
   - cffi
   - ndg-httpsclient
+  - requests[security]
   
 burpui_nginx_port: "8080"
 
