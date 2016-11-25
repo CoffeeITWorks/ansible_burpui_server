@@ -4,7 +4,7 @@
 burpui_pip_burpui: "burp-ui"
 
 burpui_pip_packages:
-  - { name: "{{ burpui_pip_burpui }}", version: 0.4.0 }
+  - { name: "{{ burpui_pip_burpui }}", version: 0.3.0 }
   
 burpui_pip_present:
   - pip
