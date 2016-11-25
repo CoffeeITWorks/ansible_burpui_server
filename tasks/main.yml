@@ -74,6 +74,7 @@
 - include: bui-celery.yml
   when: burpui_production_celery
 
-- include: bui-upgrade.yml
-  when: bui_pip_install.changed
+# This is prepared for next 0.4.0 version
+#- include: bui-upgrade.yml
+#  when: bui_pip_install.changed
 
