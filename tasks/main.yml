@@ -15,11 +15,15 @@
     state: present
   with_items: "{{ burpui_pip_present }}"
 
-- name: upgrade pip packages
+- name: Install pip packages by version
   pip:
-    name: "{{ item }}"
-    state: latest
-  with_items: "{{ burpui_pip_latest }}"
+    name: "{{ item.name }}"
+    state: present
+    version: "{{ item.version}}"
+  with_items: "{{ burpui_pip_packages }}"
+  register: bui_pip_install
+  notify: restart burpui services
+  
 
 - name: create burp folder
   file:
@@ -61,3 +65,7 @@
 
 - include: bui-celery.yml
   when: burpui_production_celery
+
+- include: bui-upgrade.yml
+  when: bui_pip_install.changed
+

@@ -1,10 +1,11 @@
 ---
 # file defaults/bui-celery.yml
 
-- name: install role packages
+- name: install Supervisor
   package:
-    name: "{{ burp_ui_celery_packages| join(',') }}"
-    state: latest
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ burp_ui_celery_dependencies }}"
 
 - name: create burp ui folder
   file:
