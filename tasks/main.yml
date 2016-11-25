@@ -55,6 +55,14 @@
     dest: "/etc/nginx/sites-enabled/burpui"
     state: link
 
+- name: fix httproxy issue in ngnix
+  lineinfile:
+    dest: "/etc/nginx/fastcgi_params"
+    regexp: "{{ item.src }}"
+    line: "{{ item.value }}"
+  with_items:
+    - { src: 'fastcgi_param HTTP_PROXY "";' , value: 'fastcgi_param HTTP_PROXY "";' }
+
 - name: ensure services are enabled
   service:
     name: "{{ item }}"
