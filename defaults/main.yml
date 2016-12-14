@@ -77,6 +77,7 @@ burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
 #[BASIC]
 burpui_basic_enabled: false
 burpui_basic_priority: "2"
+# Enable mixed to allow plain passwords https://git.ziirish.me/ziirish/burp-ui/issues/177#note_1794
 burpui_basic_mixed: "true"
 burpui_basic_users:
   - { name: "admin", password: "admin" }
