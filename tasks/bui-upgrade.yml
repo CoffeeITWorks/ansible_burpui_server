@@ -1,5 +1,10 @@
 ---
 
+# - name: Upgrade sql requirements
+#   pip:
+#     name: burp-ui[sql]
+#     state: 0.4.2
+
 - name: Upgrade database schema
   shell: bui-manage -c /etc/burp/burpui.cfg db upgrade
 

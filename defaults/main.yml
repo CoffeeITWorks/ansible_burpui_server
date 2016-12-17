@@ -4,7 +4,7 @@
 burpui_pip_burpui: "burp-ui"
 
 burpui_pip_packages:
-  - { name: "{{ burpui_pip_burpui }}", version: 0.3.0 }
+  - { name: "{{ burpui_pip_burpui }}", version: 0.4.2 }
   
 burpui_pip_present:
   - pip
@@ -74,6 +74,7 @@ burpui_ldap_searchattr: "uid"
 burpui_ldap_base: '"ou=users,dc=example,dc=com"'
 burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
 burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
+
 #[BASIC]
 burpui_basic_enabled: false
 burpui_basic_priority: "2"
@@ -81,17 +82,21 @@ burpui_basic_priority: "2"
 burpui_basic_mixed: "true"
 burpui_basic_users:
   - { name: "admin", password: "admin" }
+
 #[LOCAL]
 burpui_local_enabled: false
 burpui_local_priority: "3"
 burpui_local_users: "user1,user2"
+
 #[BASIC:ACL]
+# http://burp-ui.readthedocs.io/en/latest/usage.html#basic-acl
 burpui_basic_acl_enabled: false
 burpui_basic_acl_admins: "user1,user2"
 burpui_basic_acl_users: false
 #burpui_basic_acl_users:
 #  - { name: "user3", value: '["client4", "client5"]' }
 #  - { name: "user4", value: '{"agent2": ["client8"], "agent1": ["client6", "client7"]}' }
+
 # bui-agent
 burpui_agents:
   - { name: "localhost", address: "127.0.0.1", port: "10000", password: "password", ssl: "false" }

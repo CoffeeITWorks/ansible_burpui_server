@@ -4,6 +4,13 @@
 
 - include: multi_os.yml
 
+- name: check only if burpui is installed
+  pip:
+    name: "{{ burpui_pip_burpui }}"
+    state: present
+  register: burpui_installed_check
+  check_mode: yes
+
 - name: install role packages
   package:
     name: "{{ burpui_packages| join(',') }}"
@@ -23,7 +30,6 @@
   with_items: "{{ burpui_pip_packages }}"
   register: bui_pip_install
   notify: restart burpui services
-  
 
 - name: create burp folder
   file:
@@ -74,7 +80,6 @@
 - include: bui-celery.yml
   when: burpui_production_celery
 
-# This is prepared for next 0.4.0 version
-#- include: bui-upgrade.yml
-#  when: bui_pip_install.changed
-
+# This is prepared for next 0.4.2 version
+- include: bui-upgrade.yml
+  when: bui_pip_install.changed and not burpui_installed_check.changed
