@@ -1,0 +1,7 @@
+---
+- hosts: all
+  vars:
+    burp_module_test_client: true
+  roles:
+    - role: ansible_burp2_server
+    - role: ansible_burpui_server
