@@ -5,6 +5,7 @@ burpui_pip_burpui: "burp-ui"
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: 0.4.2 }
+  - { name: "{{ burpui_pip_burpui }}[sql]", version: 0.4.2 }
   
 burpui_pip_present:
   - pip
