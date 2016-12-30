@@ -23,10 +23,18 @@
     src: supervisor_logrotate.j2
     dest: /etc/logrotate.d/supervisor
 
-- name: ensure supervisor is running
+- name: ensure supervisor is started
   service:
     name: supervisor
     state: started
+    sleep: 4
+
+- name: ensure supervisor is restarted
+  service:
+    name: supervisor
+    state: restarted
+    sleep: 4
+  changed_when: false
 
 - name: ensure supervisor is enabled
   service:
