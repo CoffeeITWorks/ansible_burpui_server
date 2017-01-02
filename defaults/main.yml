@@ -2,10 +2,11 @@
 # file defaults/main.yml
 
 burpui_pip_burpui: "burp-ui"
+burpui_version: 0.4.4
 
 burpui_pip_packages:
-  - { name: "{{ burpui_pip_burpui }}", version: 0.4.3 }
-  - { name: "{{ burpui_pip_burpui }}-sql", version: 0.4.3 }
+  - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
+  - { name: "{{ burpui_pip_burpui }}-sql", version: "{{ burpui_version }}" }
   
 burpui_pip_present:
   - pip
