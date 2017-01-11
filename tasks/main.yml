@@ -4,6 +4,8 @@
 
 - include: multi_os.yml
 
+- include: requirements.yml
+
 - name: check only if burpui is installed
   pip:
     name: "{{ burpui_pip_burpui }}"

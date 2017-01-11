@@ -3,14 +3,21 @@
 #::::::::::::::
 ---
 
-burpui_packages:
-  - gunicorn
+burpui_system_requirements:
   - python-pip
   - python-dev
   - libssl-dev # dependecy of ndg-httpsclient
   - libffi-dev # dependency for cffi
+
+burpui_packages:
+  - gunicorn
   - redis-server
   - nginx
 
 burp_ui_celery_dependencies:
   - supervisor
+
+supervisoretc_dir: "/etc/supervisor/conf.d"
+supervisor_ext: "conf"
+supervisor_service: supervisor
+pip_installed_exe_bin_path: '/usr/local/bin'

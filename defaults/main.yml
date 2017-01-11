@@ -9,18 +9,19 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}-sql", version: "{{ burpui_version }}" }
   
 burpui_pip_present:
-  - pip
-  - urllib3
-  - pyasn1
   - gevent
-  - ujson
   - redis
   - Flask-Session
   - Flask-Migrate
   - celery
-  - cffi
-  - ndg-httpsclient
-  - requests[security]
+  - "pip>=9"
+  - "cffi>=1.7"
+  - "gevent>=1.2"
+  - "ujson>=1.35"
+  - "urllib3>=1.19" # required to avoid issues with get_url module
+  - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
+  - "pyasn1"
+  - "requests[security]>=2.12"  # required to avoid issues with get_url module
   
 burpui_nginx_port: "8080"
 
