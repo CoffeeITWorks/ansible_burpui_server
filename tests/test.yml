@@ -4,4 +4,3 @@
   roles:
     - ansible_burp2_server
     - ansible_burpui_server
-      burp_module_agent: true

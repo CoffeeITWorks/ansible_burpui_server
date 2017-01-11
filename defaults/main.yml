@@ -100,6 +100,8 @@ burpui_basic_acl_users: false
 #  - { name: "user4", value: '{"agent2": ["client8"], "agent1": ["client6", "client7"]}' }
 
 # bui-agent
+# change burpui_standalone: false
+# To use multiple agents:
 burpui_agents:
   - { name: "localhost", address: "127.0.0.1", port: "10000", password: "password", ssl: "false" }
 
