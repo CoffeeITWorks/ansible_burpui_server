@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/CoffeeITWorks/ansible_burpui_server.svg?style=svg)](https://circleci.com/gh/CoffeeITWorks/ansible_burpui_server)
+
 Getting Started
 ================
 
