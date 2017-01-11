@@ -1,6 +1,13 @@
 ---
 # file: tasks/requirements.yml 
 
+- name: ensure cache for apt is updated
+  apt:
+    update_cache: yes
+    cache_valid_time: 43200
+  changed_when: false
+  when: ansible_os_family == 'Debian'
+  
 - name: install required system packages
   package:
     name: "{{ item }}"
