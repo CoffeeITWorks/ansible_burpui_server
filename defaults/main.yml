@@ -9,11 +9,11 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}-sql", version: "{{ burpui_version }}" }
   
 burpui_pip_present:
-  - gevent
-  - redis
-  - Flask-Session
-  - Flask-Migrate
-  - celery
+  - "redis"
+  - "Flask-Session"
+  - "Flask-Migrate"
+  - "celery>=4.0.2"
+  - "ndg-httpsclient>=0.4.2"
   - "pip>=9"
   - "cffi>=1.7"
   - "gevent>=1.2"

@@ -1,0 +1,23 @@
+#::::::::::::::
+# Ubuntu.yml
+#::::::::::::::
+---
+
+burpui_system_requirements:
+  - python-pip
+  - python-devel
+  - openssl-devel # dependecy of ndg-httpsclient
+  - libffi-devel # dependency for cffi
+
+burpui_packages:
+  - python-gunicorn
+  - redis
+  - nginx
+
+burp_ui_celery_dependencies:
+  - supervisor
+
+supervisoretc_dir: "/etc/supervisor/conf.d"
+supervisor_ext: "conf"
+supervisor_service: supervisord
+pip_installed_exe_bin_path: '/usr/bin'
