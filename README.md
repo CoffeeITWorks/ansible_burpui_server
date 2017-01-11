@@ -59,8 +59,8 @@ To enable the connection of burpui multi-agent mode, use these vars, example:
 # bui-agent
 burpui_standalone: false
 burpui_agents:
-  - { name: "localhost", address: "127.0.0.1", port: "10000", password: "password", ssl: "false" }
-  - { name: "host2", address: "192.168.122.202", port: "10000", password: "password", ssl: "false" }
+  - { name: "localhost", address: "127.0.0.1", port: "5001", password: "password", ssl: "false" }
+  - { name: "host2", address: "192.168.122.202", port: "5001", password: "password", ssl: "false" }
 ```
 
 You can use a recommended role created by us: ansible_burp2_server to configure burp2_server and also the burpui_agent to use with burpui multi-agent mode. 

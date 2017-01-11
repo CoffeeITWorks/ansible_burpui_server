@@ -104,7 +104,7 @@ burpui_basic_acl_users: false
 # change burpui_standalone: false
 # To use multiple agents:
 burpui_agents:
-  - { name: "localhost", address: "127.0.0.1", port: "10000", password: "password", ssl: "false" }
+  - { name: "localhost", address: "127.0.0.1", port: "5001", password: "password", ssl: "false" }
 
 # Bui Celery
 burpui_sv_priority: "20"
