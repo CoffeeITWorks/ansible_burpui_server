@@ -50,3 +50,6 @@ fabric.properties
 .idea/markdown-navigator/
 .idea/misc.xml
 .idea/modules.xml
+
+.kdev4
+*.kdev4
