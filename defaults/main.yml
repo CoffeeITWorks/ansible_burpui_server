@@ -2,7 +2,7 @@
 # file defaults/main.yml
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.4.4
+burpui_version: 0.5.0
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
