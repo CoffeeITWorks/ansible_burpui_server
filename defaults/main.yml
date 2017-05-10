@@ -26,6 +26,7 @@ burpui_pip_present:
   - "pyasn1"
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
   - "flask-limiter"
+  - "six>=1.10.0"
   
 burpui_nginx_port: "8080"
 
