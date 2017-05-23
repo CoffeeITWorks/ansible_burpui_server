@@ -71,14 +71,6 @@
   with_items:
     - { src: 'fastcgi_param HTTP_PROXY "";' , value: 'fastcgi_param HTTP_PROXY "";' }
 
-- name: ensure services are enabled
-  service:
-    name: "{{ item }}"
-    enabled: yes
-  with_items:
-    - gunicorn
-    - nginx
-
 - include: bui-celery.yml
   when: burpui_production_celery
 
@@ -86,3 +78,12 @@
 - include: bui-upgrade.yml
   when: bui_pip_install.changed and not burpui_installed_check.changed
 
+- name: ensure services are started and enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - gunicorn
+    - nginx
+    - "{{ redis_service }}"
