@@ -71,7 +71,7 @@ You can check more variables to modify at `defaults/main.yml` file.
 Notes upgrading:
 ================
 
-http://burp-ui.readthedocs.io/en/latest/upgrading.html#v0-4-0
+http://burp-ui.readthedocs.io/en/latest/upgrading.html
 
 Upgrade steps are managed automatically by this role. 
 
