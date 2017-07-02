@@ -12,11 +12,12 @@
     path: /var/spool/burpui
     state: directory
 
-- name: configure bui-celery
+- name: configure bui-celery supervisord service
   template:
     src: bui-celery.conf_supervisor.j2
     dest: "{{ supervisoretc_dir }}/bui-celery.{{ supervisor_ext }}"
   notify: restart bui-celery
+  register: burpui_celery_service_conf
 
 - name: configure supervisor logrotate
   template:
@@ -34,7 +35,7 @@
     name: "{{ supervisor_service }}"
     state: restarted
     sleep: 4
-  changed_when: false
+  when: burpui_celery_service_conf.changed
 
 - name: ensure supervisor is enabled
   service:
