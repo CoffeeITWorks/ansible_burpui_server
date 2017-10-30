@@ -1,7 +1,8 @@
 # http://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
 sudo: required
 dist: trusty
-
+services:
+  - docker
 language: python
 
 services:
@@ -15,6 +16,8 @@ before_install:
 install:
   #- pip install molecule
   - sudo pip install ansible
+  - sudo pip install molecule==1.25.0
+  - sudo pip install docker
 
 script:
   #- molecule test
