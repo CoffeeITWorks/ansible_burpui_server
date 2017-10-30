@@ -6,6 +6,9 @@
 
 - include: requirements.yml
 
+- include: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
 - name: check only if burpui is installed
   pip:
     name: "{{ burpui_pip_burpui }}"
