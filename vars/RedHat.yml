@@ -22,3 +22,4 @@ supervisor_ext: "conf"
 supervisor_service: supervisord
 pip_installed_exe_bin_path: '/usr/bin'
 redis_service: redis-server
+nginx_config_dir: '/etc/nginx/conf.d'

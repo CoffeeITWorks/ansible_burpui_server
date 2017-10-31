@@ -55,6 +55,7 @@
     src: "/etc/nginx/sites-available/burpui"
     dest: "/etc/nginx/sites-enabled/burpui"
     state: link
+  when: ansible_os_family == 'Debian'
 
 - name: fix httproxy issue in ngnix
   lineinfile:
