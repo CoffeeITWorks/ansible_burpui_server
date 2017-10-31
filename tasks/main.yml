@@ -47,12 +47,12 @@
     dest: "{{ item.dest }}"
   with_items:
     - { src: "burpui.cfg.j2", dest: "/etc/burp/burpui.cfg" }
-    - { src: "burpui_site.j2", dest: "{{ nginx_config_dir }}/burpui" }
+    - { src: "burpui_site.j2", dest: "{{ burpui_nginx_config_path }}" }
   notify: restart burpui services
 
 - name: enable nginx site
   file:
-    src: "/etc/nginx/sites-available/burpui"
+    src: "{{ burpui_nginx_config_path }}"
     dest: "/etc/nginx/sites-enabled/burpui"
     state: link
   when: ansible_os_family == 'Debian'
