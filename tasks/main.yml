@@ -47,7 +47,7 @@
     dest: "{{ item.dest }}"
   with_items:
     - { src: "burpui.cfg.j2", dest: "/etc/burp/burpui.cfg" }
-    - { src: "burpui_site.j2", dest: "/etc/nginx/sites-available/burpui" }
+    - { src: "burpui_site.j2", dest: "{{ nginx_config_dir }}/burpui" }
   notify: restart burpui services
 
 - name: enable nginx site
