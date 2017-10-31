@@ -41,23 +41,13 @@
     path: /etc/burp
     state: directory
 
-- name: remove gunicorn example files
-  file:
-    path: "/etc/gunicorn.d/{{ item }}"
-    state: absent
-  with_items:
-    - django.example
-    - wsgi.example
-
 - name: configure burpui server
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
     - { src: "burpui.cfg.j2", dest: "/etc/burp/burpui.cfg" }
-    - { src: "burpui_gunicorn.j2", dest: "/etc/gunicorn.d/burpui" }
     - { src: "burpui_site.j2", dest: "/etc/nginx/sites-available/burpui" }
-    - { src: "gunicorn_logrotate.j2", dest: "/etc/logrotate.d/gunicorn" }
   notify: restart burpui services
 
 - name: enable nginx site
@@ -73,6 +63,8 @@
     line: "{{ item.value }}"
   with_items:
     - { src: 'fastcgi_param HTTP_PROXY "";' , value: 'fastcgi_param HTTP_PROXY "";' }
+
+- include_tasks: gunicorn.yml
 
 - include: bui-celery.yml
   when: burpui_production_celery

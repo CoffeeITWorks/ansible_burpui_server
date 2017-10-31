@@ -1,0 +1,32 @@
+---
+# https://github.com/ziirish/burp-ui/blob/master/docs/gunicorn.rst
+
+- block:
+
+  - name: remove gunicorn example files
+    file:
+      path: "/etc/gunicorn.d/{{ item }}"
+      state: absent
+    with_items:
+      - django.example
+      - wsgi.example
+    
+
+  - name: configure burpui server
+    template:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    with_items:
+      - { src: "burpui_gunicorn.j2", dest: "/etc/gunicorn.d/burpui" }
+      - { src: "gunicorn_logrotate.j2", dest: "/etc/logrotate.d/gunicorn" }
+    notify: restart burpui services
+  
+  when: ansible_os_family == 'Debian'
+
+- block: 
+
+  - name: gunicorn | copy burpui_gunicorn.py file
+    copy:
+      mode: 0755
+      src: burpui_gunicorn.py
+      dest: /etc/burp/burpui_gunicorn.py

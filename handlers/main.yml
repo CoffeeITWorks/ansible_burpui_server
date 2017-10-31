@@ -8,6 +8,7 @@
   with_items:
     - gunicorn
     - nginx
+  when: ansible_os_family == 'Debian'
 
 - name: restart bui-celery
   supervisorctl:

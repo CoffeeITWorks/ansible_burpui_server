@@ -8,6 +8,7 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[sql]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[ldap_authentication]", version: "{{ burpui_version }}" }
+  - { name: "{{ burpui_pip_burpui }}[gunicorn]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[gunicorn-extra]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[celery]", version: "{{ burpui_version }}" }
   
