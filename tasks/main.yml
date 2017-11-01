@@ -2,11 +2,11 @@
 # file: tasks/main.yml
 # https://git.ziirish.me/ziirish/burp-ui/blob/master/docker/docker-burpui/assets/setup/install
 
-- include: multi_os.yml
+- include_tasks: multi_os.yml
 
-- include: requirements.yml
+- include_tasks: requirements.yml
 
-- include: RedHat.yml
+- include_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat'
 
 - name: check only if burpui is installed
@@ -68,11 +68,11 @@
 # include tasks for gunicorn specific
 - include_tasks: gunicorn.yml
 
-- include: bui-celery.yml
+- include_tasks: bui-celery.yml
   when: burpui_production_celery
 
 # This is prepared for next 0.5.0 version
-- include: bui-upgrade.yml
+- include_tasks: bui-upgrade.yml
   when: bui_pip_install.changed and not burpui_installed_check.changed
 
 - name: ensure services are started and enabled

@@ -123,3 +123,8 @@ burpui_sv_autostart: "true"
 burpui_sv_autorestart: "true"
 burpui_sv_stdout_logfile: "/var/log/supervisor/%(program_name)s.log"
 burpui_sv_stderr_logfile: "/var/log/supervisor/%(program_name)s.log"
+
+# In development options / could not make effect on all files yet
+
+burpui_user: 'root'  # for now only root will work until we handle the creation of the user and set permissions correctly
+burpui_group: 'root'

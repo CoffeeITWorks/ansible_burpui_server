@@ -21,7 +21,7 @@
 #       range.
 #
 
-bind = '0.0.0.0:5000'
+bind = '127.0.0.1:5000'
 backlog = 2048
 
 #
@@ -74,7 +74,7 @@ backlog = 2048
 #
 
 workers = 5
-worker_class = 'eventlet'
+worker_class = 'gevent'
 worker_connections = 1000
 timeout = 300
 keepalive = 2
@@ -133,8 +133,8 @@ spew = False
 daemon = False
 pidfile = None
 umask = 0
-user = 'burpui'
-group = 'burpui'
+user = '{{ burpui_user }}'
+group = '{{ burpui_group }}'
 tmp_upload_dir = None
 
 #

@@ -1,6 +1,11 @@
 ---
 # https://github.com/ziirish/burp-ui/blob/master/docs/gunicorn.rst
 
+- name: gunicorn | directory /var/log/gunicorn 
+  file: 
+    path: '/var/log/gunicorn'
+    state: directory
+
 - block:
 
   - name: gunicorn | remove gunicorn example files
@@ -25,10 +30,12 @@
 - block: 
 
   - name: gunicorn | copy burpui_gunicorn.py file
-    copy:
+    template:
       mode: 0755
-      src: burpui_gunicorn.py
+      src: burpui_gunicorn.py.j2
       dest: /etc/burp/burpui_gunicorn.py
+      owner: root
+      group: root
   
   - name: gunicorn | setup gunicorn.service systemd
     template:
