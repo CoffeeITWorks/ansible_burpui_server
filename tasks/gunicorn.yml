@@ -35,7 +35,7 @@
       src: gunicorn_systemd.j2
       dest: /etc/systemd/system/gunicorn.service
       mode: 0755
-      user: root
+      owner: root
       group: root
 
   when: ansible_os_family == 'RedHat'
