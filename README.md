@@ -100,6 +100,14 @@ Also supervisord allow proper stdout and stderror to logs redirection, so all lo
 
 Logs are also rotated by logrotate automatically.
 
+Accessing burpui
+----------------
+
+You will be able to access to http://YOURADDRESS:8080 or whatever you have used in your own `group_vars/burpui_servers` for variable: 
+
+```yaml
+burpui_nginx_port: "8080"
+```
 
 License
 -------

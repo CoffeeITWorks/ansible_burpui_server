@@ -53,3 +53,5 @@ fabric.properties
 
 .kdev4
 *.kdev4
+
+.molecule
