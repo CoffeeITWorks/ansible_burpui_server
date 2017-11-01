@@ -8,8 +8,10 @@ docker:
   containers:
 
       - name: ansible_test-01
-        image: ubuntu
-        image_version: latest
+        image: solita/ubuntu-systemd
+        image_version: 16.04
+        volume_mounts:
+          - "/sys/fs/cgroup:/sys/fs/cgroup:ro"        
         ansible_groups:
           - group1
 

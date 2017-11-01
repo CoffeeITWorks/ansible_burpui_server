@@ -3,16 +3,15 @@
 
 - block:
 
-  - name: remove gunicorn example files
+  - name: gunicorn | remove gunicorn example files
     file:
       path: "/etc/gunicorn.d/{{ item }}"
       state: absent
     with_items:
       - django.example
       - wsgi.example
-    
 
-  - name: configure burpui server
+  - name: gunicorn | Debian configure gunicorn server
     template:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
@@ -30,3 +29,13 @@
       mode: 0755
       src: burpui_gunicorn.py
       dest: /etc/burp/burpui_gunicorn.py
+  
+  - name: gunicorn | setup gunicorn.service systemd
+    template:
+      src: gunicorn_systemd.j2
+      dest: /etc/systemd/system/gunicorn.service
+      mode: 0755
+      user: root
+      group: root
+
+  when: ansible_os_family == 'RedHat'
