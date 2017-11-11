@@ -1,0 +1,3 @@
+v1.4.1:
+  * fixed #7 fedora support
+  * Added Fedora tests

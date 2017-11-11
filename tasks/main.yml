@@ -7,7 +7,13 @@
 - include_tasks: requirements.yml
 
 - include_tasks: RedHat.yml
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
+
+- name: Install redhat-rpm-config when running Fedora
+  package:
+    name: redhat-rpm-config
+    state: present
+  when: ansible_distribution == 'Fedora'
 
 - name: check only if burpui is installed
   pip:
@@ -19,7 +25,7 @@
 - name: install role packages
   package:
     name: "{{ burpui_packages| join(',') }}"
-    state: latest
+    state: present
 
 - name: install pip packages
   pip:
