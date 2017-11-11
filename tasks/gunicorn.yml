@@ -29,6 +29,12 @@
 
 - block: 
 
+  - name: gunicorn | Uninstall gunicorn from debian package
+    package:
+      name: gunicorn
+      state: absent
+    when: ansible_os_family == 'Debian'
+
   - name: gunicorn | Install gunicorn from pip for Debian family
     pip:
       name: gunicorn>=19.7.1
