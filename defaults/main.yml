@@ -128,3 +128,6 @@ burpui_sv_stderr_logfile: "/var/log/supervisor/%(program_name)s.log"
 
 burpui_user: 'root'  # for now only root will work until we handle the creation of the user and set permissions correctly
 burpui_group: 'root'
+# gunicorn_systemd_service enables gunicorn.yml to manually setup systemd service instead of using Debian based package
+# It is set True always for RedHat based and Ubuntu equal or major to 16.04
+gunicorn_systemd_service: False

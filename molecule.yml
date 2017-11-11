@@ -10,6 +10,7 @@ docker:
       - name: ansible_test-01
         image: solita/ubuntu-systemd
         image_version: 16.04
+        privileged: True
         volume_mounts:
           - "/sys/fs/cgroup:/sys/fs/cgroup:ro"        
         ansible_groups:
