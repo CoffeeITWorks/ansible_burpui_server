@@ -24,3 +24,6 @@ pip_installed_exe_bin_path: '/usr/local/bin'
 redis_service: redis-server
 nginx_config_dir: '/etc/nginx/sites-available'
 burpui_nginx_config_path: '{{ nginx_config_dir }}/burpui'
+
+# only used when working with systemd and pip package
+burpui_gunicorn_bin: '/usr/local/bin/gunicorn'
