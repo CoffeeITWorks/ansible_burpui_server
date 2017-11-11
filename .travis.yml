@@ -13,13 +13,13 @@ services:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
-  - ansible-galaxy install -r requirements.yml
 
 install:
   #- pip install molecule
   - sudo pip install ansible
   - sudo pip install molecule==1.25.0
   - sudo pip install docker
+  - ansible-galaxy install -r requirements.yml
 
 script:
   - molecule create
