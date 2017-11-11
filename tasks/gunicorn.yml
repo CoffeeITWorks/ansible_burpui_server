@@ -6,11 +6,6 @@
     path: '/var/log/gunicorn'
     state: directory
 
-- name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
-  set_fact: 
-    gunicorn_systemd_service: True
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version >= 16
-
 - block:
 
   - name: gunicorn | remove gunicorn example files
@@ -33,6 +28,12 @@
   when: ansible_os_family == 'Debian' and not gunicorn_systemd_service
 
 - block: 
+
+  - name: gunicorn | Install gunicorn from pip for Debian family
+    pip:
+      name: gunicorn>=19.7.1
+      state: present
+    when: ansible_os_family == 'Debian'
 
   - name: gunicorn | copy burpui_gunicorn.py file
     template:
