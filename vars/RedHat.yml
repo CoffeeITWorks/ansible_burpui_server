@@ -8,11 +8,17 @@ burpui_system_requirements:
   - python-devel
   - openssl-devel # dependecy of ndg-httpsclient
   - libffi-devel # dependency for cffi
+  - redhat-rpm-config
 
 burpui_packages:
   - python-gunicorn
   - redis
   - nginx
+
+burpui_py3_packages:
+  - python3
+  - python3-devel
+  - python3-pip
 
 burp_ui_celery_dependencies:
   - supervisor
