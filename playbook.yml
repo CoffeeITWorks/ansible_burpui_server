@@ -3,6 +3,7 @@
   vars:
     burp_module_test_client: False
     burpui_standalone: True
+    python_pip_executable: 'pip3'
   roles:
     - role: ansible_burp2_server
     - role: ansible_burpui_server

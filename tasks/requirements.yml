@@ -30,7 +30,7 @@
   
   when: ansible_distribution_release == 'trusty'
 
-- name: install burpui packages for pip3
+- name: install burpui package requirements for python3
   package:
     name: "{{ burpui_py3_packages| join(',') }}"
     state: present

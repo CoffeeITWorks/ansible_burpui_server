@@ -4,10 +4,10 @@
 
 - include_tasks: multi_os.yml
 
-- include_tasks: requirements.yml
-
 - include_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
+
+- include_tasks: requirements.yml
 
 - name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
   set_fact: 
