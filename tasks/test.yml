@@ -1,0 +1,9 @@
+---
+
+# Restart services if required
+- meta: flush_handlers
+
+- name: test if burpui get is ok
+  get_url:
+    url: http://localhost:{{ burpui_global_port }}/
+    dest: /tmp/test_burpui.html

@@ -114,3 +114,5 @@
     - gunicorn
     - nginx
     - "{{ redis_service }}"
+
+- include_tasks: test.yml
