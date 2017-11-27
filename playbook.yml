@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  serial: 2
   vars:
     burp_module_test_client: False
     burpui_standalone: True
