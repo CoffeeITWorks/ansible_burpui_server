@@ -60,7 +60,7 @@ burpui_security_enforce: "false"
 burpui_security_revoke: "true"
 burpui_security_cookietime: "14"
 burpui_security_scookie: "true"
-burpui_security_appsecret: "random"
+burpui_security_appsecret: "ChangeYourSecretapp" # it is not possible to setup random when using gunicorn
 #[Experimental]
 burpui_experimental_zip64: "false"
 burpui_experimental_noserverrestore: "false"

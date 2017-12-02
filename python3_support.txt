@@ -1,0 +1,6 @@
+TASK [ansible_burpui_server : test if burpui get about is ok] ******************
+fatal: [ansible_test-01]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 500: INTERNAL SERVER ERROR", "state": "absent", "status_code": 500, "url": "http://localhost:8080/about"}
+fatal: [ansible_test-trusty]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway", "state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}
+fatal: [ansible_test-04]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway", "state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}
+ok: [ansible_test-03]
+fatal: [ansible_test-master2]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway","state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}

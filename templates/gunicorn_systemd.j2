@@ -5,6 +5,9 @@ After=network.target
 [Service]
 User=root
 Group=root
+# Environment variables required in python3
+Environment=LC_ALL=C.UTF-8
+Environment=LANG=C.UTF-8
 ExecStart={{ burpui_gunicorn_bin }} -c /etc/burp/burpui_gunicorn.py 'burpui:create_app(conf="/etc/burp/burpui.cfg",logfile="/var/log/gunicorn/burp-ui_info.log")'
 
 [Install]
