@@ -11,17 +11,16 @@
   package:
     name: "{{ burpui_gunicorn_packages| join(',') }}"
     state: present
-  when: python_pip_executable == "pip3"
+  when: ansible_os_family != 'RedHat' or not gunicorn_systemd_service and python_pip_executable == "pip2"
 
 # gunicorn system package should not be used when using python3
 - name: gunicorn | uninstall python2 system packages
   package:
     name: "{{ burpui_gunicorn_packages| join(',') }}"
     state: absent
-  when: python_pip_executable != "pip3"
+  when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
 
-# use pip always for python3
-
+# use pip always for python3 or RedHat or systemd
 - name: gunicorn | Install gunicorn from pip
   pip:
     name: gunicorn>=19.7.1
