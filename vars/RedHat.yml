@@ -11,9 +11,11 @@ burpui_system_requirements:
   - redhat-rpm-config
 
 burpui_packages:
-  - python-gunicorn
   - redis
   - nginx
+
+burpui_gunicorn_packages:
+  - python-gunicorn
 
 burpui_py3_packages:
   - python3

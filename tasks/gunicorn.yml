@@ -6,6 +6,30 @@
     path: '/var/log/gunicorn'
     state: directory
 
+# only works for python2
+- name: gunicorn | install packages
+  package:
+    name: "{{ burpui_gunicorn_packages| join(',') }}"
+    state: present
+  when: python_pip_executable == "pip3"
+
+# gunicorn system package should not be used when using python3
+- name: gunicorn | uninstall python2 system packages
+  package:
+    name: "{{ burpui_gunicorn_packages| join(',') }}"
+    state: absent
+  when: python_pip_executable != "pip3"
+
+# use pip always for python3
+
+- name: gunicorn | Install gunicorn from pip
+  pip:
+    name: gunicorn>=19.7.1
+    state: present
+    executable: "{{ python_pip_executable }}"
+  when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
+
+# This is only for python2 gunicorn on debian
 - block:
 
   - name: gunicorn | remove gunicorn example files
@@ -27,20 +51,8 @@
   
   when: ansible_os_family == 'Debian' and not gunicorn_systemd_service
 
+# This is for python2 or 3 gunicorn with systemd
 - block: 
-
-  - name: gunicorn | Uninstall gunicorn from debian package
-    package:
-      name: gunicorn
-      state: absent
-    when: ansible_os_family == 'Debian'
-
-  - name: gunicorn | Install gunicorn from pip for Debian family
-    pip:
-      name: gunicorn>=19.7.1
-      state: present
-      executable: "{{ python_pip_executable }}"
-    when: ansible_os_family == 'Debian'
 
   - name: gunicorn | copy burpui_gunicorn.py file
     template:

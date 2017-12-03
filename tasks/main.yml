@@ -14,19 +14,6 @@
     gunicorn_systemd_service: True
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 16
 
-- name: change burpui_packages when gunicorn_systemd_service true and ansible_os_family Debian
-  set_fact:
-    burpui_packages:
-      - redis-server
-      - nginx
-  when: ansible_os_family == 'Debian' and gunicorn_systemd_service
-
-- name: Install redhat-rpm-config when running Fedora
-  package:
-    name: redhat-rpm-config
-    state: present
-  when: ansible_distribution == 'Fedora'
-
 - name: check only if burpui is installed
   pip:
     name: "{{ burpui_pip_burpui }}"

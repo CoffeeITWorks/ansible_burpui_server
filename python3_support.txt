@@ -1,6 +1,15 @@
-TASK [ansible_burpui_server : test if burpui get about is ok] ******************
-fatal: [ansible_test-01]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 500: INTERNAL SERVER ERROR", "state": "absent", "status_code": 500, "url": "http://localhost:8080/about"}
-fatal: [ansible_test-trusty]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway", "state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}
-fatal: [ansible_test-04]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway", "state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}
-ok: [ansible_test-03]
-fatal: [ansible_test-master2]: FAILED! => {"changed": false, "dest": "/tmp/test_burpui_about", "failed": true, "msg": "Request failed", "response": "HTTP Error 502: Bad Gateway","state": "absent", "status_code": 502, "url": "http://localhost:8080/about"}
+Debian 9 python 3.5 issues:
+
+pip3 install flask-limiter
+Collecting flask-limiter
+From cffi callback <function _verify_callback at 0x7f5cca2e2e18>:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/OpenSSL/SSL.py", line 313, in wrapper
+    _lib.X509_up_ref(x509)
+AttributeError: module 'lib' has no attribute 'X509_up_ref'
+  Could not find a version that satisfies the requirement flask-limiter (from versions: )
+No matching distribution found for flask-limiter
+
+
+---
+

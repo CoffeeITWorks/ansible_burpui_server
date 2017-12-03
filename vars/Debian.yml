@@ -15,9 +15,11 @@ burpui_py3_packages:
   - python3-pip
 
 burpui_packages:
-  - gunicorn
   - redis-server
   - nginx
+
+burpui_gunicorn_packages:
+  - gunicorn
 
 burp_ui_celery_dependencies:
   - supervisor
