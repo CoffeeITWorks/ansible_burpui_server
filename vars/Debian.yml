@@ -8,6 +8,7 @@ burpui_system_requirements:
   - python-dev
   - libssl-dev # dependecy of ndg-httpsclient
   - libffi-dev # dependency for cffi
+  - locales-all # required for python3
 
 burpui_py3_packages:
   - python3
