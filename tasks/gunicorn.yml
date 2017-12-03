@@ -31,6 +31,26 @@
     executable: "{{ python_pip_executable }}"
   when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
 
+- name: check /usr/local/bin/gunicorn stat
+  stat: 
+    path: /usr/local/bin/gunicorn
+  register: gunicorn_local_bin_stat
+
+- name: set /usr/local/bin/gunicorn as gunicorn path
+  set_fact:
+    burpui_gunicorn_bin: /usr/local/bin/gunicorn
+  when: gunicorn_local_bin_stat.stat.exists
+
+- name: check /usr/bin/gunicorn stat
+  stat: 
+    path: /usr/bin/gunicorn
+  register: gunicorn_bin_stat
+
+- name: set /usr/bin/gunicorn as gunicorn path
+  set_fact:
+    burpui_gunicorn_bin: /usr/bin/gunicorn
+  when: gunicorn_bin_stat.stat.exists
+
 # This is only for python2 gunicorn on debian
 - block:
 
