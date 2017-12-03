@@ -1,24 +1,27 @@
 ---
 # https://github.com/ziirish/burp-ui/blob/master/docs/gunicorn.rst
 
-- name: gunicorn | directory /var/log/gunicorn 
-  file: 
-    path: '/var/log/gunicorn'
-    state: directory
-
 # only works for python2
 - name: gunicorn | install packages
   package:
     name: "{{ burpui_gunicorn_packages| join(',') }}"
     state: present
-  when: ansible_os_family != 'RedHat' or not gunicorn_systemd_service and python_pip_executable == "pip2"
+  when: ansible_os_family != 'RedHat' and not gunicorn_systemd_service and python_pip_executable == "pip2"
 
 # gunicorn system package should not be used when using python3
 - name: gunicorn | uninstall python2 system packages
   package:
-    name: "{{ burpui_gunicorn_packages| join(',') }}"
+    name: "{{ item }}"
     state: absent
+  with_items:
+    - gunicorn
+    - python-gunicorn
   when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
+
+- name: gunicorn | directory /var/log/gunicorn 
+  file: 
+    path: '/var/log/gunicorn'
+    state: directory
 
 # use pip always for python3 or RedHat or systemd
 - name: gunicorn | Install gunicorn from pip
