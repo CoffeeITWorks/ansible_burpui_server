@@ -5,7 +5,7 @@ CONFIG = {
     },
     'args': (
         '--bind={{ burpui_global_bind }}:{{ burpui_global_port }}',
-        '--user=root',
+        '--user={{ burpui_user }}',
         '--workers=3',
         '--worker-class=gevent',
         '--access-logfile=/var/log/gunicorn/burpui_access.log',

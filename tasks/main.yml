@@ -67,6 +67,8 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    owner: "{{ burpui_user }}"
+    group: "{{ burpui_group }}"
   with_items:
     - { src: "burpui.cfg.j2", dest: "/etc/burp/burpui.cfg" }
     - { src: "burpui_site.j2", dest: "{{ burpui_nginx_config_path }}" }

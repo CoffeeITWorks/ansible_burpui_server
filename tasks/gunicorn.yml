@@ -22,6 +22,8 @@
   file: 
     path: '/var/log/gunicorn'
     state: directory
+    owner: "{{ burpui_user }}"
+    group: "{{ burpui_group }}"
 
 # use pip always for python3 or RedHat or systemd
 - name: gunicorn | Install gunicorn from pip
@@ -30,6 +32,11 @@
     state: present
     executable: "{{ python_pip_executable }}"
   when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
+
+- name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
+  set_fact: 
+    gunicorn_upstart_service: True
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 14 and python_pip_executable == "pip3"
 
 - name: check /usr/local/bin/gunicorn stat
   stat: 
@@ -71,25 +78,32 @@
       - { src: "gunicorn_logrotate.j2", dest: "/etc/logrotate.d/gunicorn" }
     notify: restart burpui services
   
-  when: ansible_os_family == 'Debian' and not gunicorn_systemd_service
+  when: ansible_os_family == 'Debian' and not gunicorn_systemd_service and not gunicorn_upstart_service
 
 # This is for python2 or 3 gunicorn with systemd
-- block: 
-
-  - name: gunicorn | copy burpui_gunicorn.py file
-    template:
-      mode: 0755
-      src: burpui_gunicorn.py.j2
-      dest: /etc/burp/burpui_gunicorn.py
-      owner: root
-      group: root
-  
-  - name: gunicorn | setup gunicorn.service systemd
-    template:
-      src: gunicorn_systemd.j2
-      dest: /etc/systemd/system/gunicorn.service
-      mode: 0755
-      owner: root
-      group: root
-
+- name: gunicorn | setup gunicorn.service systemd
+  template:
+    src: gunicorn_systemd.j2
+    dest: /etc/systemd/system/gunicorn.service
+    mode: 0755
+    owner: root
+    group: root
   when: ansible_os_family == 'RedHat' or gunicorn_systemd_service
+
+- name: gunicorn | copy burpui_gunicorn.py file
+  template:
+    mode: 0755
+    src: burpui_gunicorn.py.j2
+    dest: /etc/burp/burpui_gunicorn.py
+    owner: root
+    group: root
+  when: gunicorn_systemd_service or gunicorn_upstart_service
+
+- name: gunicorn | setup gunicorn upstart service
+  template:
+    src: gunicorn_upstart.j2
+      dest: /etc/init/gunicorn.conf
+      mode: 0755
+      owner: root
+      group: root
+  when: gunicorn_upstart_service

@@ -3,8 +3,8 @@ Description=Burp-UI gunicorn service
 After=network.target
 
 [Service]
-User=root
-Group=root
+User={{ burpui_user }}
+Group={{ burpui_group }}
 # Environment variables required in python3
 Environment=LC_ALL=en_US.UTF-8
 Environment=LANG=en_US.UTF-8
