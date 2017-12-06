@@ -8,9 +8,15 @@
   with_items:
     - gunicorn
     - nginx
-  when: ansible_os_family == 'Debian'
+  #when: ansible_os_family == 'Debian'
+  notify: wait 10s
 
 - name: restart bui-celery
   supervisorctl:
     name: bui-celery
     state: restarted
+
+- name: wait 10s
+  wait_for: timeout=10
+  delegate_to: localhost
+  become: no
