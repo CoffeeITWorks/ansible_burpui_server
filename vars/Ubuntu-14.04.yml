@@ -1,0 +1,34 @@
+#::::::::::::::
+# Ubuntu.yml
+#::::::::::::::
+---
+
+burpui_system_requirements:
+  - python-pip
+  - python-dev
+  - libssl-dev # dependecy of ndg-httpsclient
+  - libffi-dev # dependency for cffi
+  - locales # required for python3
+
+burpui_py3_packages:
+  - python3
+  - python3-dev
+  - python3-pip
+
+burpui_packages:
+  - redis-server
+  - nginx
+
+burpui_gunicorn_packages:
+  - gunicorn
+
+burp_ui_celery_dependencies:
+  - supervisor
+
+supervisoretc_dir: "/etc/supervisor/conf.d"
+supervisor_ext: "conf"
+supervisor_service: supervisor
+pip_installed_exe_bin_path: '/usr/local/bin'
+redis_service: redis-server
+nginx_config_dir: '/etc/nginx/sites-available'
+burpui_nginx_config_path: '{{ nginx_config_dir }}/burpui'
