@@ -52,9 +52,13 @@ verifier:
 ansible:
   playbook: playbook.yml
   group_vars:
+    all:
+      python_pip_executable: 'pip3'
     group_master:
       burpsrcext: "zip"
       burp_version: "master"
       burp_remove_clients:
         - name: client_to_remove
         - name: other_client_to_remove
+    group_trusty:
+      python_pip_executable: 'pip2'

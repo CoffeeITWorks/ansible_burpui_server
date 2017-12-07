@@ -19,6 +19,11 @@
     gunicorn_systemd_service: True
   when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 8
 
+- name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
+  set_fact: 
+    gunicorn_systemd_service: True
+  when: ansible_os_family == 'RedHat'
+
 - name: check only if burpui is installed
   pip:
     name: "{{ burpui_pip_burpui }}"
