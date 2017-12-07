@@ -16,12 +16,6 @@ docker:
         ansible_groups:
           - group1
 
-      - name: ansible_test-trusty
-        image: ubuntu-upstart
-        image_version: '14.04'
-        ansible_groups:
-          - group_trusty
-
       - name: ansible_test-master2
         image: dramaturg/debian-systemd
         image_version: 'latest'

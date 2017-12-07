@@ -4,5 +4,5 @@
     burp_module_test_client: False
     burpui_standalone: True
   roles:
-    - role: ansible_burp2_server
+    #- role: ansible_burp2_server
     - role: ansible_burpui_server
