@@ -16,16 +16,6 @@ docker:
         ansible_groups:
           - group1
 
-      - name: ansible_test-master2
-        image: dramaturg/debian-systemd
-        image_version: 'latest'
-        volume_mounts:
-          - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-        privileged: False
-        cap_add: SYS_ADMIN
-        ansible_groups:
-          - group_master
-
       # In docker cannot be tested with centos 7 due to https://github.com/ansible/ansible-modules-core/issues/593
       - name: ansible_test-03
         image: centos/systemd
