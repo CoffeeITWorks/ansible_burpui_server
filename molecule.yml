@@ -21,7 +21,8 @@ docker:
         image_version: 'latest'
         volume_mounts:
           - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-        privileged: True
+        privileged: False
+        cap_add: SYS_ADMIN
         ansible_groups:
           - group_master
 
