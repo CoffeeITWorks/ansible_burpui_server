@@ -9,6 +9,7 @@ burpui_system_requirements:
   - openssl-devel # dependecy of ndg-httpsclient
   - libffi-devel # dependency for cffi
   - redhat-rpm-config
+  - gcc
 
 burpui_packages:
   - redis
