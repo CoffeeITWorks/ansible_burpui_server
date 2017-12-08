@@ -18,7 +18,7 @@
     dest: /etc/logrotate.d/supervisor
 
 # On centos 6 there is no include section by default
-- name: supervisor | configure supervisor logrotate
+- name: supervisor | configure supervisor settings
   template:
     src: redhat_supervisord.conf.j2
     dest: /etc/supervisord.conf
