@@ -7,4 +7,5 @@
   get_url:
     url: http://localhost:{{ burpui_nginx_port }}/about
     dest: /tmp/test_burpui_about
+    timeout: 30
   changed_when: false
