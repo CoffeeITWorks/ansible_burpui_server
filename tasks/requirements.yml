@@ -10,9 +10,8 @@
   
 - name: install required system packages
   package:
-    name: "{{ item }}"
+    name: "{{ burpui_system_requirements | join(',') }}"
     state: present
-  with_items: "{{ burpui_system_requirements }}"
 
 # workaround for ubuntu 14.04 with missing pip3 executable
 - block:
