@@ -12,17 +12,30 @@
     path: /var/spool/burpui
     state: directory
 
+- name: configure supervisor logrotate
+  template:
+    src: supervisor_logrotate.j2
+    dest: /etc/logrotate.d/supervisor
+
+# On centos 6 there is no include section by default
+- name: supervisor | configure supervisor settings
+  template:
+    src: redhat_supervisord.conf.j2
+    dest: /etc/supervisord.conf
+  when: ansible_os_family == "RedHat"
+
+# On centos 6 this directory is not created by rpm package
+- name: supervisor | Ensure "{{ supervisoretc_dir }}" dir exists
+  file:
+    path: "{{ supervisoretc_dir }}"
+    state: "directory"
+
 - name: configure bui-celery supervisord service
   template:
     src: bui-celery.conf_supervisor.j2
     dest: "{{ supervisoretc_dir }}/bui-celery.{{ supervisor_ext }}"
   notify: restart bui-celery
   register: burpui_celery_service_conf
-
-- name: configure supervisor logrotate
-  template:
-    src: supervisor_logrotate.j2
-    dest: /etc/logrotate.d/supervisor
 
 - name: ensure supervisor is started
   service:

@@ -1,0 +1,11 @@
+---
+
+# Restart services if required
+- meta: flush_handlers
+
+- name: test if burpui get about is ok
+  get_url:
+    url: http://localhost:{{ burpui_nginx_port }}/about
+    dest: /tmp/test_burpui_about
+    timeout: 30
+  changed_when: false

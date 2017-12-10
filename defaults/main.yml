@@ -3,6 +3,7 @@
 
 burpui_pip_burpui: "burp-ui"
 burpui_version: 0.5.1
+python_pip_executable: "pip2" # options pip3 / pip2
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
@@ -17,13 +18,12 @@ burpui_pip_present:
   - "Flask-Session"
   - "Flask-Migrate"
   - "celery>=4.0.2"
-  - "ndg-httpsclient>=0.4.2"
   - "pip>=9"
   - "cffi>=1.7"
   - "gevent>=1.2"
   - "ujson>=1.35"
   - "urllib3>=1.19" # required to avoid issues with get_url module
-  - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
+  # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
   - "pyasn1"
   - "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
@@ -60,7 +60,7 @@ burpui_security_enforce: "false"
 burpui_security_revoke: "true"
 burpui_security_cookietime: "14"
 burpui_security_scookie: "true"
-burpui_security_appsecret: "random"
+burpui_security_appsecret: "ChangeYourSecretapp" # it is not possible to setup random when using gunicorn
 #[Experimental]
 burpui_experimental_zip64: "false"
 burpui_experimental_noserverrestore: "false"
@@ -118,7 +118,6 @@ burpui_sv_priority: "20"
 burpui_sv_directory: "/tmp"
 burpui_sv_environment: "C_FORCE_ROOT=true"
 burpui_sv_command: "bui-celery -c /etc/burp/burpui.cfg -- --beat"
-burpui_sv_user: "root"
 burpui_sv_autostart: "true"
 burpui_sv_autorestart: "true"
 burpui_sv_stdout_logfile: "/var/log/supervisor/%(program_name)s.log"
@@ -131,3 +130,5 @@ burpui_group: 'root'
 # gunicorn_systemd_service enables gunicorn.yml to manually setup systemd service instead of using Debian based package
 # It is set True always for RedHat based and Ubuntu equal or major to 16.04
 gunicorn_systemd_service: False
+
+gunicorn_upstart_service: False

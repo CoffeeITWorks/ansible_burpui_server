@@ -16,12 +16,6 @@ docker:
         ansible_groups:
           - group1
 
-      - name: ansible_test-master2
-        image: debian
-        image_version: '8'
-        ansible_groups:
-          - group_master
-
       # In docker cannot be tested with centos 7 due to https://github.com/ansible/ansible-modules-core/issues/593
       - name: ansible_test-03
         image: centos/systemd
@@ -45,9 +39,13 @@ verifier:
 ansible:
   playbook: playbook.yml
   group_vars:
+    all:
+      python_pip_executable: 'pip3'
     group_master:
       burpsrcext: "zip"
       burp_version: "master"
       burp_remove_clients:
         - name: client_to_remove
         - name: other_client_to_remove
+    group_trusty:
+      python_pip_executable: 'pip2'

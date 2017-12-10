@@ -1,0 +1,15 @@
+Debian 9 python 3.5 issues:
+
+pip3 install flask-limiter
+Collecting flask-limiter
+From cffi callback <function _verify_callback at 0x7f5cca2e2e18>:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/OpenSSL/SSL.py", line 313, in wrapper
+    _lib.X509_up_ref(x509)
+AttributeError: module 'lib' has no attribute 'X509_up_ref'
+  Could not find a version that satisfies the requirement flask-limiter (from versions: )
+No matching distribution found for flask-limiter
+
+
+---
+

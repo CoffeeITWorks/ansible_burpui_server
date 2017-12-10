@@ -8,9 +8,16 @@
   with_items:
     - gunicorn
     - nginx
-  when: ansible_os_family == 'Debian'
+  #when: ansible_os_family == 'Debian'
+  notify: wait burpui
 
 - name: restart bui-celery
   supervisorctl:
     name: bui-celery
     state: restarted
+
+- name: wait burpui
+  wait_for: 
+    timeout: 60
+    delay: 2
+    port: "{{ burpui_global_port }}"

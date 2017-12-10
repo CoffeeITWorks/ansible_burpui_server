@@ -1,0 +1,10 @@
+
+description "gunicorn"
+
+start on (filesystem)
+stop on runlevel [016]
+
+respawn
+chdir /etc/burp
+
+exec {{ burpui_gunicorn_bin }} -c /etc/burp/burpui_gunicorn.py 'burpui:create_app(conf="/etc/burp/burpui.cfg",logfile="/var/log/gunicorn/burp-ui_info.log")'
