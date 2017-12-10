@@ -4,28 +4,20 @@
 - name: set gunicorn_upstart_service true for Ubuntu 14.04
   set_fact: 
     gunicorn_upstart_service: True
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 14 and python_pip_executable == "pip3"
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 14
 
 - name: debus see vars
   debug:
     msg: "distribution: {{ ansible_distribution }}, major version: {{ ansible_distribution_major_version|int }}, pip exe: {{ python_pip_executable  }} "
 
-# only works for python2
-- name: gunicorn | install packages
-  package:
-    name: "{{ burpui_gunicorn_packages| join(',') }}"
-    state: present
-  when: ansible_os_family != 'RedHat' and not gunicorn_systemd_service and python_pip_executable == "pip2"
-
 # gunicorn system package should not be used when using python3
-- name: gunicorn | uninstall python2 system packages
+- name: gunicorn | uninstall gunicorn system packages
   package:
     name: "{{ item }}"
     state: absent
   with_items:
     - gunicorn
     - python-gunicorn
-  when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
 
 - name: gunicorn | directory /var/log/gunicorn 
   file: 
@@ -34,13 +26,12 @@
     owner: "{{ burpui_user }}"
     group: "{{ burpui_group }}"
 
-# use pip always for python3 or RedHat or systemd
+# use pip always for pip2 or pip3, for systemd or upstart
 - name: gunicorn | Install gunicorn from pip
   pip:
     name: gunicorn>=19.7.1
     state: present
     executable: "{{ python_pip_executable }}"
-  when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or python_pip_executable == "pip3"
 
 - name: check /usr/local/bin/gunicorn stat
   stat: 
@@ -62,23 +53,13 @@
     burpui_gunicorn_bin: /usr/bin/gunicorn
   when: gunicorn_bin_stat.stat.exists
 
-# This is only for python2 gunicorn on debian
 - block:
-
-  - name: gunicorn | remove gunicorn example files
-    file:
-      path: "/etc/gunicorn.d/{{ item }}"
-      state: absent
-    with_items:
-      - django.example
-      - wsgi.example
 
   - name: gunicorn | Debian configure gunicorn server
     template:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
     with_items:
-      - { src: "burpui_gunicorn.j2", dest: "/etc/gunicorn.d/burpui" }
       - { src: "gunicorn_logrotate.j2", dest: "/etc/logrotate.d/gunicorn" }
     notify: restart burpui services
   
@@ -101,7 +82,7 @@
     dest: /etc/burp/burpui_gunicorn.py
     owner: root
     group: root
-  when: gunicorn_systemd_service or gunicorn_upstart_service
+  when: ansible_os_family == 'RedHat' or gunicorn_systemd_service or gunicorn_upstart_service
 
 - name: gunicorn | setup gunicorn upstart service
   template:

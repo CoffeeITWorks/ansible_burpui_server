@@ -27,7 +27,7 @@
         state: absent
       when: not pip3_executable_stat.stat.exists
   
-  when: ansible_distribution_release == 'trusty'
+  when: ansible_distribution_release == 'trusty' and python_pip_executable == 'pip3'
 
 - name: install burpui package requirements for python3
   package:

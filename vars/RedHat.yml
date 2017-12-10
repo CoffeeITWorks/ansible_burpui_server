@@ -15,9 +15,6 @@ burpui_packages:
   - redis
   - nginx
 
-burpui_gunicorn_packages:
-  - python-gunicorn
-
 burpui_py3_packages:
   - python3
   - python3-devel

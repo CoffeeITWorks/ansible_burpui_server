@@ -1,6 +1,7 @@
 v1.5.0:
-  * drop autotest support for ubuntu trusty due to complexity in testing the role (it works by your own, and pull requests are welcome)
+  * drop autotest support for ubuntu trusty due to complexity in testing the role due to upstart limitations (it works and now is tested with VM locally)
   * lot of fixes for python3 and systemd support with gunicorn
+  * drop ubuntu trusty gunicorn-debian service and now use pip gunicorn installation and configure with upstart
 v1.4.2:
   * fixed #6 Ubuntu 16.04 and newer support
   * Added option to use gunicorn from pip with systemd: gunicorn_systemd_service var. 

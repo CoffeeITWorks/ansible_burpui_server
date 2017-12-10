@@ -19,9 +19,6 @@ burpui_packages:
   - redis-server
   - nginx
 
-burpui_gunicorn_packages:
-  - gunicorn
-
 burp_ui_celery_dependencies:
   - supervisor
 
