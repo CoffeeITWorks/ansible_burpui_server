@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/CoffeeITWorks/ansible_burpui_server.svg?style=svg)](https://circleci.com/gh/CoffeeITWorks/ansible_burpui_server)
+[![Build Status](https://travis-ci.org/CoffeeITWorks/ansible_burpui_server.svg?branch=master)](https://travis-ci.org/CoffeeITWorks/ansible_burpui_server)
 
 Getting Started
 ================
