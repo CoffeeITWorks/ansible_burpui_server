@@ -13,9 +13,8 @@ env:
 #  - sudo apt-get install -o Dpkg::Options::="--force-confnew" --force-yes -y docker-ce
 
 install:
-  #- pip install molecule
+  - pip install molecule
   - sudo pip install ansible
-  - sudo pip install molecule==1.25.0
   - sudo pip install docker
   - ansible-galaxy install -r requirements.yml
 
