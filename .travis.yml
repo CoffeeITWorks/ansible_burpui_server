@@ -1,6 +1,6 @@
 # http://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
 sudo: required
-dist: trusty
+# dist: trusty
 services:
   - docker
 language: python
@@ -8,12 +8,9 @@ env:
   global:
     - PATH="/usr/bin:$PATH"
 
-#before_install:
-#  - sudo apt-get -qq update
-#  - sudo apt-get install -o Dpkg::Options::="--force-confnew" --force-yes -y docker-ce
-
 install:
-  - pip install molecule
+  - sudo apt-get install -y python-pip libssl-dev libffi-dev
+  - sudo pip install molecule
   - sudo pip install ansible
   - sudo pip install docker-py
   - ansible-galaxy install -r requirements.yml
