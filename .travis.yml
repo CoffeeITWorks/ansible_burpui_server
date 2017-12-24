@@ -19,7 +19,7 @@ install:
   - ansible-galaxy install -r requirements.yml
 
 script:
-  - molecule create
+  - molecule --debug create
   - molecule converge
   - molecule syntax
   #- molecule idempotence

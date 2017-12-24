@@ -9,7 +9,7 @@ platforms:
   - name: ansible_test-01
     image: solita/ubuntu-systemd:16.04
     privileged: True
-    command: /sbin/init    
+    command: /sbin/init
     capabilities:
       - SYS_ADMIN    
     volumes:
@@ -19,8 +19,9 @@ platforms:
   # In docker cannot be tested with centos 7 due to https://github.com/ansible/ansible-modules-core/issues/593
   - name: ansible_test-03
     image: centos/systemd
+    command: /sbin/init
     capabilities:
-      - SYS_ADMIN    
+      - SYS_ADMIN
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     privileged: True
@@ -28,6 +29,7 @@ platforms:
       - group1
   - name: ansible_test-04
     image: fedora/systemd-systemd
+    command: /sbin/init
     capabilities:
       - SYS_ADMIN    
     volumes:
