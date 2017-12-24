@@ -15,7 +15,7 @@ env:
 install:
   - pip install molecule
   - sudo pip install ansible
-  - sudo pip install docker
+  - sudo pip install docker-py
   - ansible-galaxy install -r requirements.yml
 
 script:
