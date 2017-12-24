@@ -1,6 +1,6 @@
 # http://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
 sudo: required
-# dist: trusty
+dist: trusty
 services:
   - docker
 language: python
@@ -16,7 +16,7 @@ install:
   - ansible-galaxy install -r requirements.yml
 
 script:
-  - molecule --debug create
+  - sudo molecule --debug create
   - molecule converge
   - molecule syntax
   #- molecule idempotence
