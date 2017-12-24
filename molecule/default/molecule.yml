@@ -37,15 +37,6 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
-  inventory:
-    group_vars:
-      group_master:
-        burpsrcext: "zip"
-        burp_version: "master"
-        burp_remove_clients:
-          - name: client_to_remove
-          - name: other_client_to_remove
-        burp_server_port_per_operation_bool: true
 scenario:
   name: default
 verifier:
