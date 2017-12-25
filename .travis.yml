@@ -1,25 +1,22 @@
 # http://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
 sudo: required
-dist: trusty
+language: python
 services:
   - docker
-language: python
-env:
-  global:
-    - PATH="/usr/bin:$PATH"
+before_install:
+  - sudo apt-get -qq update
 
 install:
   - sudo apt-get install -y python-pip libssl-dev libffi-dev
-  - sudo pip install molecule
-  - sudo pip install ansible
-  - sudo pip install docker-py
-  - ansible-galaxy install -r requirements.yml
+  - pip install molecule
+  - pip install docker-py
+    #- ansible-galaxy install -r requirements.yml
 
 script:
-  - sudo molecule --debug create
+  - molecule --debug create
   - molecule converge
   - molecule syntax
-  #- molecule idempotence
+  - molecule idempotence
 
 notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
