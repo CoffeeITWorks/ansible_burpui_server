@@ -2,7 +2,7 @@
 # file defaults/main.yml
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.5.1
+burpui_version: 0.6.0rc1
 python_pip_executable: "pip2" # options pip3 / pip2
 
 burpui_pip_packages:
@@ -12,6 +12,7 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[gunicorn]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[gunicorn-extra]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[celery]", version: "{{ burpui_version }}" }
+  - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
   
 burpui_pip_present:
   - "redis"
@@ -61,6 +62,12 @@ burpui_security_revoke: "true"
 burpui_security_cookietime: "14"
 burpui_security_scookie: "true"
 burpui_security_appsecret: "ChangeYourSecretapp" # it is not possible to setup random when using gunicorn
+# Websocket
+burpui_websocket_enabled: "true"
+burpui_websocket_embedded: "false"
+burpui_websocket_broker: "redis"
+burpui_websocket_url: "none"
+burpui_websocket_debug: "false"
 #[Experimental]
 burpui_experimental_zip64: "false"
 burpui_experimental_noserverrestore: "false"
