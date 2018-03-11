@@ -1,0 +1,14 @@
+---
+# file: tasks/requirements_dev.yml
+
+- name: install burpui package requirements dev
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+
+- name: set dev packages for pip install burpui
+  set_fact: 
+    burpui_pip_burpui: "{{ burpui_pip_burpui_dev }}"
+    burpui_version: "{{ burpui_version_dev }}"
