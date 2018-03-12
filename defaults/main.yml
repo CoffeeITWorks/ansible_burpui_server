@@ -76,6 +76,9 @@ burpui_websocket_debug: "false"
 burpui_experimental_zip64: "false"
 burpui_experimental_noserverrestore: "false"
 #[Backend]
+#http://burp-ui.readthedocs.io/en/latest/advanced_usage.html#options
+burpui_backend_bhost: '::1'
+burpui_backend_bport: '4972'  # you can use also {{ burp_server_status_port }}
 burpui_backend_burpbin: "/usr/sbin/burp"
 burpui_backend_stripbin: "/usr/bin/vss_strip"
 burpui_backend_bconfcli: "/etc/burp/burp.conf"

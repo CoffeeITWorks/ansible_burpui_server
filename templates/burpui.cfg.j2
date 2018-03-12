@@ -146,7 +146,11 @@ noserverrestore = {{ burpui_experimental_noserverrestore }}
 
 {% if burpui_standalone %}
 ## burp2 backend specific options
-[Burp2]
+[Burp]
+# burp status address (can only be '127.0.0.1' or '::1')
+bhost = {{ burpui_backend_bhost }}
+# burp status port
+bport = {{ burpui_backend_bport }}
 ## burp binary
 burpbin = {{ burpui_backend_burpbin }}
 ## vss_strip binary
