@@ -35,6 +35,8 @@ burpui_pip_present:
   - "flask-limiter"
   
 burpui_nginx_port: "8080"
+# This is to check availability and nginx template as reverse proxy
+burpui_global_port: "5000"
 
 #[Global]
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#configuration
