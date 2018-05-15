@@ -37,14 +37,9 @@ burpui_pip_present:
 burpui_nginx_port: "8080"
 
 #[Global]
+# https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#configuration
 burpui_standalone: true
 burpui_global_version: "2"
-# https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#configuration
-burpui_global_port: "5000"
-burpui_global_bind: "127.0.0.1"
-burpui_global_ssl: "false"
-burpui_global_sslcert: "/etc/burp/ssl_cert-server.pem"
-burpui_global_sslkey: "/etc/burp/ssl_cert-server.key"
 burpui_global_auth: "basic"
 burpui_global_acl: "basic"
 burpui_global_prefix: "none"
