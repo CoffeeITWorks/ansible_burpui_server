@@ -1,3 +1,6 @@
+v1.6.0:
+  * changes to be compatible with burpui 0.6.1
+  * Removed deprecated config lines
 v1.5.0:
   * drop autotest support for ubuntu trusty due to complexity in testing the role due to upstart limitations (it works and now is tested with VM locally)
   * lot of fixes for python3 and systemd support with gunicorn
