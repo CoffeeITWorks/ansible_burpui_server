@@ -1,6 +1,10 @@
 ---
 dependency:
   name: galaxy
+  options:
+    ignore-certs: True
+    ignore-errors: True
+    role-file: requirements.yml
 driver:
   name: docker
 lint:
@@ -29,6 +33,9 @@ platforms:
       - group1
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks
   lint:
     name: ansible-lint
 scenario:

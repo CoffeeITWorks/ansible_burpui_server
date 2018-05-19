@@ -1,19 +1,7 @@
 # Burp-UI configuration file
-# @version@ - 0.3.0
+# @version@ - 0.6.0
 # @release@ - stable
 [Global]
-# On which port is the application listening
-port = {{ burpui_global_port }}
-# On which address is the application listening
-# '::' is the default for all IPv6
-# set it to '0.0.0.0' if you want to listen on all IPv4 addresses
-bind = {{ burpui_global_bind }}
-# enable SSL
-ssl = {{ burpui_global_ssl }}
-# ssl cert
-sslcert = {{ burpui_global_sslcert }}
-# ssl key
-sslkey = {{ burpui_global_sslkey }}
 # burp server version 1 or 2
 version = {{ burpui_global_version }}
 # Handle multiple bui-servers or not
@@ -40,12 +28,16 @@ acl = {{ burpui_global_acl }}
 # 'X-Script-Name' header. In this case, the bellow prefix will be ignored in
 # favour of the one announced by your reverse-proxy
 prefix = {{ burpui_global_prefix }}
+plugins = {{ burpui_global_plugins }}
 
 [UI]
 # refresh interval of the pages in seconds
 refresh = {{ burpui_ui_refresh }}
 # refresh interval of the live-monitoring page in seconds
 liverefresh = {{ burpui_ui_liverefresh }}
+{% for item in burpui_ui_extras %}
+{{ item }}
+{% endfor %}
 
 [Production]
 # storage backend for session and cache
@@ -79,6 +71,18 @@ celery = {{ burpui_production_celery }}
 # http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
 # example: sqlite:////var/lib/burpui/store.db
 database = {{ burpui_production_database }}
+# whether to rate limit the API or not
+# may also be a redis url like: redis://localhost:6379/0
+# if set to "true" or "redis" or "default", the url defaults to:
+# redis://<redis_host>:<redis_port>/3
+# where <redis_host> is the host part, and <redis_port> is the port part of
+# the above "redis" setting
+# Note: the limiter only applies to the API routes
+limiter = {{ burpui_production_limiter }}
+# limiter ratio
+# see https://flask-limiter.readthedocs.io/en/stable/#ratelimit-string
+ratio = {{ burpui_production_ratio }}
+
 
 [Security]
 ## This section contains some security options. Make sure you understand the
@@ -106,6 +110,33 @@ scookie = {{ burpui_security_scookie }}
 # /!\ YOU CANNOT USE THE MAGIC 'random' VALUE WHEN USING GUNICORN /!\
 appsecret = {{ burpui_security_appsecret }}
 
+## http://burp-ui.readthedocs.io/en/latest/advanced_usage.html#websocket
+[WebSocket]
+## This section contains WebSocket server specific options.
+# whether to enable websocket or not
+enabled = {{ burpui_websocket_enabled }}
+# whether to embed the websocket server or not
+# if set to "true", you should have only *one* gunicorn worker
+# see here for details:
+# https://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server
+embedded = {{ burpui_websocket_embedded }}
+# what broker to use to interact between websocket servers
+# may be a redis url like: redis://localhost:6379/0
+# if set to "true" or "redis" or "default", the url defaults to:
+# redis://<redis_host>:<redis_port>/4
+# where <redis_host> is the host part, and <redis_port> is the port part of
+# the above "redis" setting
+# set this to none to disable the broker
+broker = {{ burpui_websocket_broker }}
+# if you choose to run a dedicated websocket server (with embedded = false)
+# you can specify here the websocket url. You'll need to double quote your
+# string though.
+# example:
+# url = "document.domain + ':5001'"
+url = {{ burpui_websocket_url }}
+# whether to enable verbose websocket server logs or not (for development)
+debug = {{ burpui_websocket_debug }}
+
 [Experimental]
 ## This section contains some experimental features that have not been deeply
 ## tested yet
@@ -113,13 +144,14 @@ appsecret = {{ burpui_security_appsecret }}
 # « ZIP64 extensions are disabled by default because the default zip and unzip
 # commands on Unix (the InfoZIP utilities) don’t support these extensions. »
 zip64 = {{ burpui_experimental_zip64 }}
-# disable server initiated restoration if `bconfcli` file contains
-# `server_can_restore = 0`
-noserverrestore = {{ burpui_experimental_noserverrestore }}
 
 {% if burpui_standalone %}
-## burp2 backend specific options
-[Burp2]
+## burp specific options
+[Burp]
+# burp status address (can only be '127.0.0.1' or '::1')
+bhost = {{ burpui_backend_bhost }}
+# burp status port
+bport = {{ burpui_backend_bport }}
 ## burp binary
 burpbin = {{ burpui_backend_burpbin }}
 ## vss_strip binary
@@ -135,6 +167,7 @@ timeout = {{ burpui_backend_timeout }}
 {% endif %}
 
 {% if burpui_ldap_enabled %}
+## https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#ldap
 ## ldapauth specific options
 [LDAP]
 ## Backend priority. Higher is first
@@ -201,6 +234,8 @@ priority = {{ burpui_local_priority }}
 ## List of local users allowed to login. If you don't set this setting, every 
 ## local user will be able to login
 users = {{ burpui_local_users }}
+# Minimum uid that will be allowed to login
+limit = {{ burpui_local_limit }}
 {% endif %}
 
 {% if burpui_basic_acl_enabled %}
@@ -208,18 +243,43 @@ users = {{ burpui_local_users }}
 ## Note: in case you leave this section commented, the user 'admin' will have
 ## access to all clients whereas other users will only see the client that have
 ## the same name
+## https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#basic-acl
 [BASIC:ACL]
+# Backend priority. Higher is first
+priority = {{ burpui_basic_acl_priority }}
 admin = {{ burpui_basic_acl_admins }}
-## Please note the double-quotes and single-quotes on the following lines are
-## mandatory!
-## You can also overwrite the default behavior by specifying which clients a
-## user can access
-#user3 = '["client4", "client5"]'
-## In case you are not in a standalone mode, you can also specify which clients
-## a user can access on a specific Agent
-#user4 = '{"agent2": ["client8"], "agent1": ["client6", "client7"]}'
+# List of moderators. Users listed here will inherit the grants of the
+# group '@moderator'
++moderator = user5,user6
+@moderator = '{"agents":{"ro":["agent1"]}}'
+# NOTE: if you are running single-agent mode, you should specify the ro/rw
+# rights of the moderators using this special 'local' agent name:
+# NOTE: this is the default when running single-agent mode if you don't
+# specify anything else
+#@moderator = '{"agents": {"rw": "local"}}'
+# Please note the double-quotes and single-quotes on the following lines are
+# mandatory!
+# You can also overwrite the default behavior by specifying which clients a
+# user can access
+# Suppose you are running single-agent mode (the default), you only need to
+# specify a list of clients a user can access:
+user3 = '{"clients": {"ro": ["prod*"], "rw": ["dev*", "test1"]}}'
+# In case you are not in a single mode, you can also specify which clients
+# a user can access on a specific Agent
+user4 = '{"agents": {"agent1": ["client6", "client7"], "agent2": ["client8"]}}'
+# You can define read-only and/or read-write grants using:
+user5 = '{"agents": {"www*": {"ro": ["desk*"], "rw": ["desk1"]}}}'
+# Finally, you can define groups using the syntax "@groupname" and adding
+# members using "+groupname". Note: groups can inherit groups!
+@group1 = '{"agents": {"ro": ["*"]}}'
+@group2 = '{"clients": {"rw": ["dev*"]}}'
++group1 = @group2
++group2 = user5
+# As a result, user5 will be granted the following rights:
+# '{"ro": {"agents": ["*", "agent1"], "www*": ["desk*"]}, "rw": {"clients": ["dev*"], "www*": ["desk1"]}}
+
 {% for item in burpui_basic_acl_users %}
-{{ item.name }} = {{ item.value }}
+{{ item }}
 {% endfor %}
 {% endif %}
 
