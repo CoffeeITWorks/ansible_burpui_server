@@ -1,4 +1,0 @@
-
-- src: CoffeeITWorks.burp2_server
-  name: ansible_burp2_server
-  version: v1.11
