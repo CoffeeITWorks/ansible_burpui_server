@@ -6,8 +6,8 @@ burpui_version_dev: master
 burpui_use_dev: False
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.6.1
-python_pip_executable: "pip2" # options pip3 / pip2
+burpui_version: 0.6.4
+python_pip_executable: "pip3" # options pip3 / pip2
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
