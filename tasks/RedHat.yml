@@ -26,7 +26,7 @@
   when: ansible_distribution != "Fedora" and python_pip_executable == 'pip3'
 
 - name: redhat | ensure pip3 command setup is done
-  shell:
+  easy_install:
     name: pip
     state: present
     executable: easy_install-3.6
