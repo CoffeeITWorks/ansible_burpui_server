@@ -2,7 +2,6 @@
 - name: Converge
   hosts: all
   vars:
-    burp_module_test_client: True
     burpui_standalone: True
     burpui_use_dev: False
   roles:
