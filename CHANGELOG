@@ -1,5 +1,9 @@
 1.6.1:
-  * Update to burpui 0.6.3
+
+* update burpui-agent to 0.6.4 (Fix: sync pkgs requirements with burp-ui's `#300 <https://git.ziirish.me/ziirish/burp-ui/issues/300>`__)
+* Update python3 to python3.6 on Redhat/Centos
+* Move default installation to python3
+
 v1.6.0:
   * changes to be compatible with burpui 0.6.1
   * Removed deprecated config lines
