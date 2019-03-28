@@ -1,56 +1,13 @@
 ---
 # file defaults/bui-celery.yml
 
-- name: install Supervisor
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ burp_ui_celery_dependencies }}"
-
 - name: create burp ui folder
   file:
     path: /var/spool/burpui
     state: directory
 
-- name: configure supervisor logrotate
-  template:
-    src: supervisor_logrotate.j2
-    dest: /etc/logrotate.d/supervisor
+- include_tasks: supervisor.yml
+  when: not bui_use_systemd
 
-# On centos 6 there is no include section by default
-- name: supervisor | configure supervisor settings
-  template:
-    src: redhat_supervisord.conf.j2
-    dest: /etc/supervisord.conf
-  when: ansible_os_family == "RedHat"
-
-# On centos 6 this directory is not created by rpm package
-- name: supervisor | Ensure "{{ supervisoretc_dir }}" dir exists
-  file:
-    path: "{{ supervisoretc_dir }}"
-    state: "directory"
-
-- name: configure bui-celery supervisord service
-  template:
-    src: bui-celery.conf_supervisor.j2
-    dest: "{{ supervisoretc_dir }}/bui-celery.{{ supervisor_ext }}"
-  notify: restart bui-celery
-  register: burpui_celery_service_conf
-
-- name: ensure supervisor is started
-  service:
-    name: "{{ supervisor_service }}"
-    state: started
-    sleep: 4
-
-- name: ensure supervisor is restarted
-  service:
-    name: "{{ supervisor_service }}"
-    state: restarted
-    sleep: 4
-  when: burpui_celery_service_conf.changed
-
-- name: ensure supervisor is enabled
-  service:
-    name: "{{ supervisor_service }}"
-    enabled: yes
+- include_tasks: systemd.yml
+  when: bui_use_systemd

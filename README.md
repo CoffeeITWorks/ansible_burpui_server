@@ -88,13 +88,13 @@ So to restart installed services/daemons you should use:
 
     sudo supervisorctl restart bui-celery  (depends on the service you want to restart)
 
-you can also use supervisorctl shell: 
+you can also use supervisorctl shell:
 
     sudo supervisorctl
 
-And then interactively use all options. 
+And then interactively use all options.
 
-*Logs:* 
+*Logs:*
 
 Also supervisord allow proper stdout and stderror to logs redirection, so all logs are under `/var/logs/supervisor`
 

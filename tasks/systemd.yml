@@ -1,0 +1,28 @@
+---
+# Setup systemd service
+# Only used when not using supervisord
+
+# burpui-agent
+- name: systemd | configure systemd service for bui-celery
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: "systemd/bui-celery.service.j2",
+        dest: "/etc/systemd/system/bui-celery.service" }
+#  notify:
+#    - systemd daemon-reload
+
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+
+- name: systemd | enable bui-celery service
+  systemd:
+    daemon-reload: yes
+    name: bui-celery
+    state: started
+    enabled: yes
+
+- name: flush handlers
+  meta: flush_handlers
