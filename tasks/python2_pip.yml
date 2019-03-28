@@ -1,0 +1,26 @@
+---
+
+- name: pip2 | check only if burpui is installed
+  pip:
+    name: "{{ burpui_pip_burpui }}"
+    state: present
+    executable: "{{ python_pip_executable }}"
+  register: burpui_installed_check
+  check_mode: yes
+
+- name: install pip packages
+  pip:
+    name: "{{ item }}"
+    state: present
+    executable: "{{ python_pip_executable }}"
+  with_items: "{{ burpui_pip_present }}"
+
+- name: Install pip packages by version
+  pip:
+    name: "{{ item.name }}"
+    state: present
+    version: "{{ item.version}}"
+    executable: "{{ python_pip_executable }}"
+  with_items: "{{ burpui_pip_packages }}"
+  register: bui_pip_install
+  notify: restart burpui services

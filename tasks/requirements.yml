@@ -12,25 +12,15 @@
   package:
     name: "{{ burpui_system_requirements | join(',') }}"
     state: present
-
-# workaround for ubuntu 14.04 with missing pip3 executable
-- block:
-    
-    - name: stat to see if pip3 executable is present
-      stat:
-        path: '/usr/bin/pip3'
-      register: pip3_executable_stat
-    
-    - name: Absent python3-pip if /usr/bin/pip3 is not present
-      package:
-        name: 'python3-pip'
-        state: absent
-      when: not pip3_executable_stat.stat.exists
-  
-  when: ansible_distribution_release == 'trusty' and python_pip_executable == 'pip3'
+  when: python_pip_executable != "pip3"
 
 - name: install burpui package requirements for python3
   package:
     name: "{{ burpui_py3_packages| join(',') }}"
     state: present
   when: python_pip_executable == "pip3"
+
+- name: install role packages
+  package:
+    name: "{{ burpui_packages| join(',') }}"
+    state: present

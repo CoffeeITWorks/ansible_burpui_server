@@ -19,11 +19,16 @@ burpui_py3_packages:
   - python36
   - python36-devel
   - python36-setuptools
+  - python36-pip
   - redhat-rpm-config
+  - openssl-devel
+  - libffi-devel
+  - gcc
 
 burp_ui_celery_dependencies:
   - supervisor
 
+python3_pip: 'pip3.6'
 supervisoretc_dir: "/etc/supervisor/conf.d"
 supervisor_ext: "conf"
 supervisor_service: supervisord
