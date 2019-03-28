@@ -1,6 +1,6 @@
 1.7.0:
 
-* update burpui-agent to 0.6.5 (Fix: sync pkgs requirements with burp-ui's `#300 <https://git.ziirish.me/ziirish/burp-ui/issues/300>`__)
+* keep burpui-agent to 0.6.1 as: can't migrate to 0.6.5 until upgrade burp to 2.2.12+
 * Update python3 to python3.6 on Redhat/Centos
 * Move default installation to python3
 * Support bui-celery to systemd

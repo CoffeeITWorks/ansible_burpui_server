@@ -24,3 +24,13 @@
   package:
     name: "{{ burpui_packages| join(',') }}"
     state: present
+
+- name: register /usr/local/sbin/burp path
+  stat: 
+    path: "/usr/local/sbin/burp"
+  register: burp_local_sbin_path
+
+- name: change burp path var burpui_backend_burpbin
+  set_fact:
+    burpui_backend_burpbin: /usr/local/sbin/burp
+  when: burp_local_sbin_path.stat.exists
