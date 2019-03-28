@@ -15,6 +15,5 @@
 #  environment: 
 #    C_FORCE_ROOT: "True"
 
-
 # Restart services
 - meta: flush_handlers

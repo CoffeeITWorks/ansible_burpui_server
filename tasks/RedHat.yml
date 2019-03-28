@@ -15,20 +15,3 @@
   retries: 3
   delay: 2
   when: ansible_distribution == 'CentOS'
-
-- name: redhat | set pip3 packages for redhat and centos
-  set_fact:
-    burp_agent_py3_packages:
-      - python36
-      - python36-devel
-      - python36-pip
-      - python36-setuptools
-      - redhat-rpm-config
-  when: ansible_distribution != "Fedora" and python_pip_executable == 'pip3'
-
-- name: redhat | ensure pip3 command setup is done
-  easy_install:
-    name: pip
-    state: latest
-    executable: easy_install-3.6
-  when: ansible_distribution != "Fedora" and python_pip_executable == 'pip3'

@@ -27,44 +27,11 @@
     gunicorn_systemd_service: True
   when: ansible_os_family == 'RedHat'
 
-- name: check only if burpui is installed
-  pip:
-    name: "{{ burpui_pip_burpui }}"
-    state: present
-    executable: "{{ python_pip_executable }}"
-  register: burpui_installed_check
-  check_mode: yes
+- include_tasks: python3_pip.yml
+  when: python_pip_executable == "pip3"
 
-- name: install role packages
-  package:
-    name: "{{ burpui_packages| join(',') }}"
-    state: present
-
-- name: Uninstall burpui pip2 packages when using pip3 as pip executable
-  pip:
-    name: "{{ item.name }}"
-    state: absent
-    version: "{{ item.version}}"
-    executable: "pip2"
-  when: python_pip_executable == "pip3"  
-  with_items: "{{ burpui_pip_packages }}"
-
-- name: install pip packages
-  pip:
-    name: "{{ item }}"
-    state: present
-    executable: "{{ python_pip_executable }}"
-  with_items: "{{ burpui_pip_present }}"
-
-- name: Install pip packages by version
-  pip:
-    name: "{{ item.name }}"
-    state: present
-    version: "{{ item.version}}"
-    executable: "{{ python_pip_executable }}"
-  with_items: "{{ burpui_pip_packages }}"
-  register: bui_pip_install
-  notify: restart burpui services
+- include_tasks: python2_pip.yml
+  when: python_pip_executable == "pip2"
 
 - name: create burp folder
   file:
