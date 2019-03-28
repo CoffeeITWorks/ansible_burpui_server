@@ -13,7 +13,7 @@
     name: "{{ item.name }}"
     state: absent
     version: "{{ item.version}}"
-    executable: "pip2"
+    executable: "pip"
   with_items: "{{ burpui_pip_packages }}"
 
 - name: install pip packages
