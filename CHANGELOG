@@ -1,3 +1,5 @@
+1.8.0:
+
 1.7.0:
 
 * keep burpui-agent to 0.6.1 as: can't migrate to 0.6.5 until upgrade burp to 2.2.12+

@@ -6,6 +6,7 @@
 burpui_system_requirements:
   - python-pip
   - python-devel
+  - python-setuptools
   - openssl-devel # dependecy of ndg-httpsclient
   - libffi-devel # dependency for cffi
   - redhat-rpm-config

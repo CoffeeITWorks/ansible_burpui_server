@@ -6,7 +6,7 @@ burpui_version_dev: master
 burpui_use_dev: False
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.6.1 # can't migrate to 0.6.5 until upgrade burp to 2.2.12+
+burpui_version: 0.6.1 # still not possible to upgrade to 0.6.5 https://github.com/CoffeeITWorks/ansible_burpui_server/issues/15
 python_pip_executable: "pip3" # options pip3 / pip2
 
 burpui_pip_packages:
@@ -82,8 +82,8 @@ burpui_experimental_zip64: "false"
 #http://burp-ui.readthedocs.io/en/latest/advanced_usage.html#options
 burpui_backend_bhost: '::1'
 burpui_backend_bport: '4972'  # you can use also {{ burp_server_status_port }}
-burpui_backend_burpbin: "/usr/sbin/burp"
-burpui_backend_stripbin: "/usr/bin/vss_strip"
+burpui_backend_burpbin: "/usr/local/sbin/burp"
+burpui_backend_stripbin: "/usr/local/bin/vss_strip"
 burpui_backend_bconfcli: "/etc/burp/burp.conf"
 burpui_backend_bconfsrv: "/etc/burp/burp-server.conf"
 burpui_backend_tmpdir: "/tmp"

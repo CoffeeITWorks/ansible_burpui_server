@@ -12,7 +12,12 @@
   package:
     name: "{{ burpui_system_requirements | join(',') }}"
     state: present
-  when: python_pip_executable != "pip3"
+  when: python_pip_executable == "pip2"
+
+- name: install requirements for ansible pip
+  package:
+    name: ['python-setuptools']
+    state: present
 
 - name: install burpui package requirements for python3
   package:
