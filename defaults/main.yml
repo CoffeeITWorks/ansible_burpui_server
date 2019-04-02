@@ -1,8 +1,8 @@
 ---
 # file defaults/main.yml
 
-burpui_pip_burpui_dev: "git+https://git.ziirish.me/ziirish/burp-ui.git#egg=burp-ui"
-burpui_version_dev: master
+# use syntax: https://pip.pypa.io/en/stable/reference/pip_install/#git
+burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@stable#egg=burp-ui'
 burpui_use_dev: False
 
 burpui_pip_burpui: "burp-ui"
@@ -19,6 +19,7 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
 burpui_pip_present:
+  - "cryptography"
   - "redis"
   - "Flask-Session"
   - "Flask-Migrate"
