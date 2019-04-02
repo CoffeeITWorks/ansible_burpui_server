@@ -1,7 +1,10 @@
 #::::::::::::::
-# Ubuntu.yml
+# RedHat.yml
 #::::::::::::::
 ---
+
+burpui_system_absent:
+  - python36-cryptography
 
 burpui_system_requirements:
   - python-pip

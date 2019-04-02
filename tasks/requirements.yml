@@ -35,6 +35,12 @@
     path: "/usr/local/sbin/burp"
   register: burp_local_sbin_path
 
+- name: uninstall burpui package requirements for python3
+  package:
+    name: "{{ burpui_system_absent }}"
+    state: absent
+  when: python_pip_executable == "pip3"
+
 - name: change burp path var burpui_backend_burpbin
   set_fact:
     burpui_backend_burpbin: /usr/local/sbin/burp

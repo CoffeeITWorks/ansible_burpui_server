@@ -19,6 +19,7 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
 burpui_pip_present:
+  - "cryptography"
   - "redis"
   - "Flask-Session"
   - "Flask-Migrate"

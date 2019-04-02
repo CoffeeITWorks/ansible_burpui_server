@@ -1,7 +1,10 @@
 #::::::::::::::
-# Ubuntu.yml
+# Fedora.yml
 #::::::::::::::
 ---
+
+burpui_system_absent:
+  - python3-cryptography
 
 burpui_system_requirements:
   - python-pip

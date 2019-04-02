@@ -11,9 +11,8 @@ lint:
   name: yamllint
 platforms:
   - name: ansible_test-01
-    image: solita/ubuntu-systemd:16.04
+    image: paulfantom/debian-molecule:9
     privileged: True
-    command: /sbin/init
     capabilities:
       - SYS_ADMIN    
     volumes:
