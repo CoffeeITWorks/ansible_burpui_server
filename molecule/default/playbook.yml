@@ -3,9 +3,10 @@
   hosts: all
   vars:
     burpui_standalone: True
-    burpui_use_dev: False
+    burpui_pip_burpui_dev: 'https://git.ziirish.me/ziirish/burp-ui/-/archive/stable/burp-ui-stable.tar.gz'
+    burpui_use_targz: True
   roles:
     - role: ansible_burp2_server
     - role: ansible_burpui_server
       tags:
-        - burpui_server
+        - burpui-server

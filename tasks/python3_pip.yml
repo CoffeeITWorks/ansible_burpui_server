@@ -22,4 +22,15 @@
     executable: "{{ python3_pip }}"
   with_items: "{{ burpui_pip_packages }}"
   register: bui_pip_install
+  when: not burpui_use_targz
   notify: restart burpui services
+ 
+- name: pip3 | Install pip packages by tar.gz
+  pip:
+    name: "{{ burpui_pip_burpui_targz }}"
+    state: present
+    executable: "{{ python3_pip }}"
+  register: bui_pip_install
+  when: burpui_use_targz
+  notify: restart burpui services
+

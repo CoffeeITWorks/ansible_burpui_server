@@ -10,7 +10,7 @@
 - include_tasks: requirements.yml
 
 - include_tasks: requirements_dev.yml
-  when: burpui_use_dev
+  when: burpui_use_targz
 
 - name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
   set_fact: 

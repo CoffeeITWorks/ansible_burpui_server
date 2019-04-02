@@ -1,9 +1,8 @@
 ---
 # file defaults/main.yml
 
-burpui_pip_burpui_dev: "git+https://git.ziirish.me/ziirish/burp-ui.git#egg=burp-ui"
-burpui_version_dev: master
-burpui_use_dev: False
+burpui_pip_burpui_targz: "https://git.ziirish.me/ziirish/burp-ui/-/archive/stable/burp-ui-stable.tar.gz"
+burpui_use_targz: False
 
 burpui_pip_burpui: "burp-ui"
 burpui_version: 0.6.1 # still not possible to upgrade to 0.6.5 https://github.com/CoffeeITWorks/ansible_burpui_server/issues/15
