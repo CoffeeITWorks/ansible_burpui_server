@@ -1,3 +1,8 @@
+1.8.0:
+
+* upgrade to 0.6.6 see #15 https://github.com/CoffeeITWorks/ansible_burpui_server/issues/15
+* change molecule tests to Debian:9 due to some errors with apt sources for Ubuntu
+
 1.7.0:
 
 * keep burpui-agent to 0.6.1 as: can't migrate to 0.6.5 until upgrade burp to 2.2.12+

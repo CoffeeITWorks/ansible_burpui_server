@@ -6,7 +6,9 @@
 #     state: 0.4.2
 
 - name: Upgrade database schema
-  shell: bui-manage -c /etc/burp/burpui.cfg db upgrade
+  shell: LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 bui-manage -c /etc/burp/burpui.cfg db upgrade
+  ignore_errors: yes
+  changed_when: False
 
 # TODO: Change user to burpui
 # TODO: check other way to run it without breaking ansible task
