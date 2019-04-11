@@ -19,6 +19,15 @@ platforms:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"        
     groups:
       - group1
+  - name: ansible_test-02
+    image: fedora
+    privileged: True
+    capabilities:
+      - SYS_ADMIN    
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"        
+    groups:
+      - group1
   # In docker cannot be tested with centos 7 due to https://github.com/ansible/ansible-modules-core/issues/593
   - name: ansible_test-03
     image: centos/systemd
