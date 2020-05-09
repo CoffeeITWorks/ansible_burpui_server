@@ -24,7 +24,7 @@ burpui_pip_present:
   - "Flask-Session"
   - "Flask-Migrate"
   - "celery>=4.0.2"
-  - "pip>=9"
+  - "pip>=20"
   - "cffi>=1.7"
   - "gevent>=1.2"
   - "ujson>=1.35"
