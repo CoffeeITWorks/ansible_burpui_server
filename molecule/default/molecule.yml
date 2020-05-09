@@ -4,7 +4,7 @@ dependency:
   options:
     ignore-certs: True
     ignore-errors: True
-    role-file: dev_requirements.yml  # this file is at the root of the git project same place as molecule is executed
+    role-file: requirements.yml  # this file is at the root of the git project same place as molecule is executed
 driver:
   name: docker
 platforms:

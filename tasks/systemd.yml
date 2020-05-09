@@ -25,5 +25,15 @@
     state: started
     enabled: yes
 
+# redis-server systemd ubuntu
+- name: systemd | fix redis-server setup for systemd
+  lineinfile:
+    dest: "/etc/redis/redis.conf"
+    regexp: "{{ item.src }}"
+    line: "{{ item.value }}"
+  with_items:
+    - { src: '^supervised ' , value: 'supervised systemd' }
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 18
+
 - name: flush handlers
   meta: flush_handlers
