@@ -24,9 +24,8 @@ burpui_pip_present:
   - "Flask-Session"
   - "Flask-Migrate"
   - "celery>=4.0.2"
-  - "pip>=20"
   - "cffi>=1.7"
-  - "gevent>=1.2"
+  - "gevent>=20.0.5"
   - "ujson>=1.35"
   - "urllib3>=1.19" # required to avoid issues with get_url module
   # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
