@@ -22,7 +22,7 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     groups:
-      - group1
+      - use_pip_package
 
   - name: ansible_test-02
     image: "geerlingguy/docker-debian9-ansible"
@@ -37,7 +37,7 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     groups:
-      - group1
+      - use_pip_package
 
   - name: ansible_test-03
     image: docker.io/pycontribs/centos:7
@@ -49,10 +49,16 @@ platforms:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     #privileged: True
     groups:
-      - group1
+      - use_dev_package
 
 provisioner:
   name: ansible
   config_options:
     defaults:
       callback_whitelist: profile_tasks
+  inventory:
+    group_vars:
+      use_pip_package:
+        burpui_use_dev: False
+      use_dev_package:
+        burpui_use_dev: True
