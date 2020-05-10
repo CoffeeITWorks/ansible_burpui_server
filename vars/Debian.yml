@@ -14,6 +14,9 @@ burpui_system_requirements:
   - libffi-dev # dependency for cffi
   - locales-all # required for python3
   - gcc
+  - libev-dev # required for gevent
+  - musl-dev # required for gevent
+  - libevent-dev # required for gevent
 
 burpui_py3_packages:
   - python3
