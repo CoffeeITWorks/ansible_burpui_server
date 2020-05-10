@@ -10,7 +10,22 @@ driver:
 platforms:
 
   - name: ansible_test-01
-    image: "percygrunwald/docker-ubuntu1804-ansible:latest"
+    image: "geerlingguy/docker-ubuntu1804-ansible:latest"
+    #privileged: True
+    command: /sbin/init
+    pre_build_image: true
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    groups:
+      - group1
+
+  - name: ansible_test-02
+    image: "geerlingguy/docker-debian9-ansible"
     #privileged: True
     command: /sbin/init
     pre_build_image: true
