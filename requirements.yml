@@ -1,4 +1,4 @@
 # from galaxy
 - src: CoffeeITWorks.burp2_server
-  name: ansible_burp2_server
+  name: coffeeitworks.burp2_server
   version: master
