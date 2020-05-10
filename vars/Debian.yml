@@ -18,6 +18,7 @@ burpui_system_requirements:
   - libev-dev # required for gevent
   - musl-dev # required for gevent
   - libevent-dev # required for gevent
+  - tzdata # required timezone installed for gunicorn
 
 burpui_py3_packages:
   - python3
@@ -31,6 +32,7 @@ burpui_py3_packages:
   - libev-dev # required for gevent
   - musl-dev # required for gevent
   - libevent-dev # required for gevent
+  - tzdata # required timezone installed for gunicorn
 
 burpui_packages:
   - redis-server
