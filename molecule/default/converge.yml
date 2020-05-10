@@ -4,9 +4,9 @@
   vars:
     burpui_standalone: True
     burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@stable#egg=burp-ui'
-    burpui_use_dev: True
+    #burpui_use_dev: True # now in molecule.yml inventory group_vars
   roles:
-    - role: ansible_burp2_server
+    - role: coffeeitworks.burp2_server
     - role: ansible_burpui_server
       tags:
         - burpui-server

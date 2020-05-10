@@ -68,7 +68,7 @@
 - include_tasks: gunicorn.yml
 
 - include_tasks: bui-celery.yml
-  when: burpui_production_celery
+  when: burpui_production_celery | bool
 
 # This is prepared for next 0.5.0 version
 - include_tasks: bui-upgrade.yml
