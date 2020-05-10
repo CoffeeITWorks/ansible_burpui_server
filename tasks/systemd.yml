@@ -33,6 +33,7 @@
     line: "{{ item.value }}"
   with_items:
     - { src: '^supervised ' , value: 'supervised systemd' }
+    - { src: '^bind ' , value: 'bind 127.0.0.1' }
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 18
 
 - name: flush handlers
