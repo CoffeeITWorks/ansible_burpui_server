@@ -8,6 +8,12 @@
   register: burpui_installed_check
   check_mode: yes
 
+- name: pip3 | update pip
+  pip:
+    name: 'pip>=20'
+    state: present
+    executable: "{{ python3_pip }}"
+
 - name: pip3 | install pip packages
   pip:
     name: '{{ burpui_pip_present }}'

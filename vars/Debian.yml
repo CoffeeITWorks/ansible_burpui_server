@@ -6,6 +6,7 @@
 burpui_system_absent:
   - python3-cryptography
 
+# For python2
 burpui_system_requirements:
   - python-pip
   - python-setuptools
@@ -14,6 +15,10 @@ burpui_system_requirements:
   - libffi-dev # dependency for cffi
   - locales-all # required for python3
   - gcc
+  - libev-dev # required for gevent
+  - musl-dev # required for gevent
+  - libevent-dev # required for gevent
+  - tzdata # required timezone installed for gunicorn
 
 burpui_py3_packages:
   - python3
@@ -24,6 +29,10 @@ burpui_py3_packages:
   - libffi-dev # dependency for cffi
   - locales-all # required for python3
   - gcc
+  - libev-dev # required for gevent
+  - musl-dev # required for gevent
+  - libevent-dev # required for gevent
+  - tzdata # required timezone installed for gunicorn
 
 burpui_packages:
   - redis-server

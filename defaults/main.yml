@@ -6,7 +6,7 @@ burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@stable#eg
 burpui_use_dev: False
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.6.1 # still not possible to upgrade to 0.6.5 https://github.com/CoffeeITWorks/ansible_burpui_server/issues/15
+burpui_version: 0.6.6
 python_pip_executable: "pip3" # options pip3 / pip2
 
 burpui_pip_packages:
@@ -24,9 +24,8 @@ burpui_pip_present:
   - "Flask-Session"
   - "Flask-Migrate"
   - "celery>=4.0.2"
-  - "pip>=9"
   - "cffi>=1.7"
-  - "gevent>=1.2"
+  - "gevent>=20.0.5"
   - "ujson>=1.35"
   - "urllib3>=1.19" # required to avoid issues with get_url module
   # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module

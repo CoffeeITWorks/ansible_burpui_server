@@ -1,4 +1,9 @@
+1.8.1:
+* update to molecule 3 and fix gevent install
 1.8.0:
+
+* upgrade to 0.6.6 see #15 https://github.com/CoffeeITWorks/ansible_burpui_server/issues/15
+* change molecule tests to Debian:9 due to some errors with apt sources for Ubuntu
 
 1.7.0:
 
