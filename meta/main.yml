@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: "Diego Daguerre / Pablo Estigarribia"
+  author: "coffeeitworks"
   company: coffeeITWorks
   description: ansible role to deploy and maintain burpui with all its options
 
