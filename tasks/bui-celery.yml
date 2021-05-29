@@ -11,5 +11,5 @@
   when: not bui_use_systemd
 
 - name: include systemd tasks
-  nclude_tasks: systemd.yml
+  include_tasks: systemd.yml
   when: bui_use_systemd
