@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CoffeeITWorks/ansible_burpui_server.svg?branch=master)](https://travis-ci.org/CoffeeITWorks/ansible_burpui_server)
+[![Molecule pipeline test](https://github.com/CoffeeITWorks/ansible_burpui_server/actions/workflows/molecule-test.yml/badge.svg)](https://github.com/CoffeeITWorks/ansible_burpui_server/actions/workflows/molecule-test.yml)
 
 Getting Started
 ================

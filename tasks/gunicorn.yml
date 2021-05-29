@@ -6,9 +6,9 @@
     gunicorn_upstart_service: True
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 14
 
-- name: debus see vars
-  debug:
-    msg: "distribution: {{ ansible_distribution }}, major version: {{ ansible_distribution_major_version|int }}, pip exe: {{ python_pip_executable  }} "
+#- name: debug see vars
+#  debug:
+#    msg: "distribution: {{ ansible_distribution }}, major version: {{ ansible_distribution_major_version|int }}, pip exe: {{ python_pip_executable  }} "
 
 # gunicorn system package should not be used when using python3
 - name: gunicorn | uninstall gunicorn system packages

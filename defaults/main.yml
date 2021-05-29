@@ -19,7 +19,7 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
 # https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
-burpui_pip_present:
+burpui_pip_dev_present:
   #- "cryptography"
   - "redis==3.5.3"
   #- "Flask-Migrate"
@@ -50,6 +50,20 @@ burpui_pip_present:
   - configobj>=5.0.6
   - async_generator>=1.10
   - Click>=7.1.2
+
+burpui_pip_present:
+  #- "cryptography"
+  - "redis==3.5.3"
+  #- "Flask-Migrate"
+  - "celery>=5.1.0"
+  - "cffi>=1.14.5"
+  - "gevent>=21.1.2"
+  - "ujson>=1.35"
+  - "urllib3>=1.19" # required to avoid issues with get_url module
+  # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
+  - "pyasn1==0.4.8"
+  #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
+  - "requests[security]>=2.12"  # required to avoid issues with get_url module
 
 
 burpui_nginx_port: "8080"
