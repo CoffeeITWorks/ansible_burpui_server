@@ -10,7 +10,7 @@ driver:
 platforms:
 
   - name: ansible_burpui_server-03
-    image: "geerlingguy/docker-ubuntu2004-ansible"
+    image: "geerlingguy/docker-ubuntu1804-ansible"
     privileged: True
     command: /sbin/init
     pre_build_image: true

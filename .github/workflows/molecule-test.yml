@@ -19,7 +19,7 @@ jobs:
         scenario:
           - centos-8
           - ubuntu-2004
-          - stable-ubuntu-2004
+          - stable-ubuntu-1804
     steps:
 
       - name: Checkout
