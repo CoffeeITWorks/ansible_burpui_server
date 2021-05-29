@@ -23,6 +23,7 @@ burpui_py3_packages:
 burpui_packages:
   - redis-server
   - nginx
+  - locales
 
 burp_ui_celery_dependencies:
   - supervisor

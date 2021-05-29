@@ -17,6 +17,8 @@ burpui_py3_packages:
   - openssl-devel
   - libffi-devel
   - gcc
+  - langpacks-en
+  - glibc-all-langpacks
 
 burp_ui_celery_dependencies:
   - supervisor
