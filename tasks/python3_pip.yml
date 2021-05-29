@@ -36,4 +36,4 @@
   register: bui_pip_install
   when: burpui_use_dev
   notify: restart burpui services
-
+  changed_when: false
