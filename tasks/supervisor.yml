@@ -1,4 +1,5 @@
 ---
+# DEPRECATED
 
 - name: install Supervisor
   package:

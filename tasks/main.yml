@@ -22,16 +22,13 @@
     gunicorn_systemd_service: True
   when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 8
 
-- name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
+- name: set gunicorn_systemd_service true for RedHat
   set_fact: 
     gunicorn_systemd_service: True
   when: ansible_os_family == 'RedHat'
 
 - include_tasks: python3_pip.yml
   when: python_pip_executable == "pip3"
-
-- include_tasks: python2_pip.yml
-  when: python_pip_executable == "pip2"
 
 - name: create burp folder
   file:

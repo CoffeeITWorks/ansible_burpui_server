@@ -6,8 +6,10 @@
     path: /var/spool/burpui
     state: directory
 
-- include_tasks: supervisor.yml
+- name: include supervisord tasks [DEPRECATED]
+  include_tasks: supervisor.yml
   when: not bui_use_systemd
 
-- include_tasks: systemd.yml
+- name: include systemd tasks
+  nclude_tasks: systemd.yml
   when: bui_use_systemd

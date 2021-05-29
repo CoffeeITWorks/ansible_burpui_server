@@ -7,16 +7,10 @@
     cache_valid_time: 43200
   changed_when: false
   when: ansible_os_family == 'Debian'
-  
-- name: install required system packages
-  package:
-    name: "{{ burpui_system_requirements | join(',') }}"
-    state: present
-  when: python_pip_executable == "pip2"
 
 - name: install requirements for ansible pip
   package:
-    name: ['python-setuptools']
+    name: ['python3-setuptools']
     state: present
 
 - name: install burpui package requirements for python3

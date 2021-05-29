@@ -6,20 +6,6 @@
 burpui_system_absent:
   - python3-cryptography
 
-# For python2
-burpui_system_requirements:
-  - python-pip
-  - python-setuptools
-  - python-dev
-  - libssl-dev # dependecy of ndg-httpsclient
-  - libffi-dev # dependency for cffi
-  - locales-all # required for python3
-  - gcc
-  - libev-dev # required for gevent
-  - musl-dev # required for gevent
-  - libevent-dev # required for gevent
-  - tzdata # required timezone installed for gunicorn
-
 burpui_py3_packages:
   - python3
   - python3-dev

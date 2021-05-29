@@ -47,9 +47,3 @@ provisioner:
     ssh_connection:
       pipelining: true
       ssh_args: -o ControlMaster=auto -o ControlPersist=60s
-  inventory:
-    group_vars:
-      master:
-        burpsrcext: "zip"
-        burp_version: "master"
-        burp_server_port_per_operation_bool: true
