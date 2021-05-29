@@ -15,9 +15,9 @@ install:
     #- ansible-galaxy install -r requirements.yml
 
 script:
-  - molecule --debug create
-  - molecule converge
-  - molecule syntax
+  - molecule --debug create -s default
+  - molecule converge -s default
+  - molecule syntax -s default
   #- molecule idempotence
 
 notifications:
