@@ -21,7 +21,7 @@ burpui_pip_packages:
 # https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
 burpui_pip_present:
   #- "cryptography"
-  - "redis==2.10.6.2"
+  - "redis==3.5.3"
   #- "Flask-Migrate"
   - "celery>=5.1.0"
   - "cffi>=1.14.5"
