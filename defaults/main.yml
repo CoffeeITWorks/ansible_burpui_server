@@ -7,7 +7,7 @@ burpui_use_dev: False
 
 burpui_pip_burpui: "burp-ui"
 burpui_version: 0.6.6
-python_pip_executable: "pip3" # options pip3 / pip2
+python_pip_executable: "pip3" # pip3 only supported option
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
@@ -18,22 +18,54 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[celery]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
-burpui_pip_present:
-  - "cryptography"
-  - "redis"
-  - "Flask-Session"
-  - "Flask-Migrate"
-  - "celery>=4.0.2"
-  - "cffi>=1.7"
-  - "gevent>=20.0.5"
+# https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
+burpui_pip_dev_present:
+  #- "cryptography"
+  - "redis==3.5.3"
+  #- "Flask-Migrate"
+  - "celery>=5.1.0"
+  - "cffi>=1.14.5"
+  - "gevent>=21.1.2"
   - "ujson>=1.35"
   - "urllib3>=1.19" # required to avoid issues with get_url module
   # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
-  - "pyasn1"
-  - "six>=1.10.0"  # try to fix error in dependencies with requests[security]
+  - "pyasn1==0.4.8"
+  #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
-  - "flask-limiter"
-  
+  - "Flask-Limiter==1.4"
+  - trio>=0.18.0
+  - Flask>=1.1.2
+  - Flask-Login>=0.5.0
+  - Flask-Bower>=1.3.0
+  - Flask-Babel>=2.0.0
+  - Flask-WTF>=0.14.3
+  - flask-restx>=0.3.0
+  - Flask-Caching>=1.10.1
+  - Flask-Session>=0.3.2
+  - WTForms>=2.3.3
+  - arrow>=0.14.2
+  - pluginbase>=1.0.0
+  - tzlocal>=2.1
+  - pyOpenSSL>=20.0.1
+  - configobj>=5.0.6
+  - async_generator>=1.10
+  - Click>=7.1.2
+
+burpui_pip_present:
+  #- "cryptography"
+  - "redis==3.5.3"
+  #- "Flask-Migrate"
+  - "celery>=5.1.0"
+  - "cffi>=1.14.5"
+  - "gevent>=21.1.2"
+  - "ujson>=1.35"
+  - "urllib3>=1.19" # required to avoid issues with get_url module
+  # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
+  - "pyasn1==0.4.8"
+  #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
+  - "requests[security]>=2.12"  # required to avoid issues with get_url module
+
+
 burpui_nginx_port: "8080"
 # This is to check availability and nginx template as reverse proxy
 burpui_global_port: "5000"

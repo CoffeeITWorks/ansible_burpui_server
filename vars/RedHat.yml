@@ -6,15 +6,6 @@
 burpui_system_absent:
   - python36-cryptography
 
-burpui_system_requirements:
-  - python-pip
-  - python-devel
-  - python-setuptools
-  - openssl-devel # dependecy of ndg-httpsclient
-  - libffi-devel # dependency for cffi
-  - redhat-rpm-config
-  - gcc
-
 burpui_packages:
   - redis
   - nginx
@@ -22,12 +13,12 @@ burpui_packages:
 burpui_py3_packages:
   - python36
   - python36-devel
-  - python36-setuptools
-  - python36-pip
   - redhat-rpm-config
   - openssl-devel
   - libffi-devel
   - gcc
+  - langpacks-en
+  - glibc-all-langpacks
 
 burp_ui_celery_dependencies:
   - supervisor

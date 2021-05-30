@@ -10,24 +10,9 @@ driver:
 platforms:
 
   - name: ansible_burpui_server-03
-    image: "geerlingguy/docker-debian10-ansible"
+    image: "geerlingguy/docker-ubuntu1804-ansible"
     privileged: True
     command: /sbin/init
-    pre_build_image: true
-    capabilities:
-      - SYS_ADMIN
-    tmpfs:
-      - /run
-      - /tmp
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    groups:
-      - use_pip_package
-
-  - name: ansible_burpui_server-04
-    image: "geerlingguy/docker-centos8-ansible"
-    command: /sbin/init
-    privileged: True
     pre_build_image: true
     capabilities:
       - SYS_ADMIN

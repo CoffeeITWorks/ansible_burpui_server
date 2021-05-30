@@ -6,7 +6,7 @@
     burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@master#egg=burp-ui'
     burpui_use_dev: True
   roles:
-    - role: coffeeitworks.burp2_server
+    # - role: coffeeitworks.burp2_server
     - role: ansible_burpui_server
       tags:
         - burpui-server

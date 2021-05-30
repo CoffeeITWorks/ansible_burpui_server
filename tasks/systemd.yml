@@ -24,6 +24,7 @@
     name: bui-celery
     state: started
     enabled: yes
+  changed_when: false
 
 # redis-server systemd ubuntu
 - name: systemd | fix redis-server setup for systemd
