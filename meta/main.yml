@@ -2,6 +2,7 @@
 galaxy_info:
   author: "coffeeitworks"
   company: coffeeITWorks
+  role_name: ansible_burpui_server
   description: ansible role to deploy and maintain burpui with all its options
 
   # If the issue tracker for your role is not on github, uncomment the
