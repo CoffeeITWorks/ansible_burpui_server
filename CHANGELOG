@@ -1,3 +1,6 @@
+2.1.0:
+* Fixes on molecule v4 tests and latest galaxy meta compatibility
+
 2.0.0:
 * Remove python2 support
 * Update tests to github actions
