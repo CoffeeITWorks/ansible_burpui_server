@@ -30,6 +30,9 @@
 - include_tasks: python3_pip.yml
   when: python_pip_executable == "pip3"
 
+- include_tasks: workaround_python310.yml
+  when: python_pip_executable == "pip3"
+
 - name: create burp folder
   file:
     path: /etc/burp
