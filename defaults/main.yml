@@ -65,6 +65,11 @@ burpui_pip_present:
   #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
 
+# workaround for: https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
+burpui_pip_workaround:
+  - "Flask==2.0.3"
+  - "pyOpenSSL>=22.1.0"
+  - "Werkzeug==2.0.2"
 
 burpui_nginx_port: "8080"
 # This is to check availability and nginx template as reverse proxy

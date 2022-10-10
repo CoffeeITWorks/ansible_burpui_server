@@ -1,0 +1,7 @@
+# workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
+
+- name: workaround | install pip requirements
+  pip:
+    name: '{{ burpui_pip_workaround }}'
+    state: present
+    executable: "{{ python3_pip }}"
