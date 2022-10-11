@@ -1,7 +1,11 @@
 # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-
+# This workaround only works with dev version of the package install
+# requires:
+# burpui_use_dev: True
 - name: workaround | install pip requirements
   pip:
     name: '{{ burpui_pip_workaround }}'
     state: present
     executable: "{{ python3_pip }}"
+  when: burpui_use_dev
+  notify: restart burpui services
