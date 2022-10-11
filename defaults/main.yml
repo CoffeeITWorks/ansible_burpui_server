@@ -46,7 +46,7 @@ burpui_pip_dev_present:
   - arrow>=1.1.1
   - pluginbase>=1.0.0
   - tzlocal>=2.1
-  - pyOpenSSL>=22.1.0
+  - pyOpenSSL>=22.0.0
   - configobj>=5.0.6
   - async_generator>=1.10
   - Click>=7.1.2
@@ -69,7 +69,7 @@ burpui_pip_present:
 # workaround for: https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
 burpui_pip_workaround:
   - "Flask==2.0.3"
-  - "pyOpenSSL>=22.1.0"
+  - "pyOpenSSL>=22.0.0"
   - "Werkzeug==2.0.2"
 
 burpui_nginx_port: "8080"
