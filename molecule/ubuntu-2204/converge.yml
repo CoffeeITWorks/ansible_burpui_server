@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    burpui_standalone: True
+    burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@master#egg=burp-ui'
+    burpui_use_dev: True
+  tasks:
+    - name: Include ansible_burpui_server
+      include_role: 
+        name: ansible_burpui_server
+      tags:
+        - burpui-server

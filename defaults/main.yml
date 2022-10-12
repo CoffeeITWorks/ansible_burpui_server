@@ -51,7 +51,7 @@ burpui_pip_dev_present:
   - pluginbase>=1.0.0
   - tzlocal>=2.1
   # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-  - pyOpenSSL>=21.0.0
+  - pyOpenSSL>=20.0.1
   - configobj>=5.0.6
   - async_generator>=1.10
   - Click>=7.1.2
