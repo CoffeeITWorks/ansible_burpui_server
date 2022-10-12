@@ -28,7 +28,7 @@ burpui_pip_dev_present:
   #- Flask-Migrate
   - celery>=5.1.0
   - cffi>=1.14.5
-  - gevent>=21.1.2
+  - gevent>=21.12.0
   - ujson>=1.35
   - urllib3>=1.19 # required to avoid issues with get_url module
   # - ndg-httpsclient>=0.4.2 # required to avoid issues with get_url module

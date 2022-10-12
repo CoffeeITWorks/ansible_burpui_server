@@ -23,9 +23,10 @@
 
 - name: pip3 | install pip dev packages
   pip:
-    name: '{{ burpui_pip_dev_present }}'
+    name: '{{ item }}'
     state: present
     executable: "{{ python3_pip }}"
+  with_items: "{{ burpui_pip_dev_present }}"
   when: burpui_use_dev
 
 - name: pip3 | Install pip packages by version
