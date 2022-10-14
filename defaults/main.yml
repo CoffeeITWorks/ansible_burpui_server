@@ -2,8 +2,7 @@
 # file defaults/main.yml
 
 # use syntax: https://pip.pypa.io/en/stable/reference/pip_install/#git
-# burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@stable#egg=burp-ui'
-burpui_pip_burpui_dev: 'git+https://git.ziirish.me/pablodav/burp-ui.git@stable_workaround#egg=burp-ui'
+burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@master#egg=burp-ui'
 burpui_use_dev: True
 # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
 # This workaround only works with dev version of the package install
