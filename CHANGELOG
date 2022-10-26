@@ -3,6 +3,8 @@
 * breaks support for ubuntu 2004
 * support ubuntu 2204
 * installs from source by default
+* redesign install using virtualenv
+
 2.1.0:
 * Fixes on molecule v4 tests and latest galaxy meta compatibility
 

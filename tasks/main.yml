@@ -2,40 +2,45 @@
 # file: tasks/main.yml
 # https://git.ziirish.me/ziirish/burp-ui/blob/master/docker/docker-burpui/assets/setup/install
 
-- include_tasks: multi_os.yml
+- name: main | include multi_os.yml
+  include_tasks: multi_os.yml
 
-- include_tasks: RedHat.yml
+- name: main | include RedHat.yml
+  include_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
 
-- include_tasks: requirements.yml
+- name: main | include requirements.yml
+  include_tasks: requirements.yml
 
-- include_tasks: requirements_dev.yml
+- name: main | include requirements_dev.yml
+  include_tasks: requirements_dev.yml
   when: burpui_use_dev
 
-- name: set gunicorn_systemd_service true for Ubuntu 16.04 and newer
+- name: main | set gunicorn_systemd_service true for Ubuntu 16.04 and newer
   set_fact: 
     gunicorn_systemd_service: True
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 16
 
-- name: set gunicorn_systemd_service true for Debian 8 and newer
+- name: main | set gunicorn_systemd_service true for Debian 8 and newer
   set_fact: 
     gunicorn_systemd_service: True
   when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 8
 
-- name: set gunicorn_systemd_service true for RedHat
+- name: main | set gunicorn_systemd_service true for RedHat
   set_fact: 
     gunicorn_systemd_service: True
   when: ansible_os_family == 'RedHat'
 
-- include_tasks: python3_pip.yml
+- name: main | include python3_pip.yml
+  include_tasks: python3_pip.yml
   when: python_pip_executable == "pip3"
 
-- name: create burp folder
+- name: main | create burp folder
   file:
     path: /etc/burp
     state: directory
 
-- name: configure burpui server
+- name: main | configure burpui server
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -46,14 +51,14 @@
     - { src: "burpui_site.j2", dest: "{{ burpui_nginx_config_path }}" }
   notify: restart burpui services
 
-- name: enable nginx site
+- name: main | enable nginx site
   file:
     src: "{{ burpui_nginx_config_path }}"
     dest: "/etc/nginx/sites-enabled/burpui"
     state: link
   when: ansible_os_family == 'Debian'
 
-- name: fix httproxy issue in ngnix
+- name: main | fix httproxy issue in ngnix
   lineinfile:
     dest: "/etc/nginx/fastcgi_params"
     regexp: "{{ item.src }}"
@@ -62,7 +67,8 @@
     - { src: 'fastcgi_param HTTP_PROXY "";' , value: 'fastcgi_param HTTP_PROXY "";' }
 
 # include tasks for gunicorn specific
-- include_tasks: gunicorn.yml
+- name: main | include gunicorn.yml
+  include_tasks: gunicorn.yml
 
 - include_tasks: bui-celery.yml
   when: burpui_production_celery | bool
@@ -71,7 +77,7 @@
 - include_tasks: bui-upgrade.yml
   when: bui_pip_install.changed and not burpui_installed_check.changed
 
-- name: ensure services are started and enabled
+- name: main | ensure services are started and enabled
   service:
     name: "{{ item }}"
     state: started

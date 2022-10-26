@@ -4,7 +4,8 @@
   pip:
     name: "{{ burpui_pip_burpui }}"
     state: present
-    executable: "{{ python3_pip }}"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
   register: burpui_installed_check
   check_mode: yes
 
@@ -12,21 +13,22 @@
   pip:
     name: 'pip>=20'
     state: present
-    executable: "{{ python3_pip }}"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
 
 - name: pip3 | install pip packages
   pip:
     name: '{{ burpui_pip_present }}'
     state: present
-    executable: "{{ python3_pip }}"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
   when: not burpui_use_dev
 
-- name: pip3 | install pip dev packages
+- name: pip3 | install pip dev packages from requirements_dev.txt
   pip:
-    name: '{{ item }}'
-    state: present
-    executable: "{{ python3_pip }}"
-  with_items: "{{ burpui_pip_dev_present }}"
+    requirements: "{{ burpui_virtualenv }}/requirements_dev.txt"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
   when: burpui_use_dev
 
 - name: pip3 | Install pip packages by version
@@ -34,15 +36,19 @@
     name: "{{ item.name }}"
     state: present
     version: "{{ item.version}}"
-    executable: "{{ python3_pip }}"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
   with_items: "{{ burpui_pip_packages }}"
   register: bui_pip_install
   when: not burpui_use_dev
   notify: restart burpui services
  
 - name: pip3 | Install pip packages by tar.gz
-  shell: "{{ python3_pip }} install -e {{ burpui_pip_burpui_dev }}"
+  pip:
+    name: "{{ burpui_pip_burpui_dev }}"
+    state: present
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
   register: bui_pip_install
   when: burpui_use_dev
   notify: restart burpui services
-  changed_when: false

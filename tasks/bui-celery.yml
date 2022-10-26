@@ -1,15 +1,15 @@
 ---
 # file defaults/bui-celery.yml
 
-- name: create burp ui folder
+- name: bui-celery | create burp ui folder
   file:
     path: /var/spool/burpui
     state: directory
 
-- name: include supervisord tasks [DEPRECATED]
+- name: bui-celery | include supervisord tasks [DEPRECATED]
   include_tasks: supervisor.yml
   when: not bui_use_systemd
 
-- name: include systemd tasks
+- name: bui-celery | include systemd tasks
   include_tasks: systemd.yml
   when: bui_use_systemd

@@ -79,26 +79,19 @@ Upgrade steps are managed automatically by this role.
 Installed services
 ==================
 
-It uses http://supervisord.org/ for better management of third-party  services on the system and to be compatible with most systems (ubuntu trusty+, debian, centos, fedora, etc).
 
-supervisor is used for bui-celery
+by default systemd is used for bui-celery and gunicorn
 default service manager for the package manager of your distribution is used for gunicorn (the service responsible to start burpui) and same for nginx (the proxy configured to expose burpui)
 
-So to restart installed services/daemons you should use: 
+Python virtualenv is used, by default you will see packages in:
 
-    sudo supervisorctl restart bui-celery  (depends on the service you want to restart)
+    /venv_apps/bui/lib/python3.10/site-packages/
 
-you can also use supervisorctl shell:
+And binaries in:
 
-    sudo supervisorctl
+    /venv_apps/bui/bin
 
-And then interactively use all options.
-
-*Logs:*
-
-Also supervisord allow proper stdout and stderror to logs redirection, so all logs are under `/var/logs/supervisor`
-
-Logs are also rotated by logrotate automatically.
+You can change the variable for virtualenv, see defaults vars.
 
 Accessing burpui
 ----------------

@@ -1,7 +1,7 @@
 ---
 # file: tasks/multi_os.yml
 
-- name: Gather OS Specific Variables
+- name: multi_os | Gather OS Specific Variables
   include_vars: "{{ item }}"
   with_first_found:
     - "../vars/{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"

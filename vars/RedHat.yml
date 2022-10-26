@@ -13,6 +13,7 @@ burpui_packages:
 burpui_py3_packages:
   - python36
   - python36-devel
+  - python36-virtualenv
   - redhat-rpm-config
   - openssl-devel
   - libffi-devel

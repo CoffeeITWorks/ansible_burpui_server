@@ -23,41 +23,9 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
 # https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
-burpui_pip_dev_present:
-  - redis==3.5.3
-  #- Flask-Migrate
-  - celery>=5.1.0
-  - cffi>=1.14.5
-  - gevent>=21.12.0
-  - ujson>=1.35
-  - urllib3>=1.19 # required to avoid issues with get_url module
-  # - ndg-httpsclient>=0.4.2 # required to avoid issues with get_url module
-  - pyasn1==0.4.8
-  #- six>=1.10.0  # try to fix error in dependencies with requests[security]
-  - requests[security]>=2.12 # required to avoid issues with get_url module
-  - Flask-Limiter==1.4
-  - trio>=0.18.0
-  # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-  - Flask>=1.1.4
-  - Flask-Login>=0.5.0
-  - Flask-Bower>=1.3.0
-  - Flask-Babel>=2.0.0
-  - Flask-WTF>=0.14.3
-  - flask-restx>=0.3.0
-  - Flask-Caching>=1.10.1
-  - Flask-Session>=0.3.2
-  - WTForms>=2.3.3
-  - arrow>=1.1.1
-  - pluginbase>=1.0.0
-  - tzlocal>=2.1
-  # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-  - pyOpenSSL>=20.0.1
-  - configobj>=5.0.6
-  - async_generator>=1.10
-  - Click>=7.1.2
-  # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-  - Werkzeug==2.0.2
-  - cryptography==36.0.2
+burpui_virtualenv: /venv_apps/bui
+burpui_virtualenv_bin: "{{ burpui_virtualenv}}/bin"
+burpui_virtualenv_python: python3
 
 burpui_pip_present:
   #- "cryptography"
@@ -72,12 +40,6 @@ burpui_pip_present:
   - "pyasn1==0.4.8"
   #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
-
-# workaround for: https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
-burpui_pip_workaround:
-  - "Flask==2.0.3"
-  - "pyOpenSSL>=22.0.0"
-  - "Werkzeug==2.0.2"
 
 burpui_nginx_port: "8080"
 # This is to check availability and nginx template as reverse proxy
@@ -184,7 +146,7 @@ burpui_agents:
 burpui_sv_priority: "20"
 burpui_sv_directory: "/tmp"
 burpui_sv_environment: "C_FORCE_ROOT=true"
-burpui_sv_command: "/usr/local/bin/bui-celery -c /etc/burp/burpui.cfg -- --beat"
+burpui_sv_command: "{{ burpui_virtualenv_bin }}/bui-celery -c /etc/burp/burpui.cfg -- --beat"
 burpui_sv_autostart: "true"
 burpui_sv_autorestart: "true"
 burpui_sv_stdout_logfile: "/var/log/supervisor/%(program_name)s.log"
