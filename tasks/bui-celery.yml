@@ -10,6 +10,16 @@
   include_tasks: supervisor.yml
   when: not bui_use_systemd
 
+- name: bui-celery | workaround link to /bin/celery
+  ansible.builtin.file:
+    src: "{{ burpui_virtualenv_bin }}/celery"
+    dest: /bin/celery
+    owner: root
+    group: root
+    mode: '0755'
+    state: link
+
+
 - name: bui-celery | include systemd tasks
   include_tasks: systemd.yml
   when: bui_use_systemd
