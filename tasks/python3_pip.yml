@@ -42,6 +42,15 @@
   register: bui_pip_install
   when: not burpui_use_dev
   notify: restart burpui services
+
+- name: pip3 | workaround link to /bin/flask
+  ansible.builtin.file:
+    src: "{{ burpui_virtualenv_bin }}/flask"
+    dest: /bin/flask
+    owner: root
+    group: root
+    mode: '0755'
+    state: link
  
 - name: pip3 | Install pip packages by tar.gz
   pip:
