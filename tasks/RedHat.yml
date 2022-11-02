@@ -1,17 +1,17 @@
 ---
 
-- name: RedHat | install EPEL release package for RHEL
-  yum:
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
-    state: latest
-  retries: 2
-  delay: 2
-  when: ansible_distribution == 'Red Hat Enterprise Linux'
+# - name: RedHat | install EPEL release package for RHEL
+#   yum:
+#     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+#     state: latest
+#   retries: 2
+#   delay: 2
+#   when: ansible_distribution == 'Red Hat Enterprise Linux'
 
-- name: RedHat | install EPEL release package for Centos
-  yum:
+- name: RedHat | install EPEL release package 
+  dnf:
     name: "epel-release"
     state: present
   retries: 3
   delay: 2
-  when: ansible_distribution == 'CentOS'
+  when: ansible_os_family == 'RedHat'

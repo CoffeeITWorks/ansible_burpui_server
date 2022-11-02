@@ -1,5 +1,11 @@
 ---
 
+- name: pip3 | install virtualenv from pip3
+  pip:
+    name: "virtualenv>=20.16.6"
+    state: present
+    executable: "pip3"
+
 - name: pip3 | check only if burpui is installed
   pip:
     name: "{{ burpui_pip_burpui }}"

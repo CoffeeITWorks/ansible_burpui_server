@@ -18,9 +18,6 @@
 
 - name: requirements | ensure install requirements for ansible pip
   package:
-
-- name: requirements | ensure install requirements for ansible pip
-  package:
     name: ['python3-setuptools']
     state: present
 

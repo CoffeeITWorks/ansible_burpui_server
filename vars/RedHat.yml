@@ -4,16 +4,16 @@
 ---
 
 burpui_system_absent:
-  - python36-cryptography
+  - python3-cryptography
 
 burpui_packages:
   - redis
   - nginx
 
 burpui_py3_packages:
-  - python36
-  - python36-devel
-  - python36-virtualenv
+  - python3
+  - python3-devel
+  # - python3-virtualenv # Install with pip now
   - redhat-rpm-config
   - openssl-devel
   - libffi-devel
