@@ -3,7 +3,6 @@
   hosts: all
   vars:
     burpui_standalone: True
-    burpui_use_dev: True
   tasks:
     - name: Include ansible_burpui_server
       include_role: 
