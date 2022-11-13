@@ -43,7 +43,8 @@ burpui_global_port: "5000"
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#configuration
 burpui_global_version: '2'
 burpui_global_auth: 'basic'
-burpui_global_acl: 'basic'
+# use burpui_global_acl: 'basic' to enable this
+burpui_global_acl: 'none' # By default don't enable acl
 burpui_global_audit: 'none'
 burpui_global_plugins: 'none'
 #[UI]
@@ -108,7 +109,7 @@ burpui_ldap_base: '"ou=users,dc=example,dc=com"'
 burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
 burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
 
-#[BASIC]
+#[BASIC:AUTH]
 burpui_basic_enabled: false
 burpui_basic_priority: "2"
 # Enable mixed to allow plain passwords https://git.ziirish.me/ziirish/burp-ui/issues/177#note_1794
@@ -117,14 +118,19 @@ burpui_basic_users:
   - { name: "admin", password: "plain$$adminstrongpassword" }
 
 
-#[LOCAL]
+#[LOCAL:AUTH]
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#local
 burpui_local_enabled: false
 burpui_local_priority: "3"
 burpui_local_users: "user1,user2"
 # Minimum uid that will be allowed to login
 burpui_local_limit: 1000
-
+#[ACL]
+burpui_acl_extended: 'true'
+burpui_acl_assume_rw: 'true'
+burpui_acl_inverse_inheritance: 'false'
+burpui_acl_implicit_link: 'true'
+burpui_acl_legacy: 'false'
 #[BASIC:ACL]
 burpui_basic_acl_enabled: false
 burpui_basic_acl_priority: 100

@@ -87,15 +87,15 @@ database = {{ burpui_production_database }}
 # favour of the one announced by your reverse-proxy
 # prefix option should be moved to Production section in 0.7.0+
 prefix = {{ burpui_production_prefix }}
-# ProxyFix
+# ProxyFix - Not yet implemented in 1.0.0
 # number of reverse-proxy to trust in order to retrieve some HTTP headers
 # All the details can be found here:
 # https://werkzeug.palletsprojects.com/en/0.15.x/middleware/proxy_fix/#module-werkzeug.middleware.proxy_fix
-num_proxies = "{{ burpui_production_num_proxies }}"
+# num_proxies = "{{ burpui_production_num_proxies }}"
 # alternatively, you can specify your own ProxyFix args.
 # The default is: "{'x_proto': {num_proxies}, 'x_for': {num_proxies}, 'x_host': {num_proxies}, 'x_prefix': {num_proxies}}"
 # if num_proxies > 0, else it defaults to ProxyFix defaults
-proxy_fix_args = {{ burpui_production_proxy_fix_args }}
+# proxy_fix_args = {{ burpui_production_proxy_fix_args }}
 
 ## http://burp-ui.readthedocs.io/en/latest/advanced_usage.html#websocket
 [WebSocket]
@@ -260,7 +260,36 @@ users = {{ burpui_local_users }}
 limit = {{ burpui_local_limit }}
 {% endif %}
 
-{% if burpui_basic_acl_enabled %}
+{% if burpui_global_acl == 'basic' %}
+# acl engine global options
+[ACL]
+# Enable extended matching rules (enabled by default)
+# If the rule is a string like 'user1 = desk*', it will match any client that
+# matches 'desk*' no mater what agent it is attached to.
+# If it is a coma separated list of strings like 'user1 = desk*,laptop*' it
+# will match the first matching rule no mater what agent it is attached to.
+# If it is a dict like:
+# user1 = '{"agents": ["srv*", "www*"], "clients": ["desk*", "laptop*"]}'
+# It will also validate against the agent name.
+extended = {{ burpui_acl_extended }}
+# If you don't explicitly specify ro/rw grants, what should we assume?
+assume_rw = {{ burpui_acl_assume_rw }}
+# The inheritance order maters, it means depending the order you choose,
+# the ACL engine won't handle the grants the same way.
+# By default, ACL inherited by groups will have lower priority, unless you
+# choose otherwise
+inverse_inheritance = {{ burpui_acl_inverse_inheritance }}
+# If you specify agents and clients separately, should we link them implicitly?
+# For instance, '{"agents": ["agent1", "agent2"], "clients": ["client1", "client2"]}'
+# will become: '{"agents": {"agent1": ["client1", "client2"], "agent2": ["client1", "client2"]}}'
+implicit_link = {{ burpui_acl_implicit_link }}
+# Enable 'legacy' behavior
+# Since v0.6.0, if you don't specify the agents name explicitly, users will be
+# granted on every agents where a client matches user's ACL. If you enable the
+# 'legacy' behavior, you will need to specify the agents explicitly.
+# Note: enabling this option will also disable the extended mode
+legacy = {{ burpui_acl_legacy }}
+
 ## basicacl specific options
 ## Note: in case you leave this section commented, the user 'admin' will have
 ## access to all clients whereas other users will only see the client that have

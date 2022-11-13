@@ -45,7 +45,6 @@ To enable users you can add a list of basic users:
 ```yaml
 # Enable mixed to allow plain passwords https://git.ziirish.me/ziirish/burp-ui/issues/177#note_1794
 burpui_basic_enabled: false
-burpui_basic_mixed: "true"
 burpui_basic_users:
   - { name: "admin", password: "plain$$admin" }
 ```
@@ -62,14 +61,15 @@ werkzeug.security.generate_password_hash('plainpassword', method='pbkdf2:sha256'
 
 Other optional acl for users is to use the basic acl: 
 
+Check the burp-ui docs, you can use wildcards and others special characters here.
 ```yaml
 # http://burp-ui.readthedocs.io/en/latest/usage.html#basic-acl
-burpui_basic_acl_enabled: false
+burpui_global_acl: 'basic'
 burpui_basic_acl_admins: "user1,user2"
 burpui_basic_acl_users: false
-#burpui_basic_acl_users:
-#  - { name: "user3", value: '["client4", "client5"]' }
-#  - { name: "user4", value: '{"agent2": ["client8"], "agent1": ["client6", "client7"]}' }
+burpui_basic_acl_users:
+  - { name: "user3", value: '["client4", "client5"]' }
+  - { name: "user4", value: '{"agent2": ["client8"], "agent1": ["client6", "client7"]}' }
 ```
 
 ### Multi-agent mode: 
