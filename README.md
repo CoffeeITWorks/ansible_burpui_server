@@ -21,6 +21,19 @@ VARS
 
 defaults/main.yml
 
+```yaml
+# burp backend to load either one of 'burp1', 'burp2', 'parallel' or 'multi'.
+# If you choose 'multi', you will have to declare at lease one 'Agent' section.
+# If you choose 'parallel', you need to configure the [Parallel] section.
+# If you choose either 'burp1' or 'burp2', you need to configure the [Burp]
+# section.
+# The [Burp] section is also used with the 'parallel' backend for the restoration
+# process.
+# You can also use whatever custom backend you like if it is located in the
+# 'plugins' directory and if it implements the right interface.
+burpui_backend = burp2
+```
+
 By default this role will configure nginx as proxy for gunicorn (the service that starts burpui), the variable that will expose the tcp port for burpui is: 
 
     burpui_nginx_port: "8080"
@@ -34,7 +47,17 @@ To enable users you can add a list of basic users:
 burpui_basic_enabled: false
 burpui_basic_mixed: "true"
 burpui_basic_users:
-  - { name: "admin", password: "admin" }
+  - { name: "admin", password: "plain$$admin" }
+```
+
+Use the following method to create hash passwords:
+
+    pip install --user werkzeug
+
+```python
+werkzeug.security.generate_password_hash('plainpassword', method='pbkdf2:sha256')
+
+'pbkdf2:sha256:260000$hZ7teoNFWtkS6g4J$4ff797c0f8d1d59009a8ef8d9ee1d1126fae1713d7128d66d1132005dcfe7c9a'
 ```
 
 Other optional acl for users is to use the basic acl: 
@@ -57,7 +80,7 @@ To enable the connection of burpui multi-agent mode, use these vars, example:
 
 ```yaml
 # bui-agent
-burpui_standalone: false
+burpui_backend: multi
 burpui_agents:
   - { name: "localhost", address: "127.0.0.1", port: "5001", password: "password", ssl: "false" }
   - { name: "host2", address: "192.168.122.202", port: "5001", password: "password", ssl: "false" }

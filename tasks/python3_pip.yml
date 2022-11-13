@@ -67,3 +67,13 @@
   register: bui_pip_install
   when: burpui_use_dev
   notify: restart burpui services
+
+- name: bui-celery | links to /usr/local/bin
+  ansible.builtin.file:
+    src: "{{ burpui_virtualenv_bin }}/{{ item }}"
+    dest: "{{ burpui_local_bin }}/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+    state: link
+  with_items: "{{ burpui_bin_links }}"
