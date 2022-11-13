@@ -8,6 +8,10 @@
 * installs from source by default
 * redesign install using virtualenv
 * Update to burpui_version 1.0.0
+* See the breaking changes in https://burp-ui.readthedocs.io/en/latest/changelog.html#id1
+* Parallel option will be added and tested on next version
+* breaks compatibility with old burpui versions
+* closes #12 added doc about hashpassword
 
 
 2.1.0:

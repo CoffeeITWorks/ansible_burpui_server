@@ -10,7 +10,7 @@
 
 - name: requirements | create virtualenv dir
   ansible.builtin.file:
-    path: "{{ burpui_virtualenv_python }}"
+    path: "{{ burpui_virtualenv }}"
     state: directory 
     owner: root
     group: root

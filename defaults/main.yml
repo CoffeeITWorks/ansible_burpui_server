@@ -21,24 +21,19 @@ burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}[celery]", version: "{{ burpui_version }}" }
   - { name: "{{ burpui_pip_burpui }}[websocket]", version: "{{ burpui_version }}" }
 
-# https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
-burpui_virtualenv: /venv_apps/bui
-burpui_virtualenv_bin: "{{ burpui_virtualenv}}/bin"
-burpui_virtualenv_python: python3
+##### --- CONFIG SECTION --- #####
 
-burpui_pip_present:
-  #- "cryptography"
-  - "redis==3.5.3"
-  #- "Flask-Migrate"
-  - "celery>=5.1.0"
-  - "cffi>=1.14.5"
-  - "gevent>=21.1.2"
-  - "ujson>=1.35"
-  - "urllib3>=1.19" # required to avoid issues with get_url module
-  # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
-  - "pyasn1==0.4.8"
-  #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
-  - "requests[security]>=2.12"  # required to avoid issues with get_url module
+# burp backend to load either one of 'burp1', 'burp2', 'parallel' or 'multi'.
+# If you choose 'multi', you will have to declare at lease one 'Agent' section.
+# If you choose 'parallel', you need to configure the [Parallel] section.
+# Parallel is not yet added and tested, see issue#33
+# If you choose 'burp2', you need to configure the [Burp]
+# section.
+# The [Burp] section is also used with the 'parallel' backend for the restoration
+# process.
+# You can also use whatever custom backend you like if it is located in the
+# 'plugins' directory and if it implements the right interface.
+burpui_backend: burp2
 
 burpui_nginx_port: "8080"
 # This is to check availability and nginx template as reverse proxy
@@ -46,11 +41,11 @@ burpui_global_port: "5000"
 
 #[Global]
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#configuration
-burpui_standalone: true
-burpui_global_version: "2"
-burpui_global_auth: "basic"
-burpui_global_acl: "basic"
-burpui_global_prefix: "none"
+burpui_global_version: '2'
+burpui_global_auth: 'basic'
+# use burpui_global_acl: 'basic' to enable this
+burpui_global_acl: 'none' # By default don't enable acl
+burpui_global_audit: 'none'
 burpui_global_plugins: 'none'
 #[UI]
 burpui_ui_refresh: "180"
@@ -65,10 +60,13 @@ burpui_production_cache: "redis"
 burpui_production_redis: "localhost:6379"
 burpui_production_celery: "true"
 burpui_production_database: "sqlite:////var/spool/burpui/celery.db"
-burpui_production_limiter: false
+burpui_production_limiter: "false"
+burpui_production_prefix: "none"
 # limiter ratio
 # see https://flask-limiter.readthedocs.io/en/stable/#ratelimit-string
 burpui_production_ratio: '60/minute'
+burpui_production_num_proxies: '0'
+burpui_production_proxy_fix_args: "{'x_proto': {num_proxies}, 'x_for': {num_proxies}, 'x_host': {num_proxies}, 'x_prefix': {num_proxies}}"
 #[Security]
 burpui_security_includes: "/etc/burp"
 burpui_security_enforce: "false"
@@ -94,9 +92,11 @@ burpui_backend_bconfcli: "/etc/burp/burp.conf"
 burpui_backend_bconfsrv: "/etc/burp/burp-server.conf"
 burpui_backend_tmpdir: "/tmp"
 burpui_backend_timeout: "60"
-#[LDAP]
+burpui_backend_deep_inspection: "false"
+# [Global]
+# auth = ldap
+#[LDAP:AUTH]
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#ldap
-burpui_ldap_enabled: false
 burpui_ldap_priority: "1"
 burpui_ldap_host: "127.0.0.1"
 burpui_ldap_port: "389"
@@ -109,37 +109,53 @@ burpui_ldap_base: '"ou=users,dc=example,dc=com"'
 burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
 burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
 
-#[BASIC]
+#[BASIC:AUTH]
 burpui_basic_enabled: false
 burpui_basic_priority: "2"
 # Enable mixed to allow plain passwords https://git.ziirish.me/ziirish/burp-ui/issues/177#note_1794
 burpui_basic_mixed: "true"
 burpui_basic_users:
-  - { name: "admin", password: "admin" }
+  - { name: "admin", password: "plain$$adminstrongpassword" }
 
-#[LOCAL]
+
+#[LOCAL:AUTH]
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#local
 burpui_local_enabled: false
 burpui_local_priority: "3"
 burpui_local_users: "user1,user2"
 # Minimum uid that will be allowed to login
 burpui_local_limit: 1000
-
+#[ACL]
+burpui_acl_extended: 'true'
+burpui_acl_assume_rw: 'true'
+burpui_acl_inverse_inheritance: 'false'
+burpui_acl_implicit_link: 'true'
+burpui_acl_legacy: 'false'
 #[BASIC:ACL]
 burpui_basic_acl_enabled: false
 burpui_basic_acl_priority: 100
 burpui_basic_acl_admins: "user1,user2"
 burpui_basic_acl_users: false
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#basic-acl
-#burpui_basic_acl_users:
-#  - +moderator = user5,user6
-#  - @moderator = '{"agents":{"ro":["agent1"]}}'
+# burpui_basic_acl_users:
+#  - '+moderator = user5,user6'
+#  - '@moderator = '{"agents":{"ro":["agent1"]}}'
 
 # bui-agent
-# change burpui_standalone: false
 # To use multiple agents:
+# set burpui_backend: multiagent
 burpui_agents:
   - { name: "localhost", address: "127.0.0.1", port: "5001", password: "password", ssl: "false" }
+
+# TODO: Add support for parallel backend
+# https://burp-ui.readthedocs.io/en/latest/advanced_usage.html#parallel
+# burpui_parallel_host: localhost
+# burpui_parallel_port: 1111
+# burpui_parallel_timeout: 15
+# burpui_parallel_password: xxsdfsdfsf
+# burpui_parallel_ssl: true
+# burpui_parallel_concurrency: 2
+# burpui_parallel_init_wait: 15
 
 # Bui Celery
 burpui_sv_priority: "20"
@@ -160,3 +176,47 @@ burpui_group: 'root'
 gunicorn_systemd_service: True
 bui_use_systemd: True
 gunicorn_upstart_service: False
+
+# Burpui audit basic
+# https://burp-ui.readthedocs.io/en/latest/advanced_usage.html#basic-audit
+burpui_audit_priority: '100'
+burpui_audit_level: 'WARNING'
+burpui_audit_logfile: 'none'
+burpui_audit_max_bytes: '30 * 1024 * 1024'
+burpui_audit_rotate: '5'
+
+##### --- END CONFIG SECTION --- #####
+
+##### --- PIP PACKAGES SECTION --- #####
+
+# https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
+burpui_virtualenv: /venv_apps/bui
+burpui_virtualenv_bin: "{{ burpui_virtualenv}}/bin"
+burpui_virtualenv_python: python3
+
+# There are links in virtualenv_bin to link to /usr/local/bin
+burpui_bin_links:
+  - bui-agent-legacy
+  - bui-celery
+  - bui-manage
+  - bui-monitor
+  - burp-ui
+  - burp-ui-legacy
+  - jsonschema
+  - normalizer
+
+burpui_pip_present:
+  #- "cryptography"
+  - "redis==3.5.3"
+  #- "Flask-Migrate"
+  - "celery>=5.1.0"
+  - "cffi>=1.14.5"
+  - "gevent>=21.1.2"
+  - "ujson>=1.35"
+  - "urllib3>=1.19" # required to avoid issues with get_url module
+  # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
+  - "pyasn1==0.4.8"
+  #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
+  - "requests[security]>=2.12"  # required to avoid issues with get_url module
+
+##### --------------------------- #####

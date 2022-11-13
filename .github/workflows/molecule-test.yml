@@ -58,9 +58,9 @@ jobs:
           ANSIBLE_FORCE_COLOR: '1'
         working-directory: "${{ github.repository }}"
 
-      # - name: Run molecule idempotence
-      #   run: "molecule idempotence --scenario-name ${{ matrix.scenario }}"
-      #   env:
-      #     PY_COLORS: '1'
-      #     ANSIBLE_FORCE_COLOR: '1'
-      #   working-directory: "${{ github.repository }}"
+      - name: Run molecule idempotence
+        run: "molecule idempotence --scenario-name ${{ matrix.scenario }}"
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+        working-directory: "${{ github.repository }}"
