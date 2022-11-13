@@ -44,6 +44,3 @@ provisioner:
   config_options:
     defaults:
       callback_enabled: profile_tasks
-    ssh_connection:
-      pipelining: false
-      ssh_args: -o ControlMaster=auto -o ControlPersist=60s

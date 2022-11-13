@@ -3,15 +3,14 @@
 
 # use syntax: https://pip.pypa.io/en/stable/reference/pip_install/#git
 burpui_pip_burpui_dev: 'git+https://git.ziirish.me/ziirish/burp-ui.git@master#egg=burp-ui'
-burpui_use_dev: True
+burpui_use_dev: False # False to use pip version with burpui_version var.
 # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
 # This workaround only works with dev version of the package install
 # requires:
 # burpui_use_dev: True
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 0.6.6
-python_pip_executable: "pip3" # pip3 only supported option
+burpui_version: 1.0.0
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }

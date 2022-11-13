@@ -33,7 +33,6 @@
 
 - name: main | include python3_pip.yml
   include_tasks: python3_pip.yml
-  when: python_pip_executable == "pip3"
 
 - name: main | create burp folder
   file:
