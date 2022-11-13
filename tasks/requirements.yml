@@ -1,41 +1,53 @@
 ---
 # file: tasks/requirements.yml 
 
-- name: ensure cache for apt is updated
+- name: requirements | ensure cache for apt is updated
   apt:
     update_cache: yes
     cache_valid_time: 43200
   changed_when: false
   when: ansible_os_family == 'Debian'
 
-- name: install requirements for ansible pip
+- name: requirements | create virtualenv dir
+  ansible.builtin.file:
+    path: "{{ burpui_virtualenv_python }}"
+    state: directory 
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: requirements | ensure install requirements for ansible pip
   package:
     name: ['python3-setuptools']
     state: present
 
-- name: install burpui package requirements for python3
+- name: requirements | ensure install burpui package requirements for python3
   package:
     name: "{{ burpui_py3_packages| join(',') }}"
     state: present
-  when: python_pip_executable == "pip3"
 
-- name: install role packages
+- name: requirements | ensure install role packages
   package:
     name: "{{ burpui_packages| join(',') }}"
     state: present
 
-- name: register /usr/local/sbin/burp path
+- name: requirements | redis started
+  service:
+    name: "{{ redis_service }}"
+    state: started
+    enabled: yes
+
+- name: requirements | ensure register /usr/local/sbin/burp path
   stat: 
     path: "/usr/local/sbin/burp"
   register: burp_local_sbin_path
 
-- name: uninstall burpui package requirements for python3
+- name: requirements | ensure uninstall burpui package requirements for python3
   package:
     name: "{{ burpui_system_absent }}"
     state: absent
-  when: python_pip_executable == "pip3"
 
-- name: change burp path var burpui_backend_burpbin
+- name: requirements | ensure change burp path var burpui_backend_burpbin
   set_fact:
     burpui_backend_burpbin: /usr/local/sbin/burp
   when: burp_local_sbin_path.stat.exists

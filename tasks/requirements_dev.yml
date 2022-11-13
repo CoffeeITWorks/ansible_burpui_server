@@ -1,10 +1,17 @@
 ---
 # file: tasks/requirements_dev.yml
 
-- name: install burpui package requirements dev
+- name: requirements_dev | install burpui package requirements dev
   package:
     name: "{{ item }}"
     state: present
   with_items:
     - git
 
+- name: requirements_dev | copy requirements_dev.txt file
+  ansible.builtin.copy:
+    src: 'requirements_dev.txt'
+    dest: "{{ burpui_virtualenv }}/"
+    owner: root
+    group: root
+    mode: '0755'

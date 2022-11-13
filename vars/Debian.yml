@@ -9,6 +9,7 @@ burpui_system_absent:
 burpui_py3_packages:
   - python3
   - python3-dev
+  # - python3-virtualenv # Install with pip now
   - python3-setuptools
   - python3-pip
   - libssl-dev # dependecy of ndg-httpsclient
@@ -28,11 +29,9 @@ burpui_packages:
 burp_ui_celery_dependencies:
   - supervisor
 
-python3_pip: 'pip3'
 supervisoretc_dir: "/etc/supervisor/conf.d"
 supervisor_ext: "conf"
 supervisor_service: supervisor
-pip_installed_exe_bin_path: '/usr/local/bin'
 redis_service: redis-server
 nginx_config_dir: '/etc/nginx/sites-available'
 burpui_nginx_config_path: '{{ nginx_config_dir }}/burpui'

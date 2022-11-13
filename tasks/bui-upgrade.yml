@@ -5,8 +5,8 @@
 #     name: burp-ui[sql]
 #     state: 0.4.2
 
-- name: Upgrade database schema
-  shell: LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 bui-manage -c /etc/burp/burpui.cfg db upgrade
+- name: bui-upgrade | Upgrade database schema
+  shell: "LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 {{ burpui_virtualenv_bin }}/bui-manage -c /etc/burp/burpui.cfg db upgrade"
   ignore_errors: yes
   changed_when: False
 
