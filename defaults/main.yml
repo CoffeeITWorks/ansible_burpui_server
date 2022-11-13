@@ -196,16 +196,13 @@ burpui_virtualenv_python: python3
 
 # There are links in virtualenv_bin to link to /usr/local/bin
 burpui_bin_links:
-  - alembic
   - bui-agent-legacy
   - bui-celery
   - bui-manage
   - bui-monitor
   - burp-ui
   - burp-ui-legacy
-  - gunicorn
   - jsonschema
-  - mako-render
   - normalizer
 
 burpui_pip_present:
