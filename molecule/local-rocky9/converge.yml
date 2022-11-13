@@ -1,8 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    burpui_standalone: True
   tasks:
     # - name: Include ansible_burp2_server
     #   include_role:
