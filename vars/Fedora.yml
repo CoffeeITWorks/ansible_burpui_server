@@ -13,6 +13,7 @@ burpui_packages:
 burpui_py3_packages:
   - python3
   - python3-devel
+  # - python3-virtualenv # Install with pip now
   - python3-pip
   - python3-setuptools
   - redhat-rpm-config
@@ -23,11 +24,11 @@ burpui_py3_packages:
 burp_ui_celery_dependencies:
   - supervisor
 
-python3_pip: 'pip3'
 supervisoretc_dir: "/etc/supervisor/conf.d"
 supervisor_ext: "conf"
 supervisor_service: supervisord
-pip_installed_exe_bin_path: '/usr/bin'
 redis_service: redis
 nginx_config_dir: '/etc/nginx/conf.d'
 burpui_nginx_config_path: '{{ nginx_config_dir }}/burpui.conf'
+
+burpui_local_bin: "/usr/local/bin"

@@ -1,23 +1,9 @@
 ---
 # https://github.com/ziirish/burp-ui/blob/master/docs/gunicorn.rst
 
-- name: set gunicorn_upstart_service true for Ubuntu 14.04
-  set_fact: 
-    gunicorn_upstart_service: True
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 14
-
 #- name: debug see vars
 #  debug:
 #    msg: "distribution: {{ ansible_distribution }}, major version: {{ ansible_distribution_major_version|int }}, pip exe: {{ python_pip_executable  }} "
-
-# gunicorn system package should not be used when using python3
-- name: gunicorn | uninstall gunicorn system packages
-  package:
-    name: "{{ item }}"
-    state: absent
-  with_items:
-    - gunicorn
-    - python-gunicorn
 
 - name: gunicorn | directory /var/log/gunicorn 
   file: 
@@ -31,27 +17,18 @@
   pip:
     name: gunicorn>=19.7.1
     state: present
-    executable: "{{ python_pip_executable }}"
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_python: "{{ burpui_virtualenv_python }}"
 
-- name: check /usr/local/bin/gunicorn stat
+- name: check "{{ burpui_virtualenv }}/gunicorn/bin/gunicorn" stat
   stat: 
-    path: /usr/local/bin/gunicorn
+    path: "{{ burpui_virtualenv_bin }}/gunicorn"
   register: gunicorn_local_bin_stat
 
-- name: set /usr/local/bin/gunicorn as gunicorn path
+- name: set "{{ burpui_virtualenv }}/gunicorn/bin/gunicorn" as gunicorn path
   set_fact:
-    burpui_gunicorn_bin: /usr/local/bin/gunicorn
+    burpui_gunicorn_bin: "{{ burpui_virtualenv_bin }}/gunicorn"
   when: gunicorn_local_bin_stat.stat.exists
-
-- name: check /usr/bin/gunicorn stat
-  stat: 
-    path: /usr/bin/gunicorn
-  register: gunicorn_bin_stat
-
-- name: set /usr/bin/gunicorn as gunicorn path
-  set_fact:
-    burpui_gunicorn_bin: /usr/bin/gunicorn
-  when: gunicorn_bin_stat.stat.exists
 
 - block:
 

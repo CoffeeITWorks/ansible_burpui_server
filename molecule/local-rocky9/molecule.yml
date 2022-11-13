@@ -9,8 +9,8 @@ driver:
   name: podman
 platforms:
 
-  - name: ansible_burpui_server-01
-    image: "geerlingguy/docker-ubuntu2204-ansible:latest"
+  - name: ansible_burpui_rocky9
+    image: "docker.io/geerlingguy/docker-rockylinux9-ansible:latest"
     #privileged: True
     command: "/lib/systemd/systemd"
     pre_build_image: true

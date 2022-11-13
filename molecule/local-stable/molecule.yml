@@ -1,16 +1,16 @@
 ---
-dependency:
-  name: galaxy
-  options:
-    ignore-certs: True
-    ignore-errors: True
-    role-file: dev_requirements.yml  # this file is at the root of the git project same place as molecule is executed
+# dependency:
+#   name: galaxy
+#   options:
+#     ignore-certs: True
+#     ignore-errors: True
+#     role-file: dev_requirements.yml  # this file is at the root of the git project same place as molecule is executed
 driver:
   name: podman
 platforms:
 
-  - name: ansible_burpui_stable_server-01
-    image: "geerlingguy/docker-ubuntu2004-ansible:latest"
+  - name: ansible_burpui_rocky9
+    image: "docker.io/geerlingguy/docker-rockylinux9-ansible:latest"
     #privileged: True
     command: "/lib/systemd/systemd"
     pre_build_image: true
@@ -24,10 +24,10 @@ platforms:
     groups:
       - group1
 
-  - name: ansible_burpui_stable_server-04
-    image: "geerlingguy/docker-centos8-ansible"
-    command: /usr/sbin/init
+  - name: ansible_burpui_server-03
+    image: "geerlingguy/docker-ubuntu2204-ansible:latest"
     #privileged: True
+    command: /sbin/init
     pre_build_image: true
     capabilities:
       - SYS_ADMIN
@@ -43,7 +43,4 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      callback_whitelist: profile_tasks
-    ssh_connection:
-      pipelining: false
-      ssh_args: -o ControlMaster=auto -o ControlPersist=60s
+      callback_enabled: profile_tasks

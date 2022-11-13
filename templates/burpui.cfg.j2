@@ -2,16 +2,16 @@
 # @version@ - 0.6.0
 # @release@ - stable
 [Global]
-# burp server version 1 or 2
-version = {{ burpui_global_version }}
-# Handle multiple bui-servers or not
-# If set to 'false', you will need to declare at least one 'Agent' section (see
-# bellow)
-{% if burpui_standalone %}
-single = true
-{% else %}
-single = false
-{% endif %}
+# burp backend to load either one of 'burp1', 'burp2', 'parallel' or 'multi'.
+# If you choose 'multi', you will have to declare at lease one 'Agent' section.
+# If you choose 'parallel', you need to configure the [Parallel] section.
+# If you choose either 'burp1' or 'burp2', you need to configure the [Burp]
+# section.
+# The [Burp] section is also used with the 'parallel' backend for the restoration
+# process.
+# You can also use whatever custom backend you like if it is located in the
+# 'plugins' directory and if it implements the right interface.
+backend = {{ burpui_backend }}
 # authentication plugin (mandatory)
 # list the misc/auth directory to see the available backends
 # to disable authentication you can set "auth = none"
@@ -22,12 +22,10 @@ auth = {{ burpui_global_auth }}
 # list misc/acl directory to see the available backends
 # default is no ACL
 acl = {{ burpui_global_acl }}
-# You can change the prefix if you are behind a reverse-proxy under a custom
-# root path. For example: /burpui
-# You can also configure your reverse-proxy to announce the prefix through the
-# 'X-Script-Name' header. In this case, the bellow prefix will be ignored in
-# favour of the one announced by your reverse-proxy
-prefix = {{ burpui_global_prefix }}
+# audit logger plugin (chainable, see 'auth' plugin option)
+# list the misc/audit directory to see the available backends
+# default is no audit log
+audit = {{ burpui_global_audit }}
 plugins = {{ burpui_global_plugins }}
 
 [UI]
@@ -43,6 +41,8 @@ liverefresh = {{ burpui_ui_liverefresh }}
 # storage backend for session and cache
 # may be either 'default' or 'redis'
 storage = {{ burpui_production_storage }}
+# redis server to connect to
+redis = {{ burpui_production_redis }}
 # session database to use
 # may also be a backend url like: redis://localhost:6379/0
 # if set to 'redis', the backend url defaults to:
@@ -57,8 +57,6 @@ session = {{ burpui_production_session }}
 # where <redis_host> is the host part, and <redis_port> is the port part of
 # the below "redis" setting
 cache = {{ burpui_production_cache }}
-# redis server to connect to
-redis = {{ burpui_production_redis }}
 # whether to use celery or not
 # may also be a broker url like: redis://localhost:6379/0
 # if set to "true", the broker url defaults to:
@@ -66,11 +64,6 @@ redis = {{ burpui_production_redis }}
 # where <redis_host> is the host part, and <redis_port> is the port part of
 # the above "redis" setting
 celery = {{ burpui_production_celery }}
-# database url to store some persistent data
-# none or a connect string supported by SQLAlchemy:
-# http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
-# example: sqlite:////var/lib/burpui/store.db
-database = {{ burpui_production_database }}
 # whether to rate limit the API or not
 # may also be a redis url like: redis://localhost:6379/0
 # if set to "true" or "redis" or "default", the url defaults to:
@@ -82,33 +75,27 @@ limiter = {{ burpui_production_limiter }}
 # limiter ratio
 # see https://flask-limiter.readthedocs.io/en/stable/#ratelimit-string
 ratio = {{ burpui_production_ratio }}
-
-
-[Security]
-## This section contains some security options. Make sure you understand the
-## security implications before changing these.
-# list of 'root' paths allowed when sourcing files in the configuration.
-# Set this to 'none' if you don't want any restrictions, keeping in mind this
-# can lead to accessing sensible files. Defaults to '/etc/burp'.
-# Note: you can have several paths separated by comas.
-# Example: /etc/burp,/etc/burp.d
-includes = {{ burpui_security_includes }}
-# if files already included in config do not respect the above restriction, we
-# prune them
-enforce = {{ burpui_security_enforce }}
-# enable certificates revocation
-revoke = {{ burpui_security_revoke }}
-# remember_cookie duration in days
-cookietime = {{ burpui_security_cookietime }}
-# whether to use a secure cookie for https or not. If set to false, cookies
-# won't have the 'secure' flag.
-# This setting is only useful when HTTPS is detected
-scookie = {{ burpui_security_scookie }}
-# application secret to secure cookies. If you don't set anything, the default
-# value is 'random' which will generate a new secret after every restart of your
-# application. You can also set it to 'none' although this is not recommended.
-# /!\ YOU CANNOT USE THE MAGIC 'random' VALUE WHEN USING GUNICORN /!\
-appsecret = {{ burpui_security_appsecret }}
+# database url to store some persistent data
+# none or a connect string supported by SQLAlchemy:
+# http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
+# example: sqlite:////var/lib/burpui/store.db
+database = {{ burpui_production_database }}
+# You can change the prefix if you are behind a reverse-proxy under a custom
+# root path. For example: /burpui
+# You can also configure your reverse-proxy to announce the prefix through the
+# 'X-Script-Name' header. In this case, the bellow prefix will be ignored in
+# favour of the one announced by your reverse-proxy
+# prefix option should be moved to Production section in 0.7.0+
+prefix = {{ burpui_production_prefix }}
+# ProxyFix - Not yet implemented in 1.0.0
+# number of reverse-proxy to trust in order to retrieve some HTTP headers
+# All the details can be found here:
+# https://werkzeug.palletsprojects.com/en/0.15.x/middleware/proxy_fix/#module-werkzeug.middleware.proxy_fix
+# num_proxies = "{{ burpui_production_num_proxies }}"
+# alternatively, you can specify your own ProxyFix args.
+# The default is: "{'x_proto': {num_proxies}, 'x_for': {num_proxies}, 'x_host': {num_proxies}, 'x_prefix': {num_proxies}}"
+# if num_proxies > 0, else it defaults to ProxyFix defaults
+# proxy_fix_args = {{ burpui_production_proxy_fix_args }}
 
 ## http://burp-ui.readthedocs.io/en/latest/advanced_usage.html#websocket
 [WebSocket]
@@ -137,6 +124,33 @@ url = {{ burpui_websocket_url }}
 # whether to enable verbose websocket server logs or not (for development)
 debug = {{ burpui_websocket_debug }}
 
+[Security]
+## This section contains some security options. Make sure you understand the
+## security implications before changing these.
+# list of 'root' paths allowed when sourcing files in the configuration.
+# Set this to 'none' if you don't want any restrictions, keeping in mind this
+# can lead to accessing sensible files. Defaults to '/etc/burp'.
+# Note: you can have several paths separated by comas.
+# Example: /etc/burp,/etc/burp.d
+includes = {{ burpui_security_includes }}
+# if files already included in config do not respect the above restriction, we
+# prune them
+enforce = {{ burpui_security_enforce }}
+# enable certificates revocation
+revoke = {{ burpui_security_revoke }}
+# remember_cookie duration in days
+cookietime = {{ burpui_security_cookietime }}
+# whether to use a secure cookie for https or not. If set to false, cookies
+# won't have the 'secure' flag.
+# This setting is only useful when HTTPS is detected
+scookie = {{ burpui_security_scookie }}
+# application secret to secure cookies. If you don't set anything, the default
+# value is 'random' which will generate a new secret after every restart of your
+# application. You can also set it to 'none' although this is not recommended.
+# /!\ YOU CANNOT USE THE MAGIC 'random' VALUE WHEN USING GUNICORN /!\
+appsecret = {{ burpui_security_appsecret }}
+
+
 [Experimental]
 ## This section contains some experimental features that have not been deeply
 ## tested yet
@@ -145,7 +159,7 @@ debug = {{ burpui_websocket_debug }}
 # commands on Unix (the InfoZIP utilities) don’t support these extensions. »
 zip64 = {{ burpui_experimental_zip64 }}
 
-{% if burpui_standalone %}
+{% if burpui_backend == 'burp2' or burpui_backend == 'burp1' %}
 ## burp specific options
 [Burp]
 # burp status address (can only be '127.0.0.1' or '::1')
@@ -164,12 +178,21 @@ bconfsrv = {{ burpui_backend_bconfsrv }}
 tmpdir = {{ burpui_backend_tmpdir }}
 ## how many time to wait for the monitor to answer (in seconds)
 timeout = {{ burpui_backend_timeout }}
+# since burp-2.1.10, timestamps have local offsets, if we detect a burp-server
+# version greater than 2.1.10 we'll suppose every backup was made with that
+# version. If this is not the case, you may end-up with wrongly computed backup
+# dates in the clients overview. For that reason, you can enable the
+# 'deep_inspection' option which will check every backup logs in order to
+# find out which server version was used.
+# The drawback is this process requires some extra work that may slow-down
+# burp-ui.
+deep_inspection = {{ burpui_backend_deep_inspection }}
 {% endif %}
 
-{% if burpui_ldap_enabled %}
+{% if burpui_global_auth == 'ldap' %}
 ## https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#ldap
 ## ldapauth specific options
-[LDAP]
+[LDAP:AUTH]
 ## Backend priority. Higher is first
 priority = {{ burpui_ldap_priority }}
 ## LDAP host
@@ -213,12 +236,11 @@ bindpw = {{ burpui_ldap_bindpw }}
 ## basicauth specific options
 ## Note: in case you leave this section commented, the default login/password
 ## is admin/admin
-[BASIC]
+[BASIC:AUTH]
 ## Backend priority. Higher is first
 priority = {{ burpui_basic_priority }}
 ## Allow both plain and hashed passwords
 ## WARNING: This will defaults to false in 0.4.0
-mixed = {{ burpui_basic_mixed }}
 {% for item in burpui_basic_users %}
 {{ item.name }} = {{ item.password }}
 {% endfor %}
@@ -228,7 +250,7 @@ mixed = {{ burpui_basic_mixed }}
 ## localauth specific options
 ## Note: if not running as root, then burp-ui must be run as group 'shadow' to
 ## allow PAM to work
-[LOCAL]
+[LOCAL:AUTH]
 ## Backend priority. Higher is first
 priority = {{ burpui_local_priority }}
 ## List of local users allowed to login. If you don't set this setting, every 
@@ -238,7 +260,36 @@ users = {{ burpui_local_users }}
 limit = {{ burpui_local_limit }}
 {% endif %}
 
-{% if burpui_basic_acl_enabled %}
+{% if burpui_global_acl == 'basic' %}
+# acl engine global options
+[ACL]
+# Enable extended matching rules (enabled by default)
+# If the rule is a string like 'user1 = desk*', it will match any client that
+# matches 'desk*' no mater what agent it is attached to.
+# If it is a coma separated list of strings like 'user1 = desk*,laptop*' it
+# will match the first matching rule no mater what agent it is attached to.
+# If it is a dict like:
+# user1 = '{"agents": ["srv*", "www*"], "clients": ["desk*", "laptop*"]}'
+# It will also validate against the agent name.
+extended = {{ burpui_acl_extended }}
+# If you don't explicitly specify ro/rw grants, what should we assume?
+assume_rw = {{ burpui_acl_assume_rw }}
+# The inheritance order maters, it means depending the order you choose,
+# the ACL engine won't handle the grants the same way.
+# By default, ACL inherited by groups will have lower priority, unless you
+# choose otherwise
+inverse_inheritance = {{ burpui_acl_inverse_inheritance }}
+# If you specify agents and clients separately, should we link them implicitly?
+# For instance, '{"agents": ["agent1", "agent2"], "clients": ["client1", "client2"]}'
+# will become: '{"agents": {"agent1": ["client1", "client2"], "agent2": ["client1", "client2"]}}'
+implicit_link = {{ burpui_acl_implicit_link }}
+# Enable 'legacy' behavior
+# Since v0.6.0, if you don't specify the agents name explicitly, users will be
+# granted on every agents where a client matches user's ACL. If you enable the
+# 'legacy' behavior, you will need to specify the agents explicitly.
+# Note: enabling this option will also disable the extended mode
+legacy = {{ burpui_acl_legacy }}
+
 ## basicacl specific options
 ## Note: in case you leave this section commented, the user 'admin' will have
 ## access to all clients whereas other users will only see the client that have
@@ -248,42 +299,12 @@ limit = {{ burpui_local_limit }}
 # Backend priority. Higher is first
 priority = {{ burpui_basic_acl_priority }}
 admin = {{ burpui_basic_acl_admins }}
-# List of moderators. Users listed here will inherit the grants of the
-# group '@moderator'
-+moderator = user5,user6
-@moderator = '{"agents":{"ro":["agent1"]}}'
-# NOTE: if you are running single-agent mode, you should specify the ro/rw
-# rights of the moderators using this special 'local' agent name:
-# NOTE: this is the default when running single-agent mode if you don't
-# specify anything else
-#@moderator = '{"agents": {"rw": "local"}}'
-# Please note the double-quotes and single-quotes on the following lines are
-# mandatory!
-# You can also overwrite the default behavior by specifying which clients a
-# user can access
-# Suppose you are running single-agent mode (the default), you only need to
-# specify a list of clients a user can access:
-user3 = '{"clients": {"ro": ["prod*"], "rw": ["dev*", "test1"]}}'
-# In case you are not in a single mode, you can also specify which clients
-# a user can access on a specific Agent
-user4 = '{"agents": {"agent1": ["client6", "client7"], "agent2": ["client8"]}}'
-# You can define read-only and/or read-write grants using:
-user5 = '{"agents": {"www*": {"ro": ["desk*"], "rw": ["desk1"]}}}'
-# Finally, you can define groups using the syntax "@groupname" and adding
-# members using "+groupname". Note: groups can inherit groups!
-@group1 = '{"agents": {"ro": ["*"]}}'
-@group2 = '{"clients": {"rw": ["dev*"]}}'
-+group1 = @group2
-+group2 = user5
-# As a result, user5 will be granted the following rights:
-# '{"ro": {"agents": ["*", "agent1"], "www*": ["desk*"]}, "rw": {"clients": ["dev*"], "www*": ["desk1"]}}
-
 {% for item in burpui_basic_acl_users %}
 {{ item }}
 {% endfor %}
 {% endif %}
 
-{% if not burpui_standalone %}
+{% if burpui_backend == 'multi' %}
 ## If you set standalone to 'false', add at least one section like this per
 ## bui-agent
 {% for item in burpui_agents %}
@@ -293,4 +314,20 @@ port = {{ item.port }}
 password = {{ item.password }}
 ssl = {{ item.ssl }}
 {% endfor %}
+{% endif %}
+
+{% if burpui_global_audit == 'basic' %}
+# Basic audit backend options
+[BASIC:AUDIT]
+# Backend priority. Higher is first
+priority = {{ burpui_audit_priority }}
+# debug level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
+# the default is the same as your global application level
+level = {{ burpui_audit_level }}
+# path to a file to log into
+logfile = {{ burpui_audit_logfile }}
+# maximum logfile size
+max_bytes = {{ burpui_audit_max_bytes }}
+# number of files to keep
+rotate = {{ burpui_audit_rotate }}
 {% endif %}

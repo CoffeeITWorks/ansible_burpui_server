@@ -19,8 +19,8 @@ jobs:
       matrix:
         # Better to use one scenario per OS for faster performance and easier debugging
         scenario:
-          - centos-8
-          - ubuntu-2004
+            - ubuntu-2204
+            - rocky9
     steps:
 
       - name: Checkout

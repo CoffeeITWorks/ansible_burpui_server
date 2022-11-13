@@ -1,3 +1,19 @@
+2.2.0
+* fix for #28 issues with dependencies and python 3.10
+* python3 only supported
+* breaks support for ubuntu 2004
+* support ubuntu 2204
+* breaks support for Redhat family 8
+* Adds support for Redhat family 9
+* installs from source by default
+* redesign install using virtualenv
+* Update to burpui_version 1.0.0
+* See the breaking changes in https://burp-ui.readthedocs.io/en/latest/changelog.html#id1
+* Parallel option will be added and tested on next version
+* breaks compatibility with old burpui versions
+* closes #12 added doc about hashpassword
+
+
 2.1.0:
 * Fixes on molecule v4 tests and latest galaxy meta compatibility
 

@@ -6,13 +6,13 @@
 #     ignore-errors: True
 #     role-file: dev_requirements.yml  # this file is at the root of the git project same place as molecule is executed
 driver:
-  name: podman
+  name: docker
 platforms:
 
-  - name: ansible_burpui_server-01
+  - name: ansible_burpui_server-03
     image: "geerlingguy/docker-ubuntu2204-ansible:latest"
-    #privileged: True
-    command: "/lib/systemd/systemd"
+    privileged: True
+    command: /sbin/init
     pre_build_image: true
     capabilities:
       - SYS_ADMIN
@@ -22,7 +22,7 @@ platforms:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
     groups:
-      - group1
+      - use_pip_package
 
 provisioner:
   name: ansible
