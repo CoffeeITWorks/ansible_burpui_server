@@ -108,6 +108,7 @@ burpui_ldap_searchattr: "uid"
 burpui_ldap_base: '"ou=users,dc=example,dc=com"'
 burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
 burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
+burpui_ldap_filter: '"(&({0}={1})(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))"'
 
 #[BASIC:AUTH]
 burpui_basic_enabled: false
