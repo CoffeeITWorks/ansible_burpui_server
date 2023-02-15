@@ -136,7 +136,7 @@ burpui_acl_legacy: 'false'
 burpui_basic_acl_enabled: false
 burpui_basic_acl_priority: 100
 burpui_basic_acl_admins: "user1,user2"
-burpui_basic_acl_users: false
+burpui_basic_acl_users: []
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#basic-acl
 # burpui_basic_acl_users:
 #  - '+moderator = user5,user6'
