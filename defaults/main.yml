@@ -219,5 +219,6 @@ burpui_pip_present:
   - "pyasn1==0.4.8"
   #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
+  - "normalizer==0.2.1"
 
 ##### --------------------------- #####
