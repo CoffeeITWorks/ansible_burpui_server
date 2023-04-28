@@ -19,8 +19,9 @@ jobs:
       matrix:
         # Better to use one scenario per OS for faster performance and easier debugging
         scenario:
-            - ubuntu-2204
-            - rocky9
+           # - ubuntu-2204
+           # - rocky9
+           - local
     steps:
 
       - name: Checkout
@@ -36,7 +37,13 @@ jobs:
       - name: Install dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install yamllint ansible-lint ansible molecule==4.0.4 molecule[docker]==4.0.4
+          python3 -m pip install yamllint ansible-lint ansible molecule molecule-plugins[podman] podman
+      
+      - name: Prepare the environment for podman
+        run: |
+          loginctl enable-linger $(whoami)
+          export XDG_RUNTIME_DIR=/run/user/$UID
+          podman system service --time=0 unix://${XDG_RUNTIME_DIR}/podman/podman.sock &
       
       - name: Install Galaxy dependencies.
         run: | 
