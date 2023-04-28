@@ -39,7 +39,9 @@ jobs:
           python3 -m pip install yamllint ansible-lint ansible molecule molecule-plugins[docker]
       
       - name: Install Galaxy dependencies.
-        run: ansible-galaxy collection install community.docker
+        run: | 
+          ansible-galaxy collection install community.docker
+          python3 -m pip install molecule-docker
       
       - name: check molecule version
         run: molecule --version
