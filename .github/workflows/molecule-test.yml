@@ -33,6 +33,9 @@ jobs:
         with:
           python-version: '3.x'
       
+      - name: Install docker driver  for python
+        run: python3 -m pip install docker
+
       - name: Install dependencies.
         run: |
           python3 -m pip install --upgrade pip
@@ -41,7 +44,6 @@ jobs:
       - name: Install Galaxy dependencies.
         run: | 
           ansible-galaxy collection install community.docker
-          python3 -m pip install molecule-docker
       
       - name: check molecule version
         run: molecule --version
