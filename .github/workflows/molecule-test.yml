@@ -32,14 +32,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      
-      - name: Install docker driver  for python
-        run: python3 -m pip install docker
 
       - name: Install dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install yamllint ansible-lint ansible molecule molecule-plugins[docker]
+          python3 -m pip install yamllint ansible-lint ansible molecule==4.0.4 molecule[docker]==4.0.4
       
       - name: Install Galaxy dependencies.
         run: | 
