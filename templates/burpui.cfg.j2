@@ -224,6 +224,7 @@ searchattr = {{ burpui_ldap_searchattr }}
 ##  - {1} will be replaced by the login name
 ##filter = (&({0}={1})(burpui=1))
 ##filter = (&({0}={1})(|(userAccountControl=512)(userAccountControl=66048)))
+filter = {{ burpui_ldap_filter }}
 ## LDAP base (quotes are mandatory)
 base = {{ burpui_ldap_base }}
 ## Binddn to list existing users (quotes are mandatory)

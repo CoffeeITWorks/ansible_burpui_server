@@ -108,6 +108,7 @@ burpui_ldap_searchattr: "uid"
 burpui_ldap_base: '"ou=users,dc=example,dc=com"'
 burpui_ldap_binddn: '"cn=admin,dc=example,dc=com"'
 burpui_ldap_bindpw: "Sup3rS3cr3tPa$$w0rd"
+burpui_ldap_filter: '"(&({0}={1})(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))"'
 
 #[BASIC:AUTH]
 burpui_basic_enabled: false
@@ -135,7 +136,7 @@ burpui_acl_legacy: 'false'
 burpui_basic_acl_enabled: false
 burpui_basic_acl_priority: 100
 burpui_basic_acl_admins: "user1,user2"
-burpui_basic_acl_users: false
+burpui_basic_acl_users: []
 # https://burp-ui.readthedocs.io/en/stable/advanced_usage.html#basic-acl
 # burpui_basic_acl_users:
 #  - '+moderator = user5,user6'
