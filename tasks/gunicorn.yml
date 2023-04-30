@@ -18,7 +18,7 @@
     name: gunicorn>=19.7.1
     state: present
     virtualenv: "{{ burpui_virtualenv }}"
-    virtualenv_python: "{{ burpui_virtualenv_python }}"
+    virtualenv_command: "{{ burpui_virtualenv_command }}"
 
 - name: check "{{ burpui_virtualenv }}/gunicorn/bin/gunicorn" stat
   stat: 

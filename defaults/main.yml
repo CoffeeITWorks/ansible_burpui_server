@@ -193,7 +193,7 @@ burpui_audit_rotate: '5'
 # https://git.ziirish.me/ziirish/burp-ui/-/blob/master/requirements.txt
 burpui_virtualenv: /venv_apps/bui
 burpui_virtualenv_bin: "{{ burpui_virtualenv}}/bin"
-burpui_virtualenv_python: python3
+burpui_virtualenv_command: python3 -m venv
 
 # There are links in virtualenv_bin to link to /usr/local/bin
 burpui_bin_links:
