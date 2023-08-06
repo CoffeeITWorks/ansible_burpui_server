@@ -18,7 +18,7 @@
 
 - name: requirements | ensure install requirements for ansible pip
   package:
-    name: ['python3-setuptools']
+    name: ['python3-setuptools', 'python3-venv']
     state: present
 
 - name: requirements | ensure install burpui package requirements for python3

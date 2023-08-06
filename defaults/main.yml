@@ -10,7 +10,7 @@ burpui_use_dev: False # False to use pip version with burpui_version var.
 # burpui_use_dev: True
 
 burpui_pip_burpui: "burp-ui"
-burpui_version: 1.0.0
+burpui_version: 1.1.1
 
 burpui_pip_packages:
   - { name: "{{ burpui_pip_burpui }}", version: "{{ burpui_version }}" }
@@ -216,9 +216,9 @@ burpui_pip_present:
   - "ujson>=1.35"
   - "urllib3>=1.19" # required to avoid issues with get_url module
   # - "ndg-httpsclient>=0.4.2" # required to avoid issues with get_url module
-  - "pyasn1==0.4.8"
+  #- "pyasn1==0.4.8"
   #- "six>=1.10.0"  # try to fix error in dependencies with requests[security]
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
-  - "normalizer==0.2.1"
+  #- "normalizer==0.2.1"
 
 ##### --------------------------- #####
