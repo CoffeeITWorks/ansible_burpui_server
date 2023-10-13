@@ -64,3 +64,10 @@
     mode: '0755'
     state: link
   with_items: "{{ burpui_bin_links }}"
+
+- name: pip3 | Install pip fixes packages
+  pip:
+    name: "{{ burpui_pip_fixed_deps }}"
+    state: present
+    virtualenv: "{{ burpui_virtualenv }}"
+    virtualenv_command: "{{ burpui_virtualenv_command }}"

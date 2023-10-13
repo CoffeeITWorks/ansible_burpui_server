@@ -12,7 +12,7 @@
   notify: wait burpui
 
 - name: restart bui-celery
-  supervisorctl:
+  service:
     name: bui-celery
     state: restarted
   when: not bui_use_systemd
