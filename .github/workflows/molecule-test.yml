@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install yamllint ansible-lint ansible molecule molecule-plugins[podman] podman
+          python3 -m pip install yamllint ansible-lint ansible molecule-podman
 
       # https://www.linkedin.com/pulse/how-run-rootless-podman-service-github-actions-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9-%D0%BC%D0%B8%D1%88%D0%B0%D1%80%D0%BE%D0%B2
       - name: Prepare the environment for podman

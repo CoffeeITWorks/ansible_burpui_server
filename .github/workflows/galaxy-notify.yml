@@ -16,8 +16,8 @@ jobs:
       matrix:
         # Better to use one scenario per OS for faster performance and easier debugging
         scenario:
-          - ubuntu-2204
-          - rocky9
+          - local-stable
+          - local-rocky9
     steps:
 
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies.
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install yamllint ansible-lint ansible "molecule[lint,docker]"
+          python3 -m pip install yamllint ansible-lint ansible molecule-podman
       
       - name: Install Galaxy dependencies.
         run: ansible-galaxy collection install community.docker

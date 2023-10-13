@@ -221,4 +221,7 @@ burpui_pip_present:
   - "requests[security]>=2.12"  # required to avoid issues with get_url module
   #- "normalizer==0.2.1"
 
+burpui_pip_fixed_deps:
+  - werkzeug==2.3.7 # Fix issue with ImportError: cannot import name 'url_quote' from 'werkzeug.urls'
+
 ##### --------------------------- #####
