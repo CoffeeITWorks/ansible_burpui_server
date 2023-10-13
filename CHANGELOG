@@ -1,6 +1,13 @@
-2.2.1
+2.3.1
 * important fix for werkzeug dependency
 * minor fixes on molecule-podman
+
+2.3.0
+1.1.1
+burp-ui version
+fixes github actions tests
+tests with podman
+small tweaks
 
 2.2.0
 * fix for #28 issues with dependencies and python 3.10
