@@ -27,7 +27,6 @@ acl = {{ burpui_global_acl }}
 # You can also configure your reverse-proxy to announce the prefix through the
 # 'X-Script-Name' header. In this case, the bellow prefix will be ignored in
 # favour of the one announced by your reverse-proxy
-prefix = {{ burpui_global_prefix }}
 plugins = {{ burpui_global_plugins }}
 
 [UI]
@@ -40,6 +39,7 @@ liverefresh = {{ burpui_ui_liverefresh }}
 {% endfor %}
 
 [Production]
+prefix = {{ burpui_production_prefix }}
 # storage backend for session and cache
 # may be either 'default' or 'redis'
 storage = {{ burpui_production_storage }}
