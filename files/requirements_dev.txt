@@ -31,4 +31,4 @@ async_generator>=1.10
 Click>=7.1.2
 # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
 Werkzeug==2.0.2
-cryptography==36.0.2
+cryptography==38.0.3
