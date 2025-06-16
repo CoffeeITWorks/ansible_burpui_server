@@ -8,7 +8,7 @@ urllib3>=1.19 # required to avoid issues with get_url module
 # - ndg-httpsclient>=0.4.2 # required to avoid issues with get_url module
 pyasn1==0.4.8
 #- six>=1.10.0  # try to fix error in dependencies with requests[security]
-requests[security]>=2.12 # required to avoid issues with get_url module
+requests>=2.32.4 # required to avoid issues with get_url module
 Flask-Limiter==1.4
 trio>=0.18.0
 # workaround for https://git.ziirish.me/ziirish/burp-ui/-/issues/347#note_3770
